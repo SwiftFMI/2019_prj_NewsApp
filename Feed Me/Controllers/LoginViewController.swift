@@ -1,31 +1,29 @@
 //
-//  SignUpViewController.swift
+//  LoginViewController.swift
 //  Feed Me
 //
-//  Created by Emanuil Gospodinov on 25.12.19.
+//  Created by Emanuil Gospodinov on 24.12.19.
 //  Copyright © 2019 Emanuil Gospodinov. All rights reserved.
 //
 
 import UIKit
-import Firebase
 import FirebaseAuth
 
-class SignUpViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var signUpButton: UIButton!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var signUpButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        errorLabel.isHidden = true
         styleElements()
+        errorLabel.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,56 +35,37 @@ class SignUpViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-
-    @IBAction func signUpButtonPressed(_ sender: UIButton) {
-        
+   
+    @IBAction func loginButtonPressed(_ sender: UIButton) {
         if let errorMessage = validateFields() {
             showError(message: errorMessage)
         } else {
-            let firstName = firstNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let lastName = lastNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                    if let error = error {
-                        // an error occured while creating the user
-                        self.showError(message: error.localizedDescription)
-                    } else {
-                        let db = Firestore.firestore()
-                        db.collection("users").addDocument(data: ["firstname": firstName, "lastname": lastName, "uid": result!.user.uid]) { (error) in
-                            if let _ = error {
-                                // user data could not be saved
-                                self.showError(message: "User data could not be saved.")
-                            } else {
-                                self.navigationController?.popToRootViewController(animated: true)
-                            }
-                        }
-                    }
+            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+                if let error = error {
+                    self.showError(message: error.localizedDescription)
+                } else {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
         }
     }
     
-    @IBAction func loginButtonPressed(_ sender: UIButton) {
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 // MARK: Helper Functions
-extension SignUpViewController {
+extension LoginViewController {
     func styleElements() {
-        styleTextField(field: passwordTextField)
+        stylePrimaryButton(button: loginButton)
         styleTextField(field: emailTextField)
-        styleTextField(field: lastNameTextField)
-        styleTextField(field: firstNameTextField)
-        stylePrimaryButton(button: signUpButton)
+        styleTextField(field: passwordTextField)
     }
     
     func validateFields() -> String? {
         
-        if firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
-            emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
+        if  emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             return "All fields are required."
         }
@@ -121,7 +100,7 @@ extension SignUpViewController {
 }
 
 // MARK: Touch Events
-extension SignUpViewController {
+extension LoginViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
