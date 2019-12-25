@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>246518553107-7oh307246rrli1inrhcv5oqdahe0reme.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.246518553107-7oh307246rrli1inrhcv5oqdahe0reme</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB8nhppbGM5FUeegrurTl4_GcNRUo9d9XM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>246518553107</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Emanuil-Gospodinov.Feed-Me</string>
+	<key>PROJECT_ID</key>
+	<string>feed-me-c9167</string>
+	<key>STORAGE_BUCKET</key>
+	<string>feed-me-c9167.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:246518553107:ios:c4523828a36262900bfde6</string>
+	<key>DATABASE_URL</key>
+	<string>https://feed-me-c9167.firebaseio.com</string>
+</dict>
+</plist>
