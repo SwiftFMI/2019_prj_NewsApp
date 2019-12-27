@@ -16,6 +16,11 @@
 		3807E05E23B2D136007D07BC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E05D23B2D136007D07BC /* SignUpViewController.swift */; };
 		3807E06123B39611007D07BC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E06023B39611007D07BC /* Constants.swift */; };
 		3807E06323B39BD7007D07BC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E06223B39BD7007D07BC /* HomeViewController.swift */; };
+		3841A84523B5FD1D0094040D /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3841A84423B5FD1D0094040D /* News.swift */; };
+		3841A84723B5FECD0094040D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3841A84623B5FECD0094040D /* README.md */; };
+		3841A84923B600F50094040D /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3841A84823B600F50094040D /* Networking.swift */; };
+		3841A84B23B635E50094040D /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3841A84A23B635E50094040D /* TestViewController.swift */; };
+		3896F83423B6430700BFF325 /* NewsArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3896F83323B6430700BFF325 /* NewsArticleView.swift */; };
 		38CC12E623B2B91D009AA1E3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CC12E523B2B91D009AA1E3 /* LoginViewController.swift */; };
 		38CC12E823B2BE5F009AA1E3 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CC12E723B2BE5F009AA1E3 /* Styling.swift */; };
 		6BA844E8378A77DD40A1648F /* Pods_Feed_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3154B4B1A6583C5F6513519 /* Pods_Feed_Me.framework */; };
@@ -33,6 +38,11 @@
 		3807E05D23B2D136007D07BC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3807E06023B39611007D07BC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3807E06223B39BD7007D07BC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		3841A84423B5FD1D0094040D /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		3841A84623B5FECD0094040D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3841A84823B600F50094040D /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		3841A84A23B635E50094040D /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		3896F83323B6430700BFF325 /* NewsArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticleView.swift; sourceTree = "<group>"; };
 		38CC12E523B2B91D009AA1E3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		38CC12E723B2BE5F009AA1E3 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 		A3108D283281997C28DE145B /* Pods-Feed Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Feed Me.debug.xcconfig"; path = "Target Support Files/Pods-Feed Me/Pods-Feed Me.debug.xcconfig"; sourceTree = "<group>"; };
@@ -64,6 +74,7 @@
 		3802948423B24393006CCD95 = {
 			isa = PBXGroup;
 			children = (
+				3841A84623B5FECD0094040D /* README.md */,
 				3802948F23B24393006CCD95 /* Feed Me */,
 				3802948E23B24393006CCD95 /* Products */,
 				18BA1CE7655CB3A5E9BA93B8 /* Pods */,
@@ -86,6 +97,7 @@
 				3802949223B24393006CCD95 /* SceneDelegate.swift */,
 				38CC12E423B2B8DF009AA1E3 /* Helpers */,
 				38CC12E323B2B8D3009AA1E3 /* Models */,
+				3896F83223B642D300BFF325 /* Views */,
 				38CC12E223B2B8C3009AA1E3 /* Controllers */,
 				3802949623B24393006CCD95 /* Main.storyboard */,
 				3802949923B24397006CCD95 /* Assets.xcassets */,
@@ -96,12 +108,21 @@
 			path = "Feed Me";
 			sourceTree = "<group>";
 		};
+		3896F83223B642D300BFF325 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3896F83323B6430700BFF325 /* NewsArticleView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		38CC12E223B2B8C3009AA1E3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				38CC12E523B2B91D009AA1E3 /* LoginViewController.swift */,
 				3807E05D23B2D136007D07BC /* SignUpViewController.swift */,
 				3807E06223B39BD7007D07BC /* HomeViewController.swift */,
+				3841A84A23B635E50094040D /* TestViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -109,6 +130,8 @@
 		38CC12E323B2B8D3009AA1E3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3841A84423B5FD1D0094040D /* News.swift */,
+				3841A84823B600F50094040D /* Networking.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -192,6 +215,7 @@
 			files = (
 				3802949D23B24397006CCD95 /* LaunchScreen.storyboard in Resources */,
 				380294A523B24474006CCD95 /* GoogleService-Info.plist in Resources */,
+				3841A84723B5FECD0094040D /* README.md in Resources */,
 				3802949A23B24397006CCD95 /* Assets.xcassets in Resources */,
 				3802949823B24393006CCD95 /* Main.storyboard in Resources */,
 			);
@@ -246,10 +270,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3841A84B23B635E50094040D /* TestViewController.swift in Sources */,
 				3807E05E23B2D136007D07BC /* SignUpViewController.swift in Sources */,
 				38CC12E823B2BE5F009AA1E3 /* Styling.swift in Sources */,
+				3841A84523B5FD1D0094040D /* News.swift in Sources */,
+				3841A84923B600F50094040D /* Networking.swift in Sources */,
 				38CC12E623B2B91D009AA1E3 /* LoginViewController.swift in Sources */,
 				3807E06323B39BD7007D07BC /* HomeViewController.swift in Sources */,
+				3896F83423B6430700BFF325 /* NewsArticleView.swift in Sources */,
 				3807E06123B39611007D07BC /* Constants.swift in Sources */,
 				3802949123B24393006CCD95 /* AppDelegate.swift in Sources */,
 				3802949323B24393006CCD95 /* SceneDelegate.swift in Sources */,
@@ -398,7 +426,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2L24TQ8W95;
+				DEVELOPMENT_TEAM = 225CU5X283;
 				INFOPLIST_FILE = "Feed Me/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -417,7 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2L24TQ8W95;
+				DEVELOPMENT_TEAM = 225CU5X283;
 				INFOPLIST_FILE = "Feed Me/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -13,5 +13,7 @@ struct Constants {
         static let homeVC = "HomeVC"
         static let loginVC = "LoginVC"
         static let singUpVC = "SignUpVC"
+        static let authVC = "AuthVC"
+        static let loggedVC = "LoggedVC"
     }
 }

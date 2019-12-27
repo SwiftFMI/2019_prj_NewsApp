@@ -25,16 +25,6 @@ class LoginViewController: UIViewController {
         styleElements()
         errorLabel.isHidden = true
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         if let errorMessage = validateFields() {
@@ -47,7 +37,10 @@ class LoginViewController: UIViewController {
                 if let error = error {
                     self.showError(message: error.localizedDescription)
                 } else {
-                    self.navigationController?.popToRootViewController(animated: true)
+                    let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+                    
+                    self.view.window?.rootViewController = loggedVC
+                    self.view.window?.makeKeyAndVisible()
                 }
             }
         }

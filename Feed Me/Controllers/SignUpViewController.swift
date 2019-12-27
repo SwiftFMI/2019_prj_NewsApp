@@ -27,16 +27,6 @@ class SignUpViewController: UIViewController {
         errorLabel.isHidden = true
         styleElements()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
 
     @IBAction func signUpButtonPressed(_ sender: UIButton) {
         
@@ -59,7 +49,10 @@ class SignUpViewController: UIViewController {
                                 // user data could not be saved
                                 self.showError(message: "User data could not be saved.")
                             } else {
-                                self.navigationController?.popToRootViewController(animated: true)
+                                let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+                                
+                                self.view.window?.rootViewController = loggedVC
+                                self.view.window?.makeKeyAndVisible()
                             }
                         }
                     }

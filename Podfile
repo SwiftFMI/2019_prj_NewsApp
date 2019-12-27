@@ -13,4 +13,5 @@ target 'Feed Me' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'Koloda'
 end
