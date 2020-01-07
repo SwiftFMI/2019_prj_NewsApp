@@ -44,7 +44,7 @@ struct SourceResults: Decodable {
 final class News {
     static let shared = News()
     
-    var topNews: ArticleResults?
+    var topNews: [Article] = []
     var allNews: [Article] = []
     var newsSources: SourceResults?
     

@@ -42,13 +42,14 @@ class EditUserInterestsViewController: UIViewController {
     }
     
     @IBAction func toggleInterest(_ sender: UIButton) {
-        let interest = sender.titleLabel?.text ?? ""
+        let interest = sender.titleLabel?.text?.lowercased() ?? ""
         
+        // TODO: fix interest toggling
         if interests.contains(interest) {
-            // TODO: remove interest from everywhere
+            interests = interests.filter { $0 != interest }
             styleSecondaryPill(sender)
         } else {
-            // TODO: save interest everywhere
+            interests.append(interest)
             stylePrimaryPill(sender)
         }
     }

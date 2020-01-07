@@ -10,8 +10,6 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-// TODO: Add loader when processing
-
 class SignUpBasicsViewController: UIViewController {
 
     @IBOutlet weak var errorLabel: UILabel!

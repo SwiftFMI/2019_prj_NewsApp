@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllNewsViewController: UIViewController {
+class ForYouViewController: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
@@ -36,7 +36,7 @@ class AllNewsViewController: UIViewController {
 }
 
 // MARK: Helper Functions
-extension AllNewsViewController {
+extension ForYouViewController {
     @objc func handleRefresh() {
         // reset the page count
         currentPage = 1
@@ -63,13 +63,22 @@ extension AllNewsViewController {
 }
 
 // MARK: UITableView
-extension AllNewsViewController: UITableViewDelegate, UITableViewDataSource {
+extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return News.shared.allNews.count + 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let urlAddress = News.shared.allNews[indexPath.row].url ?? ""
+        
+        guard let url = URL(string: urlAddress) else { return }
+        
+        // TODO: Open view inside the app
+        UIApplication.shared.open(url)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,7 +110,7 @@ extension AllNewsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: User Defaults Observation Handler
-extension AllNewsViewController {
+extension ForYouViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         handleRefresh()
     }

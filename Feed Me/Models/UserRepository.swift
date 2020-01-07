@@ -8,8 +8,6 @@
 
 import Foundation
 
-// TODO: Store email as well
-
 enum Key: String, CaseIterable {
     case firstname, lastname, country, interests, email
     func make() -> String {

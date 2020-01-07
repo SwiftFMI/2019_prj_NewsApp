@@ -10,9 +10,7 @@ import UIKit
 import Firebase
 import Koloda
 
-// TODO: open web pages when a card is clicked
-
-class TopNewsViewController: UIViewController {
+class LocalNewsViewController: UIViewController {
 
     @IBOutlet weak var topNewsKolodaView: KolodaView!
     @IBOutlet weak var topTitlesLabel: UILabel!
@@ -25,7 +23,7 @@ class TopNewsViewController: UIViewController {
         topNewsKolodaView.dataSource = self
         
         News.shared.getTopNews { (news) in
-            News.shared.topNews = news
+            News.shared.topNews = news?.articles ?? []
             
             DispatchQueue.main.async {
                 self.topNewsKolodaView.reloadData()
@@ -55,31 +53,34 @@ class TopNewsViewController: UIViewController {
 }
 
 // MARK: Koloda View
-extension TopNewsViewController: KolodaViewDelegate {
+extension LocalNewsViewController: KolodaViewDelegate {
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
 //      koloda.reloadData()
         print("Reached end of card stack")
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
-        let alert = UIAlertController(title: "Congratulation!", message: "Now you're \(index)", preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "OK", style: .default))
-      self.present(alert, animated: true)
+        let urlAddress = News.shared.topNews[index].url ?? ""
+        
+        guard let url = URL(string: urlAddress) else { return }
+        
+        // TODO: Open view inside the app
+        UIApplication.shared.open(url)
     }
 }
 
-extension TopNewsViewController: KolodaViewDataSource {
+extension LocalNewsViewController: KolodaViewDataSource {
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         let view = NewsArticleCardView(cardColorIndex: index % 5)
         
         view.delegate = self
         
-        view.title.text = News.shared.topNews?.articles[index].title ?? ""
-        view.authorLabel.text = News.shared.topNews?.articles[index].author ?? ""
-        view.publishedAtLabel.text = formatDate(News.shared.topNews?.articles[index].publishedAt ?? "")
-        view.desc.text = News.shared.topNews?.articles[index].description ?? ""
+        view.title.text = News.shared.topNews[index].title
+        view.authorLabel.text = News.shared.topNews[index].author
+        view.publishedAtLabel.text = formatDate(News.shared.topNews[index].publishedAt ?? "")
+        view.desc.text = News.shared.topNews[index].description
         
-        if let url = URL(string: News.shared.topNews?.articles[index].urlToImage ?? "") {
+        if let url = URL(string: News.shared.topNews[index].urlToImage ?? "") {
             view.image.load(url: url)
         } else {
             view.image.image = UIImage(named: "Placeholder Image")
@@ -89,25 +90,33 @@ extension TopNewsViewController: KolodaViewDataSource {
     }
     
     func kolodaNumberOfCards(_ koloda: KolodaView) -> Int {
-        return News.shared.topNews?.articles.count ?? 0
+        return News.shared.topNews.count
     }
 }
 
 // MARK: CanBringBackCard Protocol
-extension TopNewsViewController: CanBringBackCard {
+extension LocalNewsViewController: NewsArticleCardDelegate {
     func bringBackCard() {
         topNewsKolodaView.revertAction()
+    }
+    
+    func shareUrl() {
+        
+        let urlAddress = News.shared.topNews[topNewsKolodaView.currentCardIndex].url ?? ""
+        let url = URL(string: urlAddress)
+        let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(ac, animated: true)
     }
 }
 
 // MARK: User Defaults Observer Handler
-extension TopNewsViewController {
+extension LocalNewsViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         topTitlesLabel.text = "Top Titles for " + ((UserRepository.shared.fetch(key: .country) as! [String: String])["full"] ?? "")
         
         News.shared.getTopNews { (news) in
-            News.shared.topNews = news
+            News.shared.topNews = news?.articles ?? []
             
             DispatchQueue.main.async {
                 self.topNewsKolodaView.reloadData()
@@ -116,6 +125,7 @@ extension TopNewsViewController {
     }
 }
 
+// TODO: Better loading of the images
 // MARK: UIImageView load image from url
 extension UIImageView {
     func load(url: URL) {

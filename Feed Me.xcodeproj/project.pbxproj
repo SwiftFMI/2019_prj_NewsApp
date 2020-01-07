@@ -15,12 +15,12 @@
 		380294A523B24474006CCD95 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 380294A423B24474006CCD95 /* GoogleService-Info.plist */; };
 		3807E05E23B2D136007D07BC /* SignUpBasicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E05D23B2D136007D07BC /* SignUpBasicsViewController.swift */; };
 		3807E06123B39611007D07BC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E06023B39611007D07BC /* Constants.swift */; };
-		3807E06323B39BD7007D07BC /* TopNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E06223B39BD7007D07BC /* TopNewsViewController.swift */; };
+		3807E06323B39BD7007D07BC /* LocalNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3807E06223B39BD7007D07BC /* LocalNewsViewController.swift */; };
 		381FB9A323B91A4900ACC972 /* NewsArticleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9A223B91A4900ACC972 /* NewsArticleCardView.swift */; };
 		381FB9A523BA1C8100ACC972 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9A423BA1C8100ACC972 /* ProfileViewController.swift */; };
 		381FB9A723BB562700ACC972 /* SignUpInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9A623BB562700ACC972 /* SignUpInterestsViewController.swift */; };
 		381FB9A923BB9BE200ACC972 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9A823BB9BE200ACC972 /* UserRepository.swift */; };
-		381FB9AB23BD4A1200ACC972 /* AllNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9AA23BD4A1200ACC972 /* AllNewsViewController.swift */; };
+		381FB9AB23BD4A1200ACC972 /* ForYouViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9AA23BD4A1200ACC972 /* ForYouViewController.swift */; };
 		381FB9AD23BD4ACB00ACC972 /* AllNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381FB9AC23BD4ACB00ACC972 /* AllNewsTableViewCell.swift */; };
 		3841A84523B5FD1D0094040D /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3841A84423B5FD1D0094040D /* News.swift */; };
 		3841A84723B5FECD0094040D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3841A84623B5FECD0094040D /* README.md */; };
@@ -33,7 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3802948D23B24393006CCD95 /* Feed Me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Feed Me.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3802948D23B24393006CCD95 /* News Flash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News Flash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3802949023B24393006CCD95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3802949223B24393006CCD95 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3802949723B24393006CCD95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -43,12 +43,12 @@
 		380294A423B24474006CCD95 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3807E05D23B2D136007D07BC /* SignUpBasicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBasicsViewController.swift; sourceTree = "<group>"; };
 		3807E06023B39611007D07BC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		3807E06223B39BD7007D07BC /* TopNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNewsViewController.swift; sourceTree = "<group>"; };
+		3807E06223B39BD7007D07BC /* LocalNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNewsViewController.swift; sourceTree = "<group>"; };
 		381FB9A223B91A4900ACC972 /* NewsArticleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticleCardView.swift; sourceTree = "<group>"; };
 		381FB9A423BA1C8100ACC972 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		381FB9A623BB562700ACC972 /* SignUpInterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInterestsViewController.swift; sourceTree = "<group>"; };
 		381FB9A823BB9BE200ACC972 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
-		381FB9AA23BD4A1200ACC972 /* AllNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsViewController.swift; sourceTree = "<group>"; };
+		381FB9AA23BD4A1200ACC972 /* ForYouViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouViewController.swift; sourceTree = "<group>"; };
 		381FB9AC23BD4ACB00ACC972 /* AllNewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNewsTableViewCell.swift; sourceTree = "<group>"; };
 		3841A84423B5FD1D0094040D /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		3841A84623B5FECD0094040D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -97,7 +97,7 @@
 		3802948E23B24393006CCD95 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3802948D23B24393006CCD95 /* Feed Me.app */,
+				3802948D23B24393006CCD95 /* News Flash.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,9 +135,9 @@
 				38CC12E523B2B91D009AA1E3 /* LoginViewController.swift */,
 				3807E05D23B2D136007D07BC /* SignUpBasicsViewController.swift */,
 				381FB9A623BB562700ACC972 /* SignUpInterestsViewController.swift */,
-				3807E06223B39BD7007D07BC /* TopNewsViewController.swift */,
+				3807E06223B39BD7007D07BC /* LocalNewsViewController.swift */,
 				381FB9A423BA1C8100ACC972 /* ProfileViewController.swift */,
-				381FB9AA23BD4A1200ACC972 /* AllNewsViewController.swift */,
+				381FB9AA23BD4A1200ACC972 /* ForYouViewController.swift */,
 				389583AB23C3E8F700DF5DCD /* EditUserDetailsViewController.swift */,
 				389583AD23C3E94500DF5DCD /* EditUserInterestsViewController.swift */,
 			);
@@ -190,7 +190,7 @@
 			);
 			name = "Feed Me";
 			productName = "Feed Me";
-			productReference = 3802948D23B24393006CCD95 /* Feed Me.app */;
+			productReference = 3802948D23B24393006CCD95 /* News Flash.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -296,7 +296,7 @@
 				3841A84923B600F50094040D /* Networking.swift in Sources */,
 				38CC12E623B2B91D009AA1E3 /* LoginViewController.swift in Sources */,
 				389583AE23C3E94500DF5DCD /* EditUserInterestsViewController.swift in Sources */,
-				3807E06323B39BD7007D07BC /* TopNewsViewController.swift in Sources */,
+				3807E06323B39BD7007D07BC /* LocalNewsViewController.swift in Sources */,
 				389583AC23C3E8F700DF5DCD /* EditUserDetailsViewController.swift in Sources */,
 				381FB9A523BA1C8100ACC972 /* ProfileViewController.swift in Sources */,
 				381FB9AD23BD4ACB00ACC972 /* AllNewsTableViewCell.swift in Sources */,
@@ -304,7 +304,7 @@
 				3802949123B24393006CCD95 /* AppDelegate.swift in Sources */,
 				381FB9A323B91A4900ACC972 /* NewsArticleCardView.swift in Sources */,
 				3802949323B24393006CCD95 /* SceneDelegate.swift in Sources */,
-				381FB9AB23BD4A1200ACC972 /* AllNewsViewController.swift in Sources */,
+				381FB9AB23BD4A1200ACC972 /* ForYouViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,7 +457,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Emanuil-Gospodinov.Feed-Me";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "News Flash";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -476,7 +476,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Emanuil-Gospodinov.Feed-Me";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "News Flash";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

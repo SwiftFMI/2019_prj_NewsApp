@@ -9,17 +9,17 @@
 import UIKit
 import Koloda
 
-// TODO: open share sheet when "share" is clicked
 // TODO: saving articles for later logic
 // TODO: change the font of the meta data
 
-protocol CanBringBackCard {
+protocol NewsArticleCardDelegate {
     func bringBackCard()
+    func shareUrl()
 }
 
 class NewsArticleCardView: UIView {
     
-    var delegate: CanBringBackCard?
+    var delegate: NewsArticleCardDelegate?
     
 // MARK: Initializers
     var publishedAtLabel: UILabel! = {
@@ -267,13 +267,13 @@ class NewsArticleCardView: UIView {
         
         saveButton.leadingAnchor.constraint(equalTo: saveButton.superview!.leadingAnchor, constant: 30).isActive = true
         saveButton.centerYAnchor.constraint(equalTo: saveButton.superview!.centerYAnchor).isActive = true
-        saveButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        saveButton.heightAnchor.constraint(equalTo: saveButton.widthAnchor).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        saveButton.widthAnchor.constraint(equalTo: saveButton.heightAnchor, multiplier: 0.8).isActive = true
         
         shareButton.leadingAnchor.constraint(equalTo: saveButton.trailingAnchor, constant: 20).isActive = true
         shareButton.centerYAnchor.constraint(equalTo: shareButton.superview!.centerYAnchor).isActive = true
-        shareButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        shareButton.heightAnchor.constraint(equalTo: shareButton.widthAnchor).isActive = true
+        shareButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        shareButton.widthAnchor.constraint(equalTo: shareButton.heightAnchor, multiplier: 0.8).isActive = true
         
         revertButton.trailingAnchor.constraint(equalTo: revertButton.superview!.trailingAnchor, constant: -30).isActive = true
         revertButton.centerYAnchor.constraint(equalTo: revertButton.superview!.centerYAnchor).isActive = true
@@ -283,6 +283,7 @@ class NewsArticleCardView: UIView {
         // actions
         revertButton.addTarget(self, action: #selector(bringPrevCard), for: .touchUpInside)
         saveButton.addTarget(self, action: #selector(toggleSaved), for: .touchUpInside)
+        shareButton.addTarget(self, action: #selector(openShareSheet), for: .touchUpInside)
     }
     
     
@@ -306,5 +307,9 @@ extension NewsArticleCardView {
     @objc func toggleSaved() {
         saved = !saved
         setSaveButtonImage()
+    }
+    
+    @objc func openShareSheet() {
+        delegate?.shareUrl()
     }
 }

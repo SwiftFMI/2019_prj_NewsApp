@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 
-// TODO: password editing
-
 class EditUserDetailsViewController: UIViewController {
 
     @IBOutlet weak var firstNameTextField: UITextField!
@@ -32,8 +30,6 @@ class EditUserDetailsViewController: UIViewController {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        // TODO: save the changes
         
         let firstName = firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let lastName = lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)

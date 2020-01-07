@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 
-// TODO: Edit user
-
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
