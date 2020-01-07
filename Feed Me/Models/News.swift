@@ -27,6 +27,7 @@ struct Article: Decodable {
     let urlToImage: String?
     let publishedAt: String?
     let content: String?
+    let saved: Bool?
 }
 
 struct ArticleResults: Decodable {
@@ -44,10 +45,14 @@ final class News {
     static let shared = News()
     
     var topNews: ArticleResults?
-    var allNews: ArticleResults?
+    var allNews: [Article] = []
     var newsSources: SourceResults?
     
     func getTopNews(completion: @escaping (ArticleResults?) -> ()) {
-        Networking.getTopNews(completion: completion)
+        Networking.getLocalTopNews(completion: completion)
+    }
+    
+    func getAllNews(page: Int, completion: @escaping (ArticleResults?) -> ()) {
+        Networking.getLocalAllNews(page: page, completion: completion)
     }
 }

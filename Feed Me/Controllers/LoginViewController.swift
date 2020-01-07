@@ -7,7 +7,10 @@
 //
 
 import UIKit
+import Firebase
 import FirebaseAuth
+
+// TODO: Add loader when processing
 
 class LoginViewController: UIViewController {
 
@@ -17,6 +20,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +29,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         styleElements()
         errorLabel.isHidden = true
+        loadingView.isHidden = true
     }
    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -33,14 +39,35 @@ class LoginViewController: UIViewController {
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
+            showLoading()
+            
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
+                
                 if let error = error {
+                    self.hideLoading()
                     self.showError(message: error.localizedDescription)
                 } else {
-                    let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+                    // success -> go to home
                     
-                    self.view.window?.rootViewController = loggedVC
-                    self.view.window?.makeKeyAndVisible()
+                    // store user data
+                    Firestore.firestore().collection("users").document(result!.user.uid).getDocument { (document, error) in
+                        if let document = document, document.exists {
+                            UserRepository.shared.store(key: .firstname, value: document["firstname"]!)
+                            UserRepository.shared.store(key: .lastname, value: document["lastname"]!)
+                            UserRepository.shared.store(key: .country, value: (document["country"] as! [String: String]))
+                            UserRepository.shared.store(key: .interests, value: (document["interests"] as! [String]))
+                            UserRepository.shared.store(key: .email, value: email)
+                            
+                            self.hideLoading()
+                            
+                            let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+                            
+                            self.view.window?.rootViewController = loggedVC
+                            self.view.window?.makeKeyAndVisible()
+                        } else {
+                            print("Document does not exist")
+                        }
+                    }
                 }
             }
         }
@@ -51,9 +78,10 @@ class LoginViewController: UIViewController {
 // MARK: Helper Functions
 extension LoginViewController {
     func styleElements() {
-        stylePrimaryButton(button: loginButton)
-        styleTextField(field: emailTextField)
-        styleTextField(field: passwordTextField)
+        stylePrimaryButton(loginButton)
+        stylePrimaryTextButton(signUpButton)
+        styleTextField(emailTextField)
+        styleTextField(passwordTextField)
     }
     
     func validateFields() -> String? {
@@ -89,6 +117,16 @@ extension LoginViewController {
     func showError(message: String) -> Void {
         errorLabel.text = message
         errorLabel.isHidden = false
+    }
+    
+    func showLoading() {
+        activityIndicator.startAnimating()
+        loadingView.isHidden = false
+    }
+    
+    func hideLoading() {
+        activityIndicator.stopAnimating()
+        loadingView.isHidden = true
     }
 }
 

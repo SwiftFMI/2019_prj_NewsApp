@@ -7,15 +7,53 @@
 //
 
 import Foundation
+import FirebaseAuth
+import Firebase
 
 final class Networking {
-    typealias TopNewsCompletion = (ArticleResults?) -> ()
+    typealias NewsCompletion = (ArticleResults?) -> ()
     
-    static func getTopNews(completion: @escaping TopNewsCompletion) {
-        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us")!
+    static func getLocalTopNews(completion: @escaping NewsCompletion) {
+        let countryCode = (UserRepository().fetch(key: .country) as! [String: String])["short"] ?? ""
+        
+        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=" + countryCode)!
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
 
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            guard let data = data, error == nil else {
+                completion(nil)
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode(ArticleResults.self, from: data)
+                
+                completion(result)
+            } catch {
+                print("Could not parse JSON response")
+                completion(nil)
+            }
+            
+        }.resume()
+    }
+    
+    static func getLocalAllNews(page: Int, completion: @escaping NewsCompletion) {
+        let interests = UserRepository().fetch(key: .interests) as! [String]
+        var query = ""
+        
+        for index in 0..<interests.count {
+            query += interests[index]
+            if (index < interests.count - 1) {
+                query += "%20OR%20"
+            }
+        }
+        
+        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=popularity&q=\(query)&page=\(page)")!
+        
+        var request = URLRequest(url: url)
+        request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
+        
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             guard let data = data, error == nil else {
                 completion(nil)

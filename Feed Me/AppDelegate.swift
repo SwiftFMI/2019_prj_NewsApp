@@ -18,6 +18,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
+        // Update User Defaults
+        if let user = Auth.auth().currentUser {
+            let db = Firestore.firestore()
+            db.collection("users").document(user.uid).getDocument { (data, _) in
+                if let data = data, data.exists {
+                    UserRepository.shared.store(key: .firstname, value: data["firstname"])
+                    UserRepository.shared.store(key: .lastname, value: data["lastname"])
+                    UserRepository.shared.store(key: .email, value: user.email)
+                    UserRepository.shared.store(key: .country, value: data["country"])
+                    UserRepository.shared.store(key: .interests, value: data["interests"])
+                }
+            }
+            
+        }
+        
+        
         return true
     }
 

@@ -23,17 +23,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // checking if user is logged
         let initialViewController: UIViewController
         let mainStoryboard = UIStoryboard(name: "Main" , bundle: nil)
-//        let navController = UINavigationController()
         
         if let _ = Auth.auth().currentUser {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
         } else {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController
-//            navController.isNavigationBarHidden = true
         }
-
-        // embed the VC in the navigation VC
-//        navController.viewControllers = [initialViewController]
         
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
