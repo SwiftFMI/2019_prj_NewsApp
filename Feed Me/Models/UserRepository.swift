@@ -18,27 +18,22 @@ enum Key: String, CaseIterable {
 class UserRepository {
     
     static let shared = UserRepository()
-
-    let userDefaults: UserDefaults
-    
-    init(userDefaults: UserDefaults = .standard) {
-        self.userDefaults = userDefaults
-    }
     
     func store(key: Key, value: Any) {
-        userDefaults.set(value, forKey: key.make())
+        UserDefaults.standard.set(value, forKey: key.make())
     }
     
     func fetch(key: Key) -> Any? {
-        return userDefaults.value(forKey: key.make())
+        return UserDefaults.standard.value(forKey: key.make())
+    }
+    
+    func checkFor(key: Key) -> Bool {
+        return UserDefaults.standard.object(forKey: key.make()) != nil
     }
     
     func removeUserInfo() {
-        Key
-            .allCases
-            .map { $0.make() }
-            .forEach { key in
-                userDefaults.removeObject(forKey: key)
+        Key.allCases.map { $0.make() }.forEach { key in
+            UserDefaults.standard.removeObject(forKey: key)
         }
     }
 }

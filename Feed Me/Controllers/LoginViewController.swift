@@ -31,6 +31,10 @@ class LoginViewController: UIViewController {
     }
    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
+        
+        // hide the keyboard
+        view.endEditing(true)
+        
         if let errorMessage = validateFields() {
             showError(message: errorMessage)
         } else {

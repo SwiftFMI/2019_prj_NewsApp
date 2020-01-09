@@ -12,6 +12,8 @@ class ForYouViewController: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
+    let imageCache = NSCache<NSString, UIImage>()
+    
     var currentPage: Int = 1
     
     lazy var refreshControl: UIRefreshControl = {
@@ -98,7 +100,14 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
         cell.descLabel.text = News.shared.allNews[indexPath.row].description
         
         if let url = URL(string: News.shared.allNews[indexPath.row].urlToImage ?? "") {
-            cell.newsImage.load(url: url)
+            if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
+                cell.newsImage.image = cachedImage
+            } else {
+                cell.newsImage.load(url: url) { (image) in
+                    self.imageCache.setObject(image, forKey: NSString(string: url.absoluteString))
+                }
+            }
+            
         } else {
             cell.newsImage.image = UIImage(named: "Placeholder Image")
         }
@@ -112,6 +121,8 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: User Defaults Observation Handler
 extension ForYouViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        handleRefresh()
+        if UserRepository.shared.checkFor(key: .interests) {
+            handleRefresh()
+        }
     }
 }

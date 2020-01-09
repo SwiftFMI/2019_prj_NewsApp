@@ -12,11 +12,6 @@ import Koloda
 // TODO: saving articles for later logic
 // TODO: change the font of the meta data
 
-protocol NewsArticleCardDelegate {
-    func bringBackCard()
-    func shareUrl()
-}
-
 class NewsArticleCardView: UIView {
     
     var delegate: NewsArticleCardDelegate?

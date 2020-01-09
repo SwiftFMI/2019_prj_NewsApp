@@ -14,7 +14,7 @@ final class Networking {
     typealias NewsCompletion = (ArticleResults?) -> ()
     
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
-        let countryCode = (UserRepository().fetch(key: .country) as! [String: String])["short"] ?? ""
+        let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
         
         let url = URL(string: "https://newsapi.org/v2/top-headlines?country=" + countryCode)!
         var request = URLRequest(url: url)

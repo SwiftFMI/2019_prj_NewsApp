@@ -50,7 +50,7 @@ extension ProfileViewController {
             authVC.isNavigationBarHidden = true
             
             // remove the local data
-            UserRepository().removeUserInfo()
+            UserRepository.shared.removeUserInfo()
             
             self.view.window?.rootViewController = authVC
             self.view.window?.makeKeyAndVisible()
@@ -73,6 +73,8 @@ extension ProfileViewController {
 extension ProfileViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        self.titleLabel.text = "Hello " + (UserRepository.shared.fetch(key: .firstname) as! String)
+        if UserRepository.shared.checkFor(key: .firstname) {
+            self.titleLabel.text = "Hello " + (UserRepository.shared.fetch(key: .firstname) as! String)
+        }
     }
 }

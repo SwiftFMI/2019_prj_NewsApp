@@ -15,6 +15,8 @@ class LocalNewsViewController: UIViewController {
     @IBOutlet weak var topNewsKolodaView: KolodaView!
     @IBOutlet weak var topTitlesLabel: UILabel!
     
+    let imageCache = NSCache<NSString, UIImage>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,7 +83,13 @@ extension LocalNewsViewController: KolodaViewDataSource {
         view.desc.text = News.shared.topNews[index].description
         
         if let url = URL(string: News.shared.topNews[index].urlToImage ?? "") {
-            view.image.load(url: url)
+            if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
+                view.image.image = cachedImage
+            } else {
+                view.image.load(url: url) { (image) in
+                    self.imageCache.setObject(image, forKey: NSString(string: url.absoluteString))
+                }
+            }
         } else {
             view.image.image = UIImage(named: "Placeholder Image")
         }
@@ -94,16 +102,15 @@ extension LocalNewsViewController: KolodaViewDataSource {
     }
 }
 
-// MARK: CanBringBackCard Protocol
+// MARK: NewsArticleCardDelegate
 extension LocalNewsViewController: NewsArticleCardDelegate {
     func bringBackCard() {
         topNewsKolodaView.revertAction()
     }
     
     func shareUrl() {
-        
-        let urlAddress = News.shared.topNews[topNewsKolodaView.currentCardIndex].url ?? ""
-        let url = URL(string: urlAddress)
+        guard let urlAddress = News.shared.topNews[topNewsKolodaView.currentCardIndex].url, let url = URL(string: urlAddress) else { return }
+       
         let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         present(ac, animated: true)
     }
@@ -113,28 +120,14 @@ extension LocalNewsViewController: NewsArticleCardDelegate {
 extension LocalNewsViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        topTitlesLabel.text = "Top Titles for " + ((UserRepository.shared.fetch(key: .country) as! [String: String])["full"] ?? "")
-        
-        News.shared.getTopNews { (news) in
-            News.shared.topNews = news?.articles ?? []
+        if UserRepository.shared.checkFor(key: .country) {
+            topTitlesLabel.text = "Top Titles for " + ((UserRepository.shared.fetch(key: .country) as! [String: String])["full"] ?? "")
             
-            DispatchQueue.main.async {
-                self.topNewsKolodaView.reloadData()
-            }
-        }
-    }
-}
-
-// TODO: Better loading of the images
-// MARK: UIImageView load image from url
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
+            News.shared.getTopNews { (news) in
+                News.shared.topNews = news?.articles ?? []
+                
+                DispatchQueue.main.async {
+                    self.topNewsKolodaView.reloadData()
                 }
             }
         }

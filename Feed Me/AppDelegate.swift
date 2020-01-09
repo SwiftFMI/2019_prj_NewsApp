@@ -11,8 +11,6 @@ import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-//    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -20,19 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Update User Defaults
         if let user = Auth.auth().currentUser {
-            let db = Firestore.firestore()
-            db.collection("users").document(user.uid).getDocument { (data, _) in
+            Firestore.firestore().collection("users").document(user.uid).getDocument { (data, _) in
                 if let data = data, data.exists {
-                    UserRepository.shared.store(key: .firstname, value: data["firstname"] ?? "")
-                    UserRepository.shared.store(key: .lastname, value: data["lastname"] ?? "")
-                    UserRepository.shared.store(key: .email, value: user.email ?? "")
-                    UserRepository.shared.store(key: .country, value: data["country"] ?? ["short": "us", "full": "United States"])
-                    UserRepository.shared.store(key: .interests, value: data["interests"] ?? [])
+                    UserRepository.shared.store(key: .firstname, value: data["firstname"]!)
+                    UserRepository.shared.store(key: .lastname, value: data["lastname"]!)
+                    UserRepository.shared.store(key: .email, value: user.email!)
+                    UserRepository.shared.store(key: .country, value: data["country"] as! [String: String])
+                    UserRepository.shared.store(key: .interests, value: data["interests"] as! [String])
                 }
             }
             
         }
-        
         
         return true
     }
