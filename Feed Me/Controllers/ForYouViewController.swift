@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class ForYouViewController: UIViewController {
 
@@ -64,7 +65,7 @@ extension ForYouViewController {
     }
 }
 
-// MARK: UITableView
+// MARK: Table View
 extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return News.shared.allNews.count + 1
@@ -79,8 +80,11 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let url = URL(string: urlAddress) else { return }
         
-        // TODO: Open view inside the app
-        UIApplication.shared.open(url)
+        // Open URL in Safari inside the app 
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.delegate = self
+        safariVC.modalPresentationStyle = .overFullScreen
+        present(safariVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,8 +118,13 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    
+}
+
+// MARK: Safari VC Delegate
+extension ForYouViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        dismiss(animated: true)
+    }
 }
 
 // MARK: User Defaults Observation Handler

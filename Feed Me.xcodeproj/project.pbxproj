@@ -29,6 +29,7 @@
 		389583AE23C3E94500DF5DCD /* EditUserInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389583AD23C3E94500DF5DCD /* EditUserInterestsViewController.swift */; };
 		389583B223C61EA900DF5DCD /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389583B123C61EA900DF5DCD /* Protocols.swift */; };
 		38C2E25523C76BB70065747A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C2E25423C76BB70065747A /* Extensions.swift */; };
+		38C2E25723C780560065747A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C2E25623C780560065747A /* SearchViewController.swift */; };
 		38CC12E623B2B91D009AA1E3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CC12E523B2B91D009AA1E3 /* LoginViewController.swift */; };
 		38CC12E823B2BE5F009AA1E3 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CC12E723B2BE5F009AA1E3 /* Styling.swift */; };
 		6BA844E8378A77DD40A1648F /* Pods_Feed_Me.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3154B4B1A6583C5F6513519 /* Pods_Feed_Me.framework */; };
@@ -59,6 +60,7 @@
 		389583AD23C3E94500DF5DCD /* EditUserInterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserInterestsViewController.swift; sourceTree = "<group>"; };
 		389583B123C61EA900DF5DCD /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		38C2E25423C76BB70065747A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		38C2E25623C780560065747A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		38CC12E523B2B91D009AA1E3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		38CC12E723B2BE5F009AA1E3 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 		A3108D283281997C28DE145B /* Pods-Feed Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Feed Me.debug.xcconfig"; path = "Target Support Files/Pods-Feed Me/Pods-Feed Me.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				381FB9AA23BD4A1200ACC972 /* ForYouViewController.swift */,
 				389583AB23C3E8F700DF5DCD /* EditUserDetailsViewController.swift */,
 				389583AD23C3E94500DF5DCD /* EditUserInterestsViewController.swift */,
+				38C2E25623C780560065747A /* SearchViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 				38C2E25523C76BB70065747A /* Extensions.swift in Sources */,
 				38CC12E623B2B91D009AA1E3 /* LoginViewController.swift in Sources */,
 				389583AE23C3E94500DF5DCD /* EditUserInterestsViewController.swift in Sources */,
+				38C2E25723C780560065747A /* SearchViewController.swift in Sources */,
 				3807E06323B39BD7007D07BC /* LocalNewsViewController.swift in Sources */,
 				389583AC23C3E8F700DF5DCD /* EditUserDetailsViewController.swift in Sources */,
 				381FB9A523BA1C8100ACC972 /* ProfileViewController.swift in Sources */,

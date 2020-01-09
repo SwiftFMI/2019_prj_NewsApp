@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Koloda
+import SafariServices
 
 class LocalNewsViewController: UIViewController {
 
@@ -66,8 +67,12 @@ extension LocalNewsViewController: KolodaViewDelegate {
         
         guard let url = URL(string: urlAddress) else { return }
         
-        // TODO: Open view inside the app
-        UIApplication.shared.open(url)
+        // Open URL in Safari inside the app
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.modalPresentationStyle = .overFullScreen
+        safariVC.delegate = self
+
+        present(safariVC, animated: true)
     }
 }
 
@@ -99,6 +104,13 @@ extension LocalNewsViewController: KolodaViewDataSource {
     
     func kolodaNumberOfCards(_ koloda: KolodaView) -> Int {
         return News.shared.topNews.count
+    }
+}
+
+// MARK: Safari Services
+extension LocalNewsViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        dismiss(animated: true)
     }
 }
 
