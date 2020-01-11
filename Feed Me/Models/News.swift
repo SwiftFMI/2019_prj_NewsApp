@@ -46,6 +46,8 @@ final class News {
     
     var topNews: [Article] = []
     var allNews: [Article] = []
+    var searchResults: [Article] = []
+    
     var newsSources: SourceResults?
     
     func getTopNews(completion: @escaping (ArticleResults?) -> ()) {
@@ -54,5 +56,9 @@ final class News {
     
     func getAllNews(page: Int, completion: @escaping (ArticleResults?) -> ()) {
         Networking.getLocalAllNews(page: page, completion: completion)
+    }
+    
+    func searchNews(page: Int, q: String, completion: @escaping (ArticleResults?) -> ()) {
+        Networking.getSearchResults(page: page, q: q, completion: completion)
     }
 }

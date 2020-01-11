@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-// TODO: Better loading of the images
 // MARK: UIImageView load image from url
 extension UIImageView {
     func load(url: URL, completion: @escaping (UIImage) -> Void) {

@@ -250,6 +250,7 @@ class NewsArticleCardView: UIView {
         desc.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
         desc.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
         desc.topAnchor.constraint(equalTo: authorImage.bottomAnchor, constant: 10).isActive = true
+        desc.bottomAnchor.constraint(lessThanOrEqualTo: footerContainer.topAnchor).isActive = true
     }
     
 // MARK: Configure Footer

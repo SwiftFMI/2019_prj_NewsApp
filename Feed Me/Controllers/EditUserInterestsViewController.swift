@@ -44,7 +44,6 @@ class EditUserInterestsViewController: UIViewController {
     @IBAction func toggleInterest(_ sender: UIButton) {
         let interest = sender.titleLabel?.text?.lowercased() ?? ""
         
-        // TODO: fix interest toggling
         if interests.contains(interest) {
             interests = interests.filter { $0 != interest }
             styleSecondaryPill(sender)

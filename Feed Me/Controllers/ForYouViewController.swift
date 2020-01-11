@@ -31,6 +31,9 @@ class ForYouViewController: UIViewController {
         
         newsTableView.addSubview(refreshControl)
         
+        // make navigation bar title big
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         loadNewsForPage()
         
         // Observe for changes in the interests of the user
@@ -89,7 +92,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == News.shared.allNews.count {
-            let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.allNewsLoading, for: indexPath)
+            let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticleLoading, for: indexPath)
             
             currentPage += 1
             
@@ -98,7 +101,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         
-        let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.allNews, for: indexPath) as! AllNewsTableViewCell
+        let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticle, for: indexPath) as! NewsArticleTableViewCell
         
         cell.titleLabel.text = News.shared.allNews[indexPath.row].title
         cell.descLabel.text = News.shared.allNews[indexPath.row].description

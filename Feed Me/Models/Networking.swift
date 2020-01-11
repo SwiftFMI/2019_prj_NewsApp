@@ -10,6 +10,8 @@ import Foundation
 import FirebaseAuth
 import Firebase
 
+// TODO: Stop requesting data when before that it could not have been parsed
+
 final class Networking {
     typealias NewsCompletion = (ArticleResults?) -> ()
     
@@ -49,7 +51,7 @@ final class Networking {
             }
         }
         
-        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=popularity&q=\(query)&page=\(page)")!
+        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=relevancy&q=\(query)&page=\(page)")!
         
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
@@ -69,6 +71,30 @@ final class Networking {
                 completion(nil)
             }
             
+        }.resume()
+    }
+    
+    static func getSearchResults(page: Int, q: String, completion: @escaping NewsCompletion) {
+        let urlQuery = q.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+        
+        let url = URL(string: "https://newsapi.org/v2/everything?page=\(page)&q=\(urlQuery)")!
+        var request = URLRequest(url: url)
+        request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            guard let data = data, error == nil else {
+                completion(nil)
+                return
+            }
+            
+            do {
+                let result = try JSONDecoder().decode(ArticleResults.self, from: data)
+                
+                completion(result)
+            } catch {
+                print("Could not parse JSON response")
+                completion(nil)
+            }
         }.resume()
     }
 }

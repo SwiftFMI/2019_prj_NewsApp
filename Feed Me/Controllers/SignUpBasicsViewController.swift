@@ -90,7 +90,7 @@ class SignUpBasicsViewController: UIViewController {
     }
 }
 
-// MARK: UIPickerView
+// MARK: Picker View
 extension SignUpBasicsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -102,6 +102,10 @@ extension SignUpBasicsViewController: UIPickerViewDelegate, UIPickerViewDataSour
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Constants.countries[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        view.endEditing(true)
     }
 }
 

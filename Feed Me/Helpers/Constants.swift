@@ -17,12 +17,12 @@ struct Constants {
         static let signUpInterestsVC = "SignUpInterestsVC"
         static let authVC = "AuthVC"
         static let loggedVC = "LoggedVC"
-        
+        static let searchResultsVC = "SearchResultsVC"
     }
     
     struct TableCell {
-        static let allNews = "AllNewsTableCell"
-        static let allNewsLoading = "AllNewsLoadingCell"
+        static let newsArticle = "NewsArticle"
+        static let newsArticleLoading = "NewsArticleLoading"
     }
     
     static let cardColors = [

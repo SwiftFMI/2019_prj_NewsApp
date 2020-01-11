@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllNewsTableViewCell: UITableViewCell {
+class NewsArticleTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
@@ -30,7 +30,7 @@ class AllNewsTableViewCell: UITableViewCell {
 }
 
 // MARK: Helper Functions
-extension AllNewsTableViewCell {
+extension NewsArticleTableViewCell {
     func configure() {
         newsImage.layer.cornerRadius = 5
         newsImage.clipsToBounds = true
