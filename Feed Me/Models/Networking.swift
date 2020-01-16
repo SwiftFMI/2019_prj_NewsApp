@@ -11,6 +11,7 @@ import FirebaseAuth
 import Firebase
 
 // TODO: Stop requesting data when before that it could not have been parsed
+// TODO: Implement a Result Status Enum for the response
 
 final class Networking {
     typealias NewsCompletion = (ArticleResults?) -> ()

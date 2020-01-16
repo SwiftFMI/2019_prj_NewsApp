@@ -26,10 +26,7 @@ class ForYouViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        newsTableView.delegate = self
-        newsTableView.dataSource = self
-        
-        newsTableView.addSubview(refreshControl)
+        configureTableView()
         
         // make navigation bar title big
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -55,6 +52,16 @@ extension ForYouViewController {
                 self.refreshControl.endRefreshing()
             }
         }
+    }
+    
+    func configureTableView() {
+        newsTableView.delegate = self
+        newsTableView.dataSource = self
+        
+        newsTableView.addSubview(refreshControl)
+        
+        newsTableView.register(UINib(nibName: Constants.Xib.newsArticleLoadingCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticleLoading)
+        newsTableView.register(UINib(nibName: Constants.Xib.newsArticleCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticle)
     }
     
     func loadNewsForPage() {
@@ -121,12 +128,48 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // TODO: Check if article is saved
+        
+        let action = UIContextualAction(style: .normal, title: "Save",
+          handler: { (action, view, completionHandler) in
+          // TODO: Save article
+          completionHandler(true)
+        })
+        
+        action.image = UIImage(systemName: "bookmark")
+        action.backgroundColor = UIColor(named: "Gray")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Share",
+          handler: { (action, view, completionHandler) in
+            guard let urlAddress = News.shared.allNews[indexPath.row].url, let url = URL(string: urlAddress) else {
+                completionHandler(false)
+                return
+            }
+          
+            let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            self.present(ac, animated: true)
+            completionHandler(true)
+        })
+        
+        action.image = UIImage(systemName: "square.and.arrow.up")
+        action.backgroundColor = UIColor(named: "Gray")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 // MARK: Safari VC Delegate
 extension ForYouViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        dismiss(animated: true)
+        if let selectedCell = newsTableView.indexPathForSelectedRow {
+            newsTableView.deselectRow(at: selectedCell, animated: true)
+        }
     }
 }
 

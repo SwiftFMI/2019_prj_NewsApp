@@ -14,4 +14,7 @@ target 'Feed Me' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
   pod 'Koloda'
+
+  # keyboard controls
+  pod 'IQKeyboardManagerSwift'
 end

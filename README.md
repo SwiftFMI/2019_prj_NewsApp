@@ -14,3 +14,5 @@
 [Recommendation model](https://developer.apple.com/documentation/createml/mlrecommender#overview)
 
 Списък с новините може да консумирате от следния адрес `https://wochenfilter.de/api2/news?key=tjMobilee`
+
+Финален проект за ИД "Програмиране за iOS със Swift" 2019/2020

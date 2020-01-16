@@ -11,10 +11,11 @@ import Firebase
 import Koloda
 import SafariServices
 
-class LocalNewsViewController: UIViewController {
+class FlashCardsViewController: UIViewController {
 
     @IBOutlet weak var topNewsKolodaView: KolodaView!
     @IBOutlet weak var topTitlesLabel: UILabel!
+    @IBOutlet weak var reloadKolodaStackView: UIStackView!
     
     let imageCache = NSCache<NSString, UIImage>()
     
@@ -25,6 +26,9 @@ class LocalNewsViewController: UIViewController {
         topNewsKolodaView.delegate = self
         topNewsKolodaView.dataSource = self
         
+        // Hide Koloda Reload View
+        reloadKolodaStackView.isHidden = true
+        
         News.shared.getTopNews { (news) in
             News.shared.topNews = news?.articles ?? []
             
@@ -33,13 +37,23 @@ class LocalNewsViewController: UIViewController {
             }
         }
         
-        let userCountry = (UserRepository().fetch(key: .country) as! [String: String])["full"]
+        let userCountry = (UserRepository.shared.fetch(key: .country) as! [String: String])["full"]
         topTitlesLabel.text = "Top Titles for " + (userCountry ?? "")
         
         // Observe for changes in the country of the user
         UserDefaults.standard.addObserver(self, forKeyPath: "country", options: .new, context: nil)
     }
     
+    @IBAction func reloadKolodaViewButtonPressed(_ sender: UIButton) {
+        News.shared.getTopNews { (news) in
+            News.shared.topNews = news?.articles ?? []
+
+            DispatchQueue.main.async {
+                self.topNewsKolodaView.reloadData()
+                self.reloadKolodaStackView.isHidden = true
+            }
+        }
+    }
     private func formatDate(_ date: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -56,10 +70,10 @@ class LocalNewsViewController: UIViewController {
 }
 
 // MARK: Koloda View
-extension LocalNewsViewController: KolodaViewDelegate {
+extension FlashCardsViewController: KolodaViewDelegate {
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
-//      koloda.reloadData()
-        print("Reached end of card stack")
+//        topNewsKolodaView.reloadData()
+        reloadKolodaStackView.isHidden = false
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
@@ -76,7 +90,7 @@ extension LocalNewsViewController: KolodaViewDelegate {
     }
 }
 
-extension LocalNewsViewController: KolodaViewDataSource {
+extension FlashCardsViewController: KolodaViewDataSource {
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
         let view = NewsArticleCardView(cardColorIndex: index % 5)
         
@@ -108,14 +122,14 @@ extension LocalNewsViewController: KolodaViewDataSource {
 }
 
 // MARK: Safari Services
-extension LocalNewsViewController: SFSafariViewControllerDelegate {
+extension FlashCardsViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        dismiss(animated: true)
+        
     }
 }
 
 // MARK: NewsArticleCardDelegate
-extension LocalNewsViewController: NewsArticleCardDelegate {
+extension FlashCardsViewController: NewsArticleCardDelegate {
     func bringBackCard() {
         topNewsKolodaView.revertAction()
     }
@@ -129,7 +143,7 @@ extension LocalNewsViewController: NewsArticleCardDelegate {
 }
 
 // MARK: User Defaults Observer Handler
-extension LocalNewsViewController {
+extension FlashCardsViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if UserRepository.shared.checkFor(key: .country) {

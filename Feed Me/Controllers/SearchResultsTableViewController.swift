@@ -21,8 +21,7 @@ class SearchResultsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        resultsTableView.delegate = self
-        resultsTableView.dataSource = self
+        configureTableView()
     }
 
     // MARK: - Table view data source
@@ -86,6 +85,40 @@ class SearchResultsTableViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // TODO: Check if article is saved
+        
+        let action = UIContextualAction(style: .normal, title: "Save",
+          handler: { (action, view, completionHandler) in
+          // TODO: Save article
+          completionHandler(true)
+        })
+        
+        action.image = UIImage(systemName: "bookmark")
+        action.backgroundColor = UIColor(named: "Gray")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: "Share",
+          handler: { (action, view, completionHandler) in
+            guard let urlAddress = News.shared.searchResults[indexPath.row].url, let url = URL(string: urlAddress) else {
+                completionHandler(false)
+                return
+            }
+          
+            let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+            self.present(ac, animated: true)
+            completionHandler(true)
+        })
+        
+        action.image = UIImage(systemName: "square.and.arrow.up")
+        action.backgroundColor = UIColor(named: "Gray")
+        
+        return UISwipeActionsConfiguration(actions: [action])
+    }
 }
 
 // MARK: Search Delegate
@@ -115,8 +148,15 @@ extension SearchResultsTableViewController: SFSafariViewControllerDelegate {
 
 // MARK: Helper Functions
 extension SearchResultsTableViewController {
+    func configureTableView() -> Void {
+        resultsTableView.delegate = self
+        resultsTableView.dataSource = self
+        
+        resultsTableView.register(UINib(nibName: Constants.Xib.newsArticleCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticle)
+        resultsTableView.register(UINib(nibName: Constants.Xib.newsArticleLoadingCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticleLoading)
+    }
+    
     func loadNewsForPage() {
-        print("Query: \(currentQuery) --- Page: \(currentPage)")
         News.shared.searchNews(page: currentPage, q: currentQuery) { (news) in
             News.shared.searchResults += news?.articles ?? []
             

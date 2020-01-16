@@ -25,6 +25,12 @@ struct Constants {
         static let newsArticleLoading = "NewsArticleLoading"
     }
     
+    struct Xib {
+        static let newsArticleLoadingCell = "NewsArticleLoadingTableViewCell"
+        static let newsArticleCell = "NewsArticleTableViewCell"
+        static let flashCard = "FlashCardView"
+    }
+    
     static let cardColors = [
         UIColor(named: "Card Green"),
         UIColor(named: "Card Yellow"),
