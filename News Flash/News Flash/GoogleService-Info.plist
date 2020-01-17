@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>649108364426-dven112tnv23fp1nfpd7hr9p994c0n1h.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.649108364426-dven112tnv23fp1nfpd7hr9p994c0n1h</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDS6iJq6ZLxAT96TNE6j1lu7Xp4j6R6JA4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>649108364426</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Emanuil-Gospodinov.News-Flash</string>
+	<key>PROJECT_ID</key>
+	<string>news-flash-6bb1b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>news-flash-6bb1b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:649108364426:ios:a28ed495d7aee9d66ee173</string>
+	<key>DATABASE_URL</key>
+	<string>https://news-flash-6bb1b.firebaseio.com</string>
+</dict>
+</plist>

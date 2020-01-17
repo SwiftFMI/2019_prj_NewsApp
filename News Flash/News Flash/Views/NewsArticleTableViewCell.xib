@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="YUA-WP-eUS" customClass="NewsArticleTableViewCell" customModule="News_Flash" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YUA-WP-eUS" id="2bf-So-xCm">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="130"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JFf-up-VvU">
+                        <rect key="frame" x="20" y="10" width="374" height="110"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hhD-7T-Ahb">
+                                <rect key="frame" x="0.0" y="0.0" width="254" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhK-vk-jua">
+                                        <rect key="frame" x="0.0" y="0.0" width="254" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYZ-FE-OLL">
+                                        <rect key="frame" x="0.0" y="33" width="254" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GAS-mZ-VuE">
+                                <rect key="frame" x="264" y="0.0" width="110" height="110"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GAS-mZ-VuE" secondAttribute="height" multiplier="1:1" id="PHR-La-Vyd"/>
+                                    <constraint firstAttribute="height" constant="110" id="qT4-jy-0jG"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="CYZ-FE-OLL" firstAttribute="bottom" relation="lessThanOrEqual" secondItem="GAS-mZ-VuE" secondAttribute="bottom" id="O6Z-Rp-EBo"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="JFf-up-VvU" firstAttribute="leading" secondItem="2bf-So-xCm" secondAttribute="leading" constant="20" id="WMc-ay-mgn"/>
+                    <constraint firstAttribute="bottom" secondItem="JFf-up-VvU" secondAttribute="bottom" constant="10" id="amR-h9-m8x"/>
+                    <constraint firstItem="JFf-up-VvU" firstAttribute="top" secondItem="2bf-So-xCm" secondAttribute="top" constant="10" id="bOS-KW-6HJ"/>
+                    <constraint firstAttribute="trailing" secondItem="JFf-up-VvU" secondAttribute="trailing" constant="20" id="jPZ-N3-dtU"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descLabel" destination="CYZ-FE-OLL" id="q5X-dV-BPV"/>
+                <outlet property="newsImage" destination="GAS-mZ-VuE" id="Bed-Mf-uoj"/>
+                <outlet property="titleLabel" destination="AhK-vk-jua" id="e6j-UQ-prG"/>
+            </connections>
+            <point key="canvasLocation" x="128" y="66"/>
+        </tableViewCell>
+    </objects>
+</document>
