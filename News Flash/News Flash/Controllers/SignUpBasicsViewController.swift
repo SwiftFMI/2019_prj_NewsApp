@@ -9,27 +9,24 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import Loaf
+import TransitionButton
+import SkyFloatingLabelTextField
 
 class SignUpBasicsViewController: UIViewController {
 
-    @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var firstNameTextField: UITextField!
+    @IBOutlet weak var nextButton: TransitionButton!
+    @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var lastNameTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var firstNameTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var countryPickerView: UIPickerView!
     @IBOutlet weak var loginButton: UIButton!
-    
-    @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        errorLabel.isHidden = true
-        loadingView.isHidden = true
         styleElements()
         
         countryPickerView.delegate = self
@@ -38,7 +35,12 @@ class SignUpBasicsViewController: UIViewController {
 
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         
+        nextButton.startAnimation()
+        
         if let errorMessage = validateFields() {
+            nextButton.stopAnimation(animationStyle: .shake) {
+                self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5
+            }
             showError(message: errorMessage)
         } else {
             let firstName = firstNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -51,12 +53,12 @@ class SignUpBasicsViewController: UIViewController {
                 "full": Constants.countries[countryPickerView.selectedRow(inComponent: 0)]
             ]
             
-            showLoading()
-            
             Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                self.hideLoading()
                 
                 if let error = error {
+                    self.nextButton.stopAnimation(animationStyle: .shake) {
+                        self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5
+                    }
                     // an error occured while creating the user
                     self.showError(message: error.localizedDescription)
                 } else {
@@ -64,6 +66,9 @@ class SignUpBasicsViewController: UIViewController {
                     
                     db.collection("users").document(result!.user.uid).setData(["firstname": firstName, "lastname": lastName, "country": country]) { (error) in
                         if let _ = error {
+                            self.nextButton.stopAnimation(animationStyle: .shake) {
+                                self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5
+                            }
                             // user data could not be saved
                             self.showError(message: "User data could not be saved.")
                         } else {
@@ -75,9 +80,11 @@ class SignUpBasicsViewController: UIViewController {
                             userRepo.store(key: .country, value: country)
                             userRepo.store(key: .email, value: email)
                             
-                            let signUpInterestsVC = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
-                            
-                            self.navigationController?.pushViewController(signUpInterestsVC, animated: true)
+                            self.nextButton.stopAnimation(animationStyle: .normal) {
+                                let signUpInterestsVC = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
+                                
+                                self.navigationController?.pushViewController(signUpInterestsVC, animated: true)
+                            }
                         }
                     }
                 }
@@ -112,6 +119,17 @@ extension SignUpBasicsViewController: UIPickerViewDelegate, UIPickerViewDataSour
 // MARK: Helper Functions
 extension SignUpBasicsViewController {
     func styleElements() {
+        nextButton.spinnerColor = .white
+        
+        firstNameTextField.placeholder = "First Name"
+        firstNameTextField.title = "First Name"
+        lastNameTextField.placeholder = "Last Name"
+        lastNameTextField.title = "Last Name"
+        emailTextField.placeholder = "Email"
+        emailTextField.title = "Email"
+        passwordTextField.placeholder = "Password"
+        passwordTextField.title = "Password"
+        
         styleTextField(passwordTextField)
         styleTextField(emailTextField)
         styleTextField(lastNameTextField)
@@ -153,18 +171,7 @@ extension SignUpBasicsViewController {
     }
     
     func showError(message: String) -> Void {
-        errorLabel.text = message
-        errorLabel.isHidden = false
-    }
-    
-    func showLoading() {
-        activityIndicator.startAnimating()
-        loadingView.isHidden = false
-    }
-    
-    func hideLoading() {
-        activityIndicator.stopAnimating()
-        loadingView.isHidden = true
+        Loaf(message, state: .error, sender: self).show()
     }
 }
 

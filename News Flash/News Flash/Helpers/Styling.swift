@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SkyFloatingLabelTextField
 
 // MARK: Buttons
 func stylePrimaryButton(_ button: UIButton) {
@@ -30,6 +31,7 @@ func styleButton(_ button: UIButton, textColor: UIColor, bgColor: UIColor) {
     button.setTitleColor(textColor, for: .normal)
     button.backgroundColor = bgColor
     button.layer.cornerRadius = button.frame.height * 0.5
+    button.clipsToBounds = true
 }
 
 // MARK: Pills
@@ -55,11 +57,11 @@ func stylePill(_ button: UIButton, textColor: UIColor, borderColor: UIColor) {
 
 
 // MARK: Text Fields
-func styleTextField(_ field: UITextField) {
-    // corner radius
-    field.layer.cornerRadius = field.frame.height * 0.5
-    field.clipsToBounds = true
-    // border
-    field.layer.borderWidth = 2
-    field.layer.borderColor = UIColor(named: "Gray")?.cgColor
+func styleTextField(_ field: SkyFloatingLabelTextField) {
+    field.lineColor = UIColor.gray
+    field.selectedLineColor = UIColor(named: "Primary Color")!
+    field.selectedLineHeight = 2
+    field.lineHeight = 1
+    
+    field.selectedTitleColor = UIColor(named: "Primary Color")!
 }

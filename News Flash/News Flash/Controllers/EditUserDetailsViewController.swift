@@ -8,12 +8,13 @@
 
 import UIKit
 import Firebase
+import SkyFloatingLabelTextField
 
 class EditUserDetailsViewController: UIViewController {
 
-    @IBOutlet weak var firstNameTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var firstNameTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var lastNameTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
     
     @IBOutlet weak var countryPickerView: UIPickerView!
     
@@ -88,6 +89,13 @@ extension EditUserDetailsViewController: UIPickerViewDelegate, UIPickerViewDataS
 // MARK: Helper Functions
 extension EditUserDetailsViewController {
     func configureElements() {
+        firstNameTextField.placeholder = "First Name"
+        firstNameTextField.title = "First Name"
+        lastNameTextField.placeholder = "Last Name"
+        lastNameTextField.title = "Last Name"
+        emailTextField.placeholder = "Email"
+        emailTextField.title = "Email"
+        
         firstNameTextField.text = UserRepository().fetch(key: .firstname) as? String
         lastNameTextField.text = UserRepository().fetch(key: .lastname) as? String
         emailTextField.text = UserRepository().fetch(key: .email) as? String

@@ -9,10 +9,10 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import Loaf
+import TransitionButton
 
 class SignUpInterestsViewController: UIViewController {
-
-    @IBOutlet weak var errorLabel: UILabel!
     
     @IBOutlet weak var businessButton: UIButton!
     @IBOutlet weak var entertainmentButton: UIButton!
@@ -21,11 +21,7 @@ class SignUpInterestsViewController: UIViewController {
     @IBOutlet weak var sportsButton: UIButton!
     @IBOutlet weak var technologyButton: UIButton!
     
-    @IBOutlet weak var nextButton: UIButton!
-    
-    @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
+    @IBOutlet weak var nextButton: TransitionButton!
     
     var selectedInterests: [String] = []
     
@@ -33,8 +29,6 @@ class SignUpInterestsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        errorLabel.isHidden = true
-        loadingView.isHidden = true
         styleElements()
     }
 
@@ -46,25 +40,26 @@ class SignUpInterestsViewController: UIViewController {
         guard let currentUser = Auth.auth().currentUser else { return }
         let db = Firestore.firestore()
         
-        showLoading()
+        nextButton.startAnimation()
         
         db.collection("users").document(currentUser.uid).setData(["interests": selectedInterests], merge: true) { (error) in
-            self.hideLoading()
-            
             if let _ = error {
+                self.nextButton.stopAnimation(animationStyle: .shake) {
+                    self.nextButton.layer.cornerRadius = self.nextButton.frame.height * 0.5
+                }
                 // user data could not be saved
                 self.showError(message: "Interests could not be saved.")
             } else {
                 // success -> go to home page
-                
-                let userRepo = UserRepository()
-                userRepo.store(key: .interests, value: self.selectedInterests)
-                
-                let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+                self.nextButton.stopAnimation(animationStyle: .expand) {
+                    let userRepo = UserRepository()
+                    userRepo.store(key: .interests, value: self.selectedInterests)
+                    
+                    let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
 
-                self.view.window?.rootViewController = loggedVC
-                self.view.window?.makeKeyAndVisible()
-                 
+                    self.view.window?.rootViewController = loggedVC
+                    self.view.window?.makeKeyAndVisible()
+                }
             }
         }
     }
@@ -99,17 +94,6 @@ extension SignUpInterestsViewController {
     }
     
     func showError(message: String) {
-        errorLabel.text = message
-        errorLabel.isHidden = true
-    }
-    
-    func showLoading() {
-        activityIndicator.startAnimating()
-        loadingView.isHidden = false
-    }
-    
-    func hideLoading() {
-        activityIndicator.stopAnimating()
-        loadingView.isHidden = true
+        Loaf(message, state: .error, sender: self).show()
     }
 }

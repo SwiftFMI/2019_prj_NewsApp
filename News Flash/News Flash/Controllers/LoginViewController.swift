@@ -9,25 +9,26 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import Loaf
+import SkyFloatingLabelTextField
+import TransitionButton
 
 class LoginViewController: UIViewController {
 
-    @IBOutlet weak var errorLabel: UILabel!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
+    @IBOutlet weak var loginButton: TransitionButton!
+    @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var signUpButton: UIButton!
-    
-    @IBOutlet weak var loadingView: UIView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         styleElements()
-        errorLabel.isHidden = true
-        loadingView.isHidden = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        loginButton.frame = loginButton.superview!.bounds
     }
    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
@@ -35,18 +36,25 @@ class LoginViewController: UIViewController {
         // hide the keyboard
         view.endEditing(true)
         
+        loginButton.startAnimation()
+        
         if let errorMessage = validateFields() {
+            loginButton.stopAnimation(animationStyle: .normal) {
+                self.loginButton.layer.cornerRadius = self.loginButton.frame.height * 0.5
+            }
             showError(message: errorMessage)
         } else {
+            
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            showLoading()
             
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 
                 if let error = error {
-                    self.hideLoading()
+                    self.loginButton.stopAnimation(animationStyle: .normal) {
+                        self.loginButton.layer.cornerRadius = self.loginButton.frame.height * 0.5
+                    }
+                    
                     self.showError(message: error.localizedDescription)
                 } else {
                     // success -> go to home
@@ -54,18 +62,19 @@ class LoginViewController: UIViewController {
                     // store user data
                     Firestore.firestore().collection("users").document(result!.user.uid).getDocument { (document, error) in
                         if let document = document, document.exists {
+                            
                             UserRepository.shared.store(key: .firstname, value: document["firstname"]!)
                             UserRepository.shared.store(key: .lastname, value: document["lastname"]!)
                             UserRepository.shared.store(key: .country, value: (document["country"] as! [String: String]))
                             UserRepository.shared.store(key: .interests, value: (document["interests"] as! [String]))
                             UserRepository.shared.store(key: .email, value: email)
                             
-                            self.hideLoading()
-                            
-                            let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
-                            
-                            self.view.window?.rootViewController = loggedVC
-                            self.view.window?.makeKeyAndVisible()
+                            self.loginButton.stopAnimation(animationStyle: .expand) {
+                                let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+
+                                self.view.window?.rootViewController = loggedVC
+                                self.view.window?.makeKeyAndVisible()
+                            }
                         } else {
                             print("Document does not exist")
                         }
@@ -80,6 +89,13 @@ class LoginViewController: UIViewController {
 // MARK: Helper Functions
 extension LoginViewController {
     func styleElements() {
+        loginButton.spinnerColor = .white
+        
+        emailTextField.placeholder = "Email"
+        emailTextField.title = "Email"
+        passwordTextField.placeholder = "Password"
+        passwordTextField.title = "Password"
+        
         stylePrimaryButton(loginButton)
         stylePrimaryTextButton(signUpButton)
         styleTextField(emailTextField)
@@ -117,18 +133,7 @@ extension LoginViewController {
     }
     
     func showError(message: String) -> Void {
-        errorLabel.text = message
-        errorLabel.isHidden = false
-    }
-    
-    func showLoading() {
-        activityIndicator.startAnimating()
-        loadingView.isHidden = false
-    }
-    
-    func hideLoading() {
-        activityIndicator.stopAnimating()
-        loadingView.isHidden = true
+        Loaf(message, state: .error, sender: self).show()
     }
 }
 
