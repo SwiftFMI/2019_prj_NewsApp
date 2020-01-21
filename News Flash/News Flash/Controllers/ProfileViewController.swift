@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import TransitionButton
 
 class ProfileViewController: UIViewController {
 
@@ -15,7 +16,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var editDetailsButton: UIButton!
     @IBOutlet weak var editInterestsButton: UIButton!
     @IBOutlet weak var changePasswordButton: UIButton!
-    @IBOutlet weak var signOutButton: UIButton!
+    @IBOutlet weak var signOutButton: TransitionButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,8 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIButton) {
+        signOutButton.startAnimation()
+        
         let alertController = UIAlertController(title: nil, message: "Are you sure you want to sign out?", preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { (_) in
             self.signOut()
@@ -45,15 +48,14 @@ extension ProfileViewController {
         do {
             try Auth.auth().signOut()
             
-            // navigating to Auth views
-            let authVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController
-            authVC.isNavigationBarHidden = true
-            
-            // remove the local data
-            UserRepository.shared.removeUserInfo()
-            
-            self.view.window?.rootViewController = authVC
-            self.view.window?.makeKeyAndVisible()
+            signOutButton.stopAnimation(animationStyle: .expand) {
+                // navigating to Auth views
+                let authVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController
+                authVC.isNavigationBarHidden = true
+                
+                self.view.window?.rootViewController = authVC
+                self.view.window?.makeKeyAndVisible()
+            }
         } catch let error {
             print("Failed to sign out with error", error)
         }

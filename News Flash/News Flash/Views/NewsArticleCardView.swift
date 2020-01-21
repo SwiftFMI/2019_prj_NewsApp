@@ -96,6 +96,7 @@ class NewsArticleCardView: UIView {
         perm.textColor = UIColor.white
         perm.numberOfLines = 0
         perm.font = UIFont.boldSystemFont(ofSize: 20)
+        perm.numberOfLines = 4
         
         // enable auto layout
         perm.translatesAutoresizingMaskIntoConstraints = false

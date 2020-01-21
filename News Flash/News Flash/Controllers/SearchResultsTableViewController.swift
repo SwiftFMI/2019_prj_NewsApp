@@ -129,6 +129,7 @@ extension SearchResultsTableViewController: UISearchBarDelegate, UISearchResults
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         currentQuery = searchBar.text ?? ""
+        News.shared.searchResults = []
         loadNewsForPage()
     }
     

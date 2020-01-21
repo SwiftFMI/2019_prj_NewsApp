@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         // checking if user is logged
-        let initialViewController: UIViewController
+        var initialViewController: UIViewController
         let mainStoryboard = UIStoryboard(name: "Main" , bundle: nil)
         
         if let _ = Auth.auth().currentUser {

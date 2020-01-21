@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         loginButton.startAnimation()
         
         if let errorMessage = validateFields() {
-            loginButton.stopAnimation(animationStyle: .normal) {
+            loginButton.stopAnimation(animationStyle: .shake) {
                 self.loginButton.layer.cornerRadius = self.loginButton.frame.height * 0.5
             }
             showError(message: errorMessage)

@@ -58,10 +58,12 @@ func stylePill(_ button: UIButton, textColor: UIColor, borderColor: UIColor) {
 
 // MARK: Text Fields
 func styleTextField(_ field: SkyFloatingLabelTextField) {
-    field.lineColor = UIColor.gray
+    field.lineColor = .gray
     field.selectedLineColor = UIColor(named: "Primary Color")!
     field.selectedLineHeight = 2
     field.lineHeight = 1
+    field.textColor = .label
+    field.disabledColor = .gray
     
     field.selectedTitleColor = UIColor(named: "Primary Color")!
 }

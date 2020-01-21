@@ -49,7 +49,7 @@ class FlashCardsViewController: UIViewController {
             News.shared.topNews = news?.articles ?? []
 
             DispatchQueue.main.async {
-                self.topNewsKolodaView.reloadData()
+                self.topNewsKolodaView.resetCurrentCardIndex()
                 self.reloadKolodaStackView.isHidden = true
             }
         }
@@ -72,8 +72,11 @@ class FlashCardsViewController: UIViewController {
 // MARK: Koloda View
 extension FlashCardsViewController: KolodaViewDelegate {
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
-//        topNewsKolodaView.reloadData()
         reloadKolodaStackView.isHidden = false
+    }
+    
+    func kolodaSwipeThresholdRatioMargin(_ koloda: KolodaView) -> CGFloat? {
+        return 0.25
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
@@ -116,6 +119,10 @@ extension FlashCardsViewController: KolodaViewDataSource {
         return view
     }
     
+    func kolodaSpeedThatCardShouldDrag(_ koloda: KolodaView) -> DragSpeed {
+        return .fast
+    }
+    
     func kolodaNumberOfCards(_ koloda: KolodaView) -> Int {
         return News.shared.topNews.count
     }
@@ -128,7 +135,7 @@ extension FlashCardsViewController: SFSafariViewControllerDelegate {
     }
 }
 
-// MARK: NewsArticleCardDelegate
+// MARK: News Article Card Delegate
 extension FlashCardsViewController: NewsArticleCardDelegate {
     func bringBackCard() {
         topNewsKolodaView.revertAction()
@@ -153,7 +160,7 @@ extension FlashCardsViewController {
                 News.shared.topNews = news?.articles ?? []
                 
                 DispatchQueue.main.async {
-                    self.topNewsKolodaView.reloadData()
+                    self.topNewsKolodaView.resetCurrentCardIndex()
                 }
             }
         }

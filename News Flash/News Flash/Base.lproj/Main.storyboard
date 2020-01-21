@@ -246,6 +246,10 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kT-gU-tth" customClass="KolodaView" customModule="Koloda">
+                                <rect key="frame" x="20" y="157.5" width="374" height="635.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OHG-C9-ELB">
                                 <rect key="frame" x="165" y="358" width="84.5" height="141"/>
                                 <subviews>
@@ -273,10 +277,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7kT-gU-tth" customClass="KolodaView" customModule="Koloda">
-                                <rect key="frame" x="20" y="157.5" width="374" height="635.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -560,7 +560,7 @@
         <!--Saved-->
         <scene sceneID="ick-3N-jPb">
             <objects>
-                <viewController id="3ux-Pz-2pv" customClass="I" sceneMemberID="viewController">
+                <viewController id="3ux-Pz-2pv" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gP6-AB-KIP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

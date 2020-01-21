@@ -19,7 +19,7 @@ final class Networking {
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
         let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
         
-        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=" + countryCode)!
+        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(countryCode)")!
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
 
