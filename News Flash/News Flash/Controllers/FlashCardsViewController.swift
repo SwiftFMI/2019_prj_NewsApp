@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import Koloda
 import SafariServices
+import Loaf
 
 class FlashCardsViewController: UIViewController {
 
@@ -76,7 +77,7 @@ extension FlashCardsViewController: KolodaViewDelegate {
     }
     
     func kolodaSwipeThresholdRatioMargin(_ koloda: KolodaView) -> CGFloat? {
-        return 0.25
+        return 0.15
     }
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
@@ -103,6 +104,12 @@ extension FlashCardsViewController: KolodaViewDataSource {
         view.authorLabel.text = News.shared.topNews[index].author
         view.publishedAtLabel.text = formatDate(News.shared.topNews[index].publishedAt ?? "")
         view.desc.text = News.shared.topNews[index].description
+        
+        if let url = News.shared.topNews[index].url{
+            view.saved = News.shared.savedUrls.contains(url)
+        }
+        
+        view.setSaveButtonImage()
         
         if let url = URL(string: News.shared.topNews[index].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
@@ -135,6 +142,13 @@ extension FlashCardsViewController: SFSafariViewControllerDelegate {
     }
 }
 
+// MARK: Helper Functions
+extension FlashCardsViewController {
+    func showMessage(_ message: String, style: Loaf.State) {
+        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+    }
+}
+
 // MARK: News Article Card Delegate
 extension FlashCardsViewController: NewsArticleCardDelegate {
     func bringBackCard() {
@@ -146,6 +160,36 @@ extension FlashCardsViewController: NewsArticleCardDelegate {
        
         let ac = UIActivityViewController(activityItems: [url], applicationActivities: nil)
         present(ac, animated: true)
+    }
+    
+    func saveArticle(completion: @escaping (Bool) -> ()) {
+        let articleId = topNewsKolodaView.currentCardIndex
+        let article = News.shared.topNews[articleId]
+        
+        News.shared.saveArticle(article) { (isSaved) in
+            if isSaved {
+                self.showMessage("Article saved!", style: .success)
+                completion(true)
+            } else {
+                self.showMessage("Could not save article!", style: .error)
+                completion(false)
+            }
+        }
+    }
+    
+    func unsaveArticle(completion: @escaping (Bool) -> ()) {
+        let articleId = topNewsKolodaView.currentCardIndex
+        let articleUrl = News.shared.topNews[articleId].url ?? ""
+        
+        News.shared.unsaveArticle(articleUrl) { (isUnsaved) in
+            if isUnsaved {
+                self.showMessage("Article unsaved!", style: .success)
+                completion(true)
+            } else {
+                self.showMessage("Could not unsave article!", style: .error)
+                completion(false)
+            }
+        }
     }
 }
 

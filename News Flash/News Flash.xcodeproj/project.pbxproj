@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		386C159F23D9E135003428D1 /* SavedNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C159E23D9E135003428D1 /* SavedNewsViewController.swift */; };
 		38EC3D6B23D1169C003A137F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3D6A23D1169C003A137F /* AppDelegate.swift */; };
 		38EC3D6D23D1169C003A137F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3D6C23D1169C003A137F /* SceneDelegate.swift */; };
 		38EC3D7223D1169C003A137F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38EC3D7023D1169C003A137F /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		386C159E23D9E135003428D1 /* SavedNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNewsViewController.swift; sourceTree = "<group>"; };
 		38EC3D6723D1169C003A137F /* News Flash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News Flash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38EC3D6A23D1169C003A137F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38EC3D6C23D1169C003A137F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				38EC3D9223D11CA6003A137F /* SearchResultsTableViewController.swift */,
 				38EC3D9823D11CAC003A137F /* SignUpBasicsViewController.swift */,
 				38EC3D9923D11CAC003A137F /* SignUpInterestsViewController.swift */,
+				386C159E23D9E135003428D1 /* SavedNewsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				38EC3DB223D11CF9003A137F /* NewsArticleTableViewCell.swift in Sources */,
 				38EC3D8723D11C0E003A137F /* Styling.swift in Sources */,
 				38EC3D9D23D11CAF003A137F /* SearchResultsTableViewController.swift in Sources */,
+				386C159F23D9E135003428D1 /* SavedNewsViewController.swift in Sources */,
 				38EC3DA123D11CAF003A137F /* ExploreViewController.swift in Sources */,
 				38EC3DA223D11CAF003A137F /* FlashCardsViewController.swift in Sources */,
 				38EC3DA023D11CAF003A137F /* EditUserInterestsViewController.swift in Sources */,

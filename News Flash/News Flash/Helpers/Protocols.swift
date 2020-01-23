@@ -11,4 +11,6 @@ import Foundation
 protocol NewsArticleCardDelegate {
     func bringBackCard()
     func shareUrl()
+    func saveArticle(completion: @escaping (Bool) -> ())
+    func unsaveArticle(completion: @escaping (Bool) -> ())
 }

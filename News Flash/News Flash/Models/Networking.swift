@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import FirebaseAuth
 import Firebase
 
 // TODO: Stop requesting data when before that it could not have been parsed
@@ -15,6 +14,8 @@ import Firebase
 
 final class Networking {
     typealias NewsCompletion = (ArticleResults?) -> ()
+    typealias SavedCompletion = ([Article]?) -> ()
+    typealias BasicCompletion = (Bool) -> ()
     
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
         let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
@@ -97,6 +98,102 @@ final class Networking {
                 completion(nil)
             }
         }.resume()
+    }
+    
+    static func saveArticle(_ article: Article, completion: @escaping BasicCompletion) {
+        let data : [String: String] = [
+            "author": article.author ?? "",
+            "title": article.title ?? "",
+            "description": article.description ?? "",
+            "url": article.url ?? "",
+            "urlToImage": article.urlToImage ?? "",
+            "publishedAt": article.publishedAt ?? "",
+            "content": article.content ?? ""
+        ]
+        
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").addDocument(data: data) { (error) in
+            if let _ = error {
+                completion(false)
+            } else {
+                News.shared.savedNews.append(article)
+                News.shared.savedUrls.append(article.url ?? "")
+                
+                completion(true)
+            }
+        }
+    }
+    
+    static func unsaveArticle(_ url: String, completion: @escaping BasicCompletion) {
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").whereField("url", isEqualTo: url).getDocuments { (data, error) in
+            if let error = error {
+                completion(false)
+            } else {
+                for document in data!.documents {
+                    document.reference.delete()
+                }
+                
+                // filter the saved arrays
+                News.shared.savedNews = News.shared.savedNews.filter {$0.url != url}
+                News.shared.savedUrls = News.shared.savedUrls.filter {$0 != url}
+                
+                completion(true)
+            }
+        }
+        
+    }
+    
+    static func getSavedNews(completion: @escaping SavedCompletion) {
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").getDocuments { (data, error) in
+            guard let data = data, error == nil else {
+                completion(nil)
+                return
+            }
+            
+            News.shared.savedUrls = []
+        
+            var result: [Article] = []
+            
+            for document in data.documents {
+                let article = Article.init(
+                    source: nil,
+                    author: document["author"] as? String,
+                    title: document["title"] as? String,
+                    description: document["description"] as? String,
+                    url: document["url"] as? String,
+                    urlToImage: document["urlToImage"] as? String,
+                    publishedAt: document["publishedAt"] as? String,
+                    content: document["content"] as? String,
+                    saved: true)
+                
+                News.shared.savedUrls.append(document["url"] as! String)
+                
+                result.append(article)
+            }
+            
+            completion(result)
+        }
+    }
+    
+    static func updateSavedUrls() {
+        let db = Firestore.firestore()
+        
+        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").getDocuments { (data, error) in
+            guard let data = data, error == nil else {
+                return
+            }
+            
+            News.shared.savedUrls = []
+            
+            for document in data.documents {
+                News.shared.savedUrls.append(document["url"] as! String)
+            }
+        }
     }
 }
 

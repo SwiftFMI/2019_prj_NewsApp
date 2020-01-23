@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import Loaf
 
 class ForYouViewController: UIViewController {
 
@@ -19,7 +20,7 @@ class ForYouViewController: UIViewController {
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(handleRefresh), for: UIControl.Event.valueChanged)
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         return refreshControl
     }()
     
@@ -58,7 +59,7 @@ extension ForYouViewController {
         newsTableView.delegate = self
         newsTableView.dataSource = self
         
-        newsTableView.addSubview(refreshControl)
+        newsTableView.refreshControl = self.refreshControl
         
         newsTableView.register(UINib(nibName: Constants.Xib.newsArticleLoadingCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticleLoading)
         newsTableView.register(UINib(nibName: Constants.Xib.newsArticleCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticle)
@@ -72,6 +73,10 @@ extension ForYouViewController {
                 self.newsTableView.reloadData()
             }
         }
+    }
+    
+    func showMessage(_ message: String, style: Loaf.State) {
+        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }
 
@@ -112,6 +117,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
         
         cell.titleLabel.text = News.shared.allNews[indexPath.row].title
         cell.descLabel.text = News.shared.allNews[indexPath.row].description
+        cell.saved = News.shared.savedUrls.contains(News.shared.allNews[indexPath.row].url ?? "")
         
         if let url = URL(string: News.shared.allNews[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
@@ -130,15 +136,40 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // TODO: Check if article is saved
         
-        let action = UIContextualAction(style: .normal, title: "Save",
-          handler: { (action, view, completionHandler) in
-          // TODO: Save article
-          completionHandler(true)
+        let cell = newsTableView.cellForRow(at: indexPath) as! NewsArticleTableViewCell
+        
+        let label: String = cell.saved ? "Unsave" : "Save"
+        let image: UIImage = cell.saved ? UIImage(systemName: "bookmark.fill")! : UIImage(systemName: "bookmark")!
+        
+        let action = UIContextualAction(style: .normal, title: label, handler: { (action, view, completionHandler) in
+            let article = News.shared.allNews[indexPath.row]
+            
+            if cell.saved {
+                // unsave
+                News.shared.unsaveArticle(article.url ?? "") { (isUnsaved) in
+                    if isUnsaved {
+                        cell.saved = false
+                        self.showMessage("Article unsaved!", style: .success)
+                    } else {
+                        self.showMessage("Could not unsave article!", style: .error)
+                    }
+                }
+            } else {
+                // save
+                News.shared.saveArticle(article) { (isSaved) in
+                    if isSaved {
+                        cell.saved = true
+                        self.showMessage("Article saved!", style: .success)
+                    } else {
+                        self.showMessage("Could not save article!", style: .error)
+                    }
+                }
+            }
+            completionHandler(true)
         })
         
-        action.image = UIImage(systemName: "bookmark")
+        action.image = image
         action.backgroundColor = UIColor(named: "Gray")
         
         return UISwipeActionsConfiguration(actions: [action])

@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var initialViewController: UIViewController
         let mainStoryboard = UIStoryboard(name: "Main" , bundle: nil)
         
-        if let _ = Auth.auth().currentUser {
+        if let _ = Auth.auth().currentUser, UserRepository.shared.checkFor(key: .firstname) {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
         } else {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController

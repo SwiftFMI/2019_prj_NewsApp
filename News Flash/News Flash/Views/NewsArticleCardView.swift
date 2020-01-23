@@ -190,8 +190,6 @@ class NewsArticleCardView: UIView {
         layer.shadowOffset = .zero
         layer.shadowRadius = 10
         
-        setSaveButtonImage()
-        
         titleContainer.addSubview(title)
         footerContainer.addSubview(saveButton)
         footerContainer.addSubview(shareButton)
@@ -284,7 +282,7 @@ class NewsArticleCardView: UIView {
     }
     
     
-    private func setSaveButtonImage() {
+    func setSaveButtonImage() {
         if saved {
             saveButton.tintColor = UIColor(named: "Saved Color")
             saveButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
@@ -302,8 +300,22 @@ extension NewsArticleCardView {
     }
     
     @objc func toggleSaved() {
-        saved = !saved
-        setSaveButtonImage()
+        print("Saved status: \(saved)")
+        if saved {
+            delegate?.unsaveArticle() { (isUnsaved) in
+                if isUnsaved {
+                    self.saved = !self.saved
+                    self.setSaveButtonImage()
+                }
+            }
+        } else {
+            delegate?.saveArticle() { (isSaved) in
+                if isSaved {
+                    self.saved = !self.saved
+                    self.setSaveButtonImage()
+                }
+            }
+        }
     }
     
     @objc func openShareSheet() {

@@ -35,7 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
             
+            // get the saved urls
+            News.shared.updateSavedUrls()
         }
+        
         return true
     }
 

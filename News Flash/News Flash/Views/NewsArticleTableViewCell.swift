@@ -13,6 +13,8 @@ class NewsArticleTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var newsImage: UIImageView!
+    
+    var saved: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()

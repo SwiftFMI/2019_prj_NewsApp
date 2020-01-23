@@ -42,23 +42,45 @@ struct SourceResults: Decodable {
 }
 
 final class News {
+    typealias NewsCompletion = (ArticleResults?) -> ()
+    typealias SavedCompletion = ([Article]?) -> ()
+    typealias BasicCompletion = (Bool) -> ()
+    
     static let shared = News()
     
     var topNews: [Article] = []
     var allNews: [Article] = []
     var searchResults: [Article] = []
+    var savedNews: [Article] = []
+    var savedUrls: [String] = []
     
     var newsSources: SourceResults?
     
-    func getTopNews(completion: @escaping (ArticleResults?) -> ()) {
+    func getTopNews(completion: @escaping NewsCompletion) {
         Networking.getLocalTopNews(completion: completion)
     }
     
-    func getAllNews(page: Int, completion: @escaping (ArticleResults?) -> ()) {
+    func getAllNews(page: Int, completion: @escaping NewsCompletion) {
         Networking.getLocalAllNews(page: page, completion: completion)
     }
     
-    func searchNews(page: Int, q: String, completion: @escaping (ArticleResults?) -> ()) {
+    func searchNews(page: Int, q: String, completion: @escaping NewsCompletion) {
         Networking.getSearchResults(page: page, q: q, completion: completion)
+    }
+    
+    func getSavedNews(completion: @escaping SavedCompletion) {
+        Networking.getSavedNews(completion: completion)
+    }
+    
+    func saveArticle(_ article: Article, completion: @escaping BasicCompletion) {
+        Networking.saveArticle(article, completion: completion)
+    }
+    
+    func unsaveArticle(_ url: String, completion: @escaping BasicCompletion) {
+        Networking.unsaveArticle(url, completion: completion)
+    }
+    
+    func updateSavedUrls() -> Void {
+        Networking.updateSavedUrls()
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import SafariServices
+import Loaf
 
 class SearchResultsTableViewController: UITableViewController {
 
@@ -69,6 +70,7 @@ class SearchResultsTableViewController: UITableViewController {
         
         cell.titleLabel.text = News.shared.searchResults[indexPath.row].title
         cell.descLabel.text = News.shared.searchResults[indexPath.row].description
+        cell.saved = News.shared.savedUrls.contains(News.shared.searchResults[indexPath.row].url ?? "")
 
         if let url = URL(string: News.shared.searchResults[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
@@ -87,15 +89,38 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // TODO: Check if article is saved
+        let cell = resultsTableView.cellForRow(at: indexPath) as! NewsArticleTableViewCell
+        let label: String = cell.saved ? "Unsave" : "Save"
+        let image: UIImage = cell.saved ? UIImage(systemName: "bookmark.fill")! : UIImage(systemName: "bookmark")!
         
-        let action = UIContextualAction(style: .normal, title: "Save",
-          handler: { (action, view, completionHandler) in
-          // TODO: Save article
-          completionHandler(true)
+        let action = UIContextualAction(style: .normal, title: label, handler: { (action, view, completionHandler) in
+            let article = News.shared.searchResults[indexPath.row]
+            
+            if cell.saved {
+                // unsave
+                News.shared.unsaveArticle(article.url ?? "") { (isUnsaved) in
+                    if isUnsaved {
+                        cell.saved = false
+                        self.showMessage("Article unsaved!", style: .success)
+                    } else {
+                        self.showMessage("Could not unsave article!", style: .error)
+                    }
+                }
+            } else {
+                // save
+                News.shared.saveArticle(article) { (isSaved) in
+                    if isSaved {
+                        cell.saved = true
+                        self.showMessage("Article saved!", style: .success)
+                    } else {
+                        self.showMessage("Could not save article!", style: .error)
+                    }
+                }
+            }
+            completionHandler(true)
         })
         
-        action.image = UIImage(systemName: "bookmark")
+        action.image = image
         action.backgroundColor = UIColor(named: "Gray")
         
         return UISwipeActionsConfiguration(actions: [action])
@@ -165,5 +190,9 @@ extension SearchResultsTableViewController {
                 self.resultsTableView.reloadData()
             }
         }
+    }
+    
+    func showMessage(_ message: String, style: Loaf.State) {
+        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }

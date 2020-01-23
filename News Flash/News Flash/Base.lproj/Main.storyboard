@@ -486,6 +486,37 @@
             </objects>
             <point key="canvasLocation" x="1048" y="2437"/>
         </scene>
+        <!--Saved-->
+        <scene sceneID="LfV-MB-WQ9">
+            <objects>
+                <viewController id="nIE-50-lGA" customClass="SavedNewsViewController" customModule="News_Flash" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DcS-Xm-Q16">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8xP-13-g8f">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Gqi-zb-r4I" firstAttribute="trailing" secondItem="8xP-13-g8f" secondAttribute="trailing" id="E7d-Nz-5B4"/>
+                            <constraint firstItem="8xP-13-g8f" firstAttribute="top" secondItem="Gqi-zb-r4I" secondAttribute="top" id="VeB-I6-wE2"/>
+                            <constraint firstItem="8xP-13-g8f" firstAttribute="leading" secondItem="Gqi-zb-r4I" secondAttribute="leading" id="eWe-vR-abM"/>
+                            <constraint firstItem="Gqi-zb-r4I" firstAttribute="bottom" secondItem="8xP-13-g8f" secondAttribute="bottom" id="ycX-yB-A1P"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gqi-zb-r4I"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Saved" largeTitleDisplayMode="always" id="qxP-dv-gnM"/>
+                    <connections>
+                        <outlet property="savedNewsTableView" destination="8xP-13-g8f" id="njI-gO-EN1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xKc-JQ-8PQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2009" y="2437"/>
+        </scene>
         <!--Search Results Table View Controller-->
         <scene sceneID="qaT-57-so9">
             <objects>
@@ -558,22 +589,6 @@
             <point key="canvasLocation" x="1047.8260869565217" y="1646.6517857142856"/>
         </scene>
         <!--Saved-->
-        <scene sceneID="ick-3N-jPb">
-            <objects>
-                <viewController id="3ux-Pz-2pv" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gP6-AB-KIP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="ZLc-Ty-Kkm"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Saved" largeTitleDisplayMode="always" id="S1L-V4-qbF"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VCr-ml-Q3N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2009" y="2422"/>
-        </scene>
-        <!--Saved-->
         <scene sceneID="0Bb-qI-fJx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eHB-Cr-WTo" sceneMemberID="viewController">
@@ -585,7 +600,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="3ux-Pz-2pv" kind="relationship" relationship="rootViewController" id="lAr-5N-g3p"/>
+                        <segue destination="nIE-50-lGA" kind="relationship" relationship="rootViewController" id="Fkx-vp-5ax"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="STs-gP-kTH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
