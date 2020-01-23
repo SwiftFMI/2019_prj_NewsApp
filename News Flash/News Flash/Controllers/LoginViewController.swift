@@ -48,39 +48,23 @@ class LoginViewController: UIViewController {
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-                
-                if let error = error {
+            Authentication.login(email: email, password: password) { (message) in
+                if let message = message {
                     self.loginButton.stopAnimation(animationStyle: .normal) {
                         self.loginButton.layer.cornerRadius = self.loginButton.frame.height * 0.5
                     }
                     
-                    self.showError(message: error.localizedDescription)
+                    self.showError(message: message)
                 } else {
-                    // success -> go to home
-                    
-                    // store user data
-                    Firestore.firestore().collection("users").document(result!.user.uid).getDocument { (document, error) in
-                        if let document = document, document.exists {
-                            
-                            UserRepository.shared.store(key: .firstname, value: document["firstname"]!)
-                            UserRepository.shared.store(key: .lastname, value: document["lastname"]!)
-                            UserRepository.shared.store(key: .country, value: (document["country"] as! [String: String]))
-                            UserRepository.shared.store(key: .interests, value: (document["interests"] as! [String]))
-                            UserRepository.shared.store(key: .email, value: email)
-                            
-                            self.loginButton.stopAnimation(animationStyle: .expand) {
-                                let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+                    self.loginButton.stopAnimation(animationStyle: .expand) {
+                        let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
 
-                                self.view.window?.rootViewController = loggedVC
-                                self.view.window?.makeKeyAndVisible()
-                            }
-                        } else {
-                            print("Document does not exist")
-                        }
+                        self.view.window?.rootViewController = loggedVC
+                        self.view.window?.makeKeyAndVisible()
                     }
                 }
             }
+            
         }
     }
     

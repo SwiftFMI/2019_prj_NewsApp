@@ -1,8 +1,8 @@
 //
-//  AllNewsViewController.swift
-//  Feed Me
+//  CategoryViewController.swift
+//  News Flash
 //
-//  Created by Emanuil Gospodinov on 1.01.20.
+//  Created by Emanuil Gospodinov on 23.01.20.
 //  Copyright © 2020 Emanuil Gospodinov. All rights reserved.
 //
 
@@ -10,13 +10,13 @@ import UIKit
 import SafariServices
 import Loaf
 
-class ForYouViewController: UIViewController {
+class CategoryViewController: UIViewController {
 
-    @IBOutlet weak var newsTableView: UITableView!
+    @IBOutlet weak var articlesTableView: UITableView!
     
     let imageCache = NSCache<NSString, UIImage>()
     
-    var currentPage: Int = 1
+    var category: String?
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -27,50 +27,34 @@ class ForYouViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Do any additional setup after loading the view.
         configureTableView()
-        
-        // make navigation bar title big
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        loadNewsForPage()
-        
-        // Observe for changes in the interests of the user
-        UserDefaults.standard.addObserver(self, forKeyPath: "interests", options: .new, context: nil)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        // reset the news array
+        News.shared.categoryNews = []
     }
 }
 
 // MARK: Helper Functions
-extension ForYouViewController {
-    @objc func handleRefresh() {
-        // reset the page count
-        currentPage = 1
-        
-        News.shared.getAllNews(page: currentPage) { (news) in
-            News.shared.allNews = news ?? []
-            
-            DispatchQueue.main.async {
-                self.newsTableView.reloadData()
-                self.refreshControl.endRefreshing()
-            }
-        }
-    }
-    
+extension CategoryViewController {
     func configureTableView() {
-        newsTableView.delegate = self
-        newsTableView.dataSource = self
+        articlesTableView.delegate = self
+        articlesTableView.dataSource = self
         
-        newsTableView.refreshControl = self.refreshControl
+        articlesTableView.register(UINib(nibName: Constants.Xib.newsArticleLoadingCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticleLoading)
+        articlesTableView.register(UINib(nibName: Constants.Xib.newsArticleCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticle)
         
-        newsTableView.register(UINib(nibName: Constants.Xib.newsArticleLoadingCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticleLoading)
-        newsTableView.register(UINib(nibName: Constants.Xib.newsArticleCell, bundle: nil), forCellReuseIdentifier: Constants.TableCell.newsArticle)
+        articlesTableView.refreshControl = self.refreshControl
     }
     
-    func loadNewsForPage() {
-        News.shared.getAllNews(page: currentPage) { (news) in
-            News.shared.allNews += news ?? []
+    func loadNewsByCategory(_ category: String) {
+        News.shared.getByCategory(category, includeCountry: true) { (data) in
+            News.shared.categoryNews = data ?? []
             
             DispatchQueue.main.async {
-                self.newsTableView.reloadData()
+                self.articlesTableView.reloadData()
             }
         }
     }
@@ -78,48 +62,32 @@ extension ForYouViewController {
     func showMessage(_ message: String, style: Loaf.State) {
         Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
+    
+    @objc func handleRefresh() {
+        if let category = self.category {
+            loadNewsByCategory(category)
+        }
+    }
 }
 
 // MARK: Table View
-extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
+extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return News.shared.allNews.count + 1
+        return News.shared.categoryNews.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let urlAddress = News.shared.allNews[indexPath.row].url ?? ""
-        
-        guard let url = URL(string: urlAddress) else { return }
-        
-        // Open URL in Safari inside the app 
-        let safariVC = SFSafariViewController(url: url)
-        safariVC.delegate = self
-        safariVC.modalPresentationStyle = .overFullScreen
-        present(safariVC, animated: true)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == News.shared.allNews.count {
-            let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticleLoading, for: indexPath)
-            
-            currentPage += 1
-            
-            loadNewsForPage()
-            
-            return cell
-        }
+        let cell = articlesTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticle, for: indexPath) as! NewsArticleTableViewCell
         
-        let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticle, for: indexPath) as! NewsArticleTableViewCell
+        cell.titleLabel.text = News.shared.categoryNews[indexPath.row].title
+        cell.descLabel.text = News.shared.categoryNews[indexPath.row].description
+        cell.saved = News.shared.savedUrls.contains(News.shared.categoryNews[indexPath.row].url ?? "")
         
-        cell.titleLabel.text = News.shared.allNews[indexPath.row].title
-        cell.descLabel.text = News.shared.allNews[indexPath.row].description
-        cell.saved = News.shared.savedUrls.contains(News.shared.allNews[indexPath.row].url ?? "")
-        
-        if let url = URL(string: News.shared.allNews[indexPath.row].urlToImage ?? "") {
+        if let url = URL(string: News.shared.categoryNews[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
                 cell.newsImage.image = cachedImage
             } else {
@@ -127,7 +95,6 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
                     self.imageCache.setObject(image, forKey: NSString(string: url.absoluteString))
                 }
             }
-            
         } else {
             cell.newsImage.image = UIImage(named: "Placeholder Image")
         }
@@ -135,15 +102,27 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let urlAddress = News.shared.categoryNews[indexPath.row].url ?? ""
+        
+        guard let url = URL(string: urlAddress) else { return }
+        
+        // Open URL in Safari inside the app
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.delegate = self
+        safariVC.modalPresentationStyle = .overFullScreen
+        present(safariVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let cell = newsTableView.cellForRow(at: indexPath) as! NewsArticleTableViewCell
+        let cell = articlesTableView.cellForRow(at: indexPath) as! NewsArticleTableViewCell
         
         let label: String = cell.saved ? "Unsave" : "Save"
         let image: UIImage = cell.saved ? UIImage(systemName: "bookmark.fill")! : UIImage(systemName: "bookmark")!
         
         let action = UIContextualAction(style: .normal, title: label, handler: { (action, view, completionHandler) in
-            let article = News.shared.allNews[indexPath.row]
+            let article = News.shared.categoryNews[indexPath.row]
             
             if cell.saved {
                 // unsave
@@ -178,7 +157,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let action = UIContextualAction(style: .normal, title: "Share",
           handler: { (action, view, completionHandler) in
-            guard let urlAddress = News.shared.allNews[indexPath.row].url, let url = URL(string: urlAddress) else {
+            guard let urlAddress = News.shared.categoryNews[indexPath.row].url, let url = URL(string: urlAddress) else {
                 completionHandler(false)
                 return
             }
@@ -196,19 +175,10 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: Safari VC Delegate
-extension ForYouViewController: SFSafariViewControllerDelegate {
+extension CategoryViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        if let selectedCell = newsTableView.indexPathForSelectedRow {
-            newsTableView.deselectRow(at: selectedCell, animated: true)
-        }
-    }
-}
-
-// MARK: User Defaults Observation Handler
-extension ForYouViewController {
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if UserRepository.shared.checkFor(key: .interests) {
-            handleRefresh()
+        if let selectedCell = articlesTableView.indexPathForSelectedRow {
+            articlesTableView.deselectRow(at: selectedCell, animated: true)
         }
     }
 }

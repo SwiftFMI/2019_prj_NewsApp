@@ -37,20 +37,16 @@ class SignUpInterestsViewController: UIViewController {
     }
     
     @IBAction func nextButtonPressed(_ sender: UIButton) {
-        guard let currentUser = Auth.auth().currentUser else { return }
-        let db = Firestore.firestore()
-        
         nextButton.startAnimation()
         
-        db.collection("users").document(currentUser.uid).setData(["interests": selectedInterests], merge: true) { (error) in
-            if let _ = error {
+        Authentication.signUpInterests(interests: selectedInterests) { (message) in
+            if let message = message {
                 self.nextButton.stopAnimation(animationStyle: .shake) {
                     self.nextButton.layer.cornerRadius = self.nextButton.frame.height * 0.5
                 }
                 // user data could not be saved
-                self.showError(message: "Interests could not be saved.")
+                self.showError(message: message)
             } else {
-                // success -> go to home page
                 self.nextButton.stopAnimation(animationStyle: .expand) {
                     let userRepo = UserRepository()
                     userRepo.store(key: .interests, value: self.selectedInterests)

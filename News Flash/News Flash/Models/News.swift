@@ -8,41 +8,8 @@
 
 import Foundation
 
-struct Source: Decodable {
-    let id: String?
-    let name: String?
-    let description: String?
-    let url: String?
-    let category: String?
-    let language: String?
-    let country: String?
-}
-
-struct Article: Decodable {
-    let source: Source?
-    let author: String?
-    let title: String?
-    let description: String?
-    let url: String?
-    let urlToImage: String?
-    let publishedAt: String?
-    let content: String?
-    let saved: Bool?
-}
-
-struct ArticleResults: Decodable {
-    let status: String
-    let totalResults: Int
-    let articles: [Article]
-}
-
-struct SourceResults: Decodable {
-    let status: String
-    let sources: [Source]
-}
-
 final class News {
-    typealias NewsCompletion = (ArticleResults?) -> ()
+    typealias NewsCompletion = ([Article]?) -> ()
     typealias SavedCompletion = ([Article]?) -> ()
     typealias BasicCompletion = (Bool) -> ()
     
@@ -53,8 +20,7 @@ final class News {
     var searchResults: [Article] = []
     var savedNews: [Article] = []
     var savedUrls: [String] = []
-    
-    var newsSources: SourceResults?
+    var categoryNews: [Article] = []
     
     func getTopNews(completion: @escaping NewsCompletion) {
         Networking.getLocalTopNews(completion: completion)
@@ -83,4 +49,21 @@ final class News {
     func updateSavedUrls() -> Void {
         Networking.updateSavedUrls()
     }
+    
+    func getByCategory(_ category: String, includeCountry: Bool, completion: @escaping NewsCompletion) {
+        Networking.getNewsByCategory(category: category, includeCountry: includeCountry, completion: completion)
+    }
+}
+
+struct Article: Decodable {
+    let author: String?
+    let title: String?
+    let description: String?
+    let url: String?
+    let urlToImage: String?
+    let publishedAt: String?
+}
+
+struct ArticleResults: Decodable {
+    let articles: [Article]
 }

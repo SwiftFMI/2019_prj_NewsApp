@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import TransitionButton
 
+// TODO: Add settings (e.g. include country getting news by category?)
+
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!

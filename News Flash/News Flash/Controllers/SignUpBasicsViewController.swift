@@ -49,43 +49,22 @@ class SignUpBasicsViewController: UIViewController {
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
             let country = [
-                "short": Constants.countriesShort[countryPickerView.selectedRow(inComponent: 0)],
-                "full": Constants.countries[countryPickerView.selectedRow(inComponent: 0)]
+                "short": Constants.Countries.short[countryPickerView.selectedRow(inComponent: 0)],
+                "full": Constants.Countries.full[countryPickerView.selectedRow(inComponent: 0)]
             ]
             
-            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                
-                if let error = error {
+            Authentication.signUpBasics(firstName: firstName, lastName: lastName, email: email, password: password, country: country) { (message) in
+                if let message = message {
                     self.nextButton.stopAnimation(animationStyle: .shake) {
                         self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5
                     }
                     // an error occured while creating the user
-                    self.showError(message: error.localizedDescription)
+                    self.showError(message: message)
                 } else {
-                    let db = Firestore.firestore()
-                    
-                    db.collection("users").document(result!.user.uid).setData(["firstname": firstName, "lastname": lastName, "country": country]) { (error) in
-                        if let _ = error {
-                            self.nextButton.stopAnimation(animationStyle: .shake) {
-                                self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5
-                            }
-                            // user data could not be saved
-                            self.showError(message: "User data could not be saved.")
-                        } else {
-                            // success -> move to the next step
-                            let userRepo = UserRepository()
-                            
-                            userRepo.store(key: .firstname, value: firstName)
-                            userRepo.store(key: .lastname, value: lastName)
-                            userRepo.store(key: .country, value: country)
-                            userRepo.store(key: .email, value: email)
-                            
-                            self.nextButton.stopAnimation(animationStyle: .normal) {
-                                let signUpInterestsVC = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
-                                
-                                self.navigationController?.pushViewController(signUpInterestsVC, animated: true)
-                            }
-                        }
+                    self.nextButton.stopAnimation(animationStyle: .normal) {
+                        let signUpInterestsVC = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
+                        
+                        self.navigationController?.pushViewController(signUpInterestsVC, animated: true)
                     }
                 }
             }
@@ -104,11 +83,11 @@ extension SignUpBasicsViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Constants.countries.count
+        return Constants.Countries.full.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Constants.countries[row]
+        return Constants.Countries.full[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

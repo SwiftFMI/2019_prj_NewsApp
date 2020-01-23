@@ -12,10 +12,42 @@ import Firebase
 // TODO: Stop requesting data when before that it could not have been parsed
 // TODO: Implement a Result Status Enum for the response
 
+// API KEY: 2407b50324ed42dfadd1366a2f426651
+
 final class Networking {
-    typealias NewsCompletion = (ArticleResults?) -> ()
+    typealias NewsCompletion = ([Article]?) -> ()
     typealias SavedCompletion = ([Article]?) -> ()
     typealias BasicCompletion = (Bool) -> ()
+    
+    static func getNewsByCategory(category: String, includeCountry: Bool, completion: @escaping NewsCompletion) {
+        var urlString = "https://newsapi.org/v2/top-headlines?category=\(category)"
+        
+        if includeCountry {
+            let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
+            urlString.append("&country=\(countryCode)")
+        }
+        
+        let url = URL(string: urlString)!
+        
+        var request = URLRequest(url: url)
+        request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            guard let data = data, error == nil else {
+                completion(nil)
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode(ArticleResults.self, from: data)
+                
+                completion(result.articles)
+            } catch {
+                print("Could not parse JSON response")
+                completion(nil)
+            }
+        }.resume()
+    }
     
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
         let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
@@ -33,7 +65,7 @@ final class Networking {
             do {
                 let result = try JSONDecoder().decode(ArticleResults.self, from: data)
                 
-                completion(result)
+                completion(result.articles)
             } catch {
                 print("Could not parse JSON response")
                 completion(nil)
@@ -67,7 +99,7 @@ final class Networking {
             do {
                 let result = try JSONDecoder().decode(ArticleResults.self, from: data)
                 
-                completion(result)
+                completion(result.articles)
             } catch {
                 print("Could not parse JSON response")
                 completion(nil)
@@ -92,7 +124,7 @@ final class Networking {
             do {
                 let result = try JSONDecoder().decode(ArticleResults.self, from: data)
                 
-                completion(result)
+                completion(result.articles)
             } catch {
                 print("Could not parse JSON response")
                 completion(nil)
@@ -108,7 +140,7 @@ final class Networking {
             "url": article.url ?? "",
             "urlToImage": article.urlToImage ?? "",
             "publishedAt": article.publishedAt ?? "",
-            "content": article.content ?? ""
+//            "content": article.content ?? ""
         ]
         
         let db = Firestore.firestore()
@@ -129,7 +161,7 @@ final class Networking {
         let db = Firestore.firestore()
         
         db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").whereField("url", isEqualTo: url).getDocuments { (data, error) in
-            if let error = error {
+            if let _ = error {
                 completion(false)
             } else {
                 for document in data!.documents {
@@ -161,15 +193,13 @@ final class Networking {
             
             for document in data.documents {
                 let article = Article.init(
-                    source: nil,
                     author: document["author"] as? String,
                     title: document["title"] as? String,
                     description: document["description"] as? String,
                     url: document["url"] as? String,
                     urlToImage: document["urlToImage"] as? String,
-                    publishedAt: document["publishedAt"] as? String,
-                    content: document["content"] as? String,
-                    saved: true)
+                    publishedAt: document["publishedAt"] as? String
+                )
                 
                 News.shared.savedUrls.append(document["url"] as! String)
                 
@@ -196,5 +226,3 @@ final class Networking {
         }
     }
 }
-
-// API KEY: 2407b50324ed42dfadd1366a2f426651

@@ -31,7 +31,7 @@ class FlashCardsViewController: UIViewController {
         reloadKolodaStackView.isHidden = true
         
         News.shared.getTopNews { (news) in
-            News.shared.topNews = news?.articles ?? []
+            News.shared.topNews = news ?? []
             
             DispatchQueue.main.async {
                 self.topNewsKolodaView.reloadData()
@@ -47,7 +47,7 @@ class FlashCardsViewController: UIViewController {
     
     @IBAction func reloadKolodaViewButtonPressed(_ sender: UIButton) {
         News.shared.getTopNews { (news) in
-            News.shared.topNews = news?.articles ?? []
+            News.shared.topNews = news ?? []
 
             DispatchQueue.main.async {
                 self.topNewsKolodaView.resetCurrentCardIndex()
@@ -201,7 +201,7 @@ extension FlashCardsViewController {
             topTitlesLabel.text = "Top Titles for " + ((UserRepository.shared.fetch(key: .country) as! [String: String])["full"] ?? "")
             
             News.shared.getTopNews { (news) in
-                News.shared.topNews = news?.articles ?? []
+                News.shared.topNews = news ?? []
                 
                 DispatchQueue.main.async {
                     self.topNewsKolodaView.resetCurrentCardIndex()

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		386C159F23D9E135003428D1 /* SavedNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C159E23D9E135003428D1 /* SavedNewsViewController.swift */; };
+		386C15A223D9F627003428D1 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C15A123D9F627003428D1 /* Authentication.swift */; };
+		38EC02C323DA3EAC00D91F1B /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC02C223DA3EAC00D91F1B /* CategoryViewController.swift */; };
 		38EC3D6B23D1169C003A137F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3D6A23D1169C003A137F /* AppDelegate.swift */; };
 		38EC3D6D23D1169C003A137F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3D6C23D1169C003A137F /* SceneDelegate.swift */; };
 		38EC3D7223D1169C003A137F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38EC3D7023D1169C003A137F /* Main.storyboard */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		386C159E23D9E135003428D1 /* SavedNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNewsViewController.swift; sourceTree = "<group>"; };
+		386C15A123D9F627003428D1 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		38EC02C223DA3EAC00D91F1B /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		38EC3D6723D1169C003A137F /* News Flash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "News Flash.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		38EC3D6A23D1169C003A137F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38EC3D6C23D1169C003A137F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				38EC3D8B23D11C63003A137F /* Networking.swift */,
 				38EC3D8C23D11C64003A137F /* News.swift */,
 				38EC3D8D23D11C65003A137F /* UserRepository.swift */,
+				386C15A123D9F627003428D1 /* Authentication.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 				38EC3D9823D11CAC003A137F /* SignUpBasicsViewController.swift */,
 				38EC3D9923D11CAC003A137F /* SignUpInterestsViewController.swift */,
 				386C159E23D9E135003428D1 /* SavedNewsViewController.swift */,
+				38EC02C223DA3EAC00D91F1B /* CategoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -327,9 +333,11 @@
 				38EC3DA023D11CAF003A137F /* EditUserInterestsViewController.swift in Sources */,
 				38EC3DB323D11CF9003A137F /* FlashCardView.swift in Sources */,
 				38EC3DA423D11CAF003A137F /* SignUpInterestsViewController.swift in Sources */,
+				38EC02C323DA3EAC00D91F1B /* CategoryViewController.swift in Sources */,
 				38EC3D8923D11C0E003A137F /* Protocols.swift in Sources */,
 				38EC3DB723D11CF9003A137F /* NewsArticleLoadingTableViewCell.swift in Sources */,
 				38EC3DB523D11CF9003A137F /* NewsArticleCardView.swift in Sources */,
+				386C15A223D9F627003428D1 /* Authentication.swift in Sources */,
 				38EC3D8F23D11C65003A137F /* News.swift in Sources */,
 				38EC3DA323D11CAF003A137F /* SignUpBasicsViewController.swift in Sources */,
 				38EC3D8E23D11C65003A137F /* Networking.swift in Sources */,

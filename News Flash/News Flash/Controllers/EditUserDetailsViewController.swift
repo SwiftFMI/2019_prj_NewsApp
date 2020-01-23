@@ -52,8 +52,8 @@ class EditUserDetailsViewController: UIViewController {
         }
         
         let country = [
-            "short": Constants.countriesShort[countryPickerView.selectedRow(inComponent: 0)],
-            "full": Constants.countries[countryPickerView.selectedRow(inComponent: 0)]
+            "short": Constants.Countries.short[countryPickerView.selectedRow(inComponent: 0)],
+            "full": Constants.Countries.full[countryPickerView.selectedRow(inComponent: 0)]
         ]
         
         UserRepository.shared.store(key: .country, value: country)
@@ -78,11 +78,11 @@ extension EditUserDetailsViewController: UIPickerViewDelegate, UIPickerViewDataS
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return Constants.countries.count
+        return Constants.Countries.full.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return Constants.countries[row]
+        return Constants.Countries.full[row]
     }
 }
 
@@ -102,7 +102,7 @@ extension EditUserDetailsViewController {
         emailTextField.isUserInteractionEnabled = false
         
         let countryName = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
-        let countryId = Constants.countriesShort.firstIndex(of: countryName) ?? 0
+        let countryId = Constants.Countries.short.firstIndex(of: countryName) ?? 0
         
         countryPickerView.selectRow(countryId, inComponent: 0, animated: false)
         

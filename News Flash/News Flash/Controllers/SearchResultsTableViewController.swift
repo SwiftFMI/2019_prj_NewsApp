@@ -184,7 +184,7 @@ extension SearchResultsTableViewController {
     
     func loadNewsForPage() {
         News.shared.searchNews(page: currentPage, q: currentQuery) { (news) in
-            News.shared.searchResults += news?.articles ?? []
+            News.shared.searchResults += news ?? []
             
             DispatchQueue.main.async {
                 self.resultsTableView.reloadData()

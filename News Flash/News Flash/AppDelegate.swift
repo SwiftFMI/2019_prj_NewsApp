@@ -25,15 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Update User Defaults
         if let user = Auth.auth().currentUser {
-            Firestore.firestore().collection("users").document(user.uid).getDocument { (data, _) in
-                if let data = data, data.exists {
-                    UserRepository.shared.store(key: .firstname, value: data["firstname"]!)
-                    UserRepository.shared.store(key: .lastname, value: data["lastname"]!)
-                    UserRepository.shared.store(key: .email, value: user.email!)
-                    UserRepository.shared.store(key: .country, value: data["country"] as! [String: String])
-                    UserRepository.shared.store(key: .interests, value: data["interests"] as! [String])
-                }
-            }
+            Authentication.updateUserData()
             
             // get the saved urls
             News.shared.updateSavedUrls()
