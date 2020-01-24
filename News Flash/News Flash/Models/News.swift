@@ -55,8 +55,13 @@ final class News {
     }
 }
 
+struct Source: Decodable {
+    let id: String?
+    let name: String?
+}
+
 struct Article: Decodable {
-    let author: String?
+    let source: Source?
     let title: String?
     let description: String?
     let url: String?

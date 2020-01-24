@@ -40,7 +40,7 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return CGFloat(Constants.TableCell.newArticleHeight)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -68,10 +68,9 @@ class SearchResultsTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticle, for: indexPath) as! NewsArticleTableViewCell
         
-        cell.titleLabel.text = News.shared.searchResults[indexPath.row].title
-        cell.descLabel.text = News.shared.searchResults[indexPath.row].description
-        cell.saved = News.shared.savedUrls.contains(News.shared.searchResults[indexPath.row].url ?? "")
-
+        cell.newsImage.image = UIImage(named: "Palceholder Image")
+        cell.newsImage.isHidden = false
+        
         if let url = URL(string: News.shared.searchResults[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
                 cell.newsImage.image = cachedImage
@@ -80,18 +79,25 @@ class SearchResultsTableViewController: UITableViewController {
                     self.imageCache.setObject(image, forKey: NSString(string: url.absoluteString))
                 }
             }
-
+            
         } else {
-            cell.newsImage.image = UIImage(named: "Placeholder Image")
+            cell.newsImage.isHidden = true
         }
+        
+        cell.titleLabel.text = News.shared.searchResults[indexPath.row].title
+        cell.descriptionLabel.text = News.shared.searchResults[indexPath.row].description
+        cell.sourceLabel.text = News.shared.searchResults[indexPath.row].source?.name
+        cell.saved = News.shared.savedUrls.contains(News.shared.searchResults[indexPath.row].url ?? "")
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let cell = resultsTableView.cellForRow(at: indexPath) as! NewsArticleTableViewCell
+        
         let label: String = cell.saved ? "Unsave" : "Save"
         let image: UIImage = cell.saved ? UIImage(systemName: "bookmark.fill")! : UIImage(systemName: "bookmark")!
+        let color: UIColor = cell.saved ? UIColor(named: "Gray")! : UIColor(named: "Secondary Button Color")!
         
         let action = UIContextualAction(style: .normal, title: label, handler: { (action, view, completionHandler) in
             let article = News.shared.searchResults[indexPath.row]
@@ -121,7 +127,7 @@ class SearchResultsTableViewController: UITableViewController {
         })
         
         action.image = image
-        action.backgroundColor = UIColor(named: "Gray")
+        action.backgroundColor = color
         
         return UISwipeActionsConfiguration(actions: [action])
     }
@@ -140,7 +146,7 @@ class SearchResultsTableViewController: UITableViewController {
         })
         
         action.image = UIImage(systemName: "square.and.arrow.up")
-        action.backgroundColor = UIColor(named: "Gray")
+        action.backgroundColor = UIColor(named: "Secondary Button Color")
         
         return UISwipeActionsConfiguration(actions: [action])
     }

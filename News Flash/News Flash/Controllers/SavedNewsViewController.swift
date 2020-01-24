@@ -8,6 +8,7 @@
 
 import UIKit
 import Loaf
+import SafariServices
 
 class SavedNewsViewController: UIViewController {
 
@@ -47,15 +48,26 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return CGFloat(Constants.TableCell.newArticleHeight)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let urlAddress = News.shared.savedNews[indexPath.row].url ?? ""
+        
+        guard let url = URL(string: urlAddress) else { return }
+        
+        // Open URL in Safari inside the app
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.delegate = self
+        safariVC.modalPresentationStyle = .overFullScreen
+        present(safariVC, animated: true)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticle, for: indexPath) as! NewsArticleTableViewCell
         
-        cell.titleLabel.text = News.shared.savedNews[indexPath.row].title
-        cell.descLabel.text = News.shared.savedNews[indexPath.row].description
-        cell.saved = true
+        cell.newsImage.image = UIImage(named: "Palceholder Image")
+        cell.newsImage.isHidden = false
         
         if let url = URL(string: News.shared.savedNews[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
@@ -67,8 +79,13 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         } else {
-            cell.newsImage.image = UIImage(named: "Placeholder Image")
+            cell.newsImage.isHidden = true
         }
+        
+        cell.titleLabel.text = News.shared.savedNews[indexPath.row].title
+        cell.descriptionLabel.text = News.shared.savedNews[indexPath.row].description
+        cell.sourceLabel.text = News.shared.savedNews[indexPath.row].source?.name
+        cell.saved = true
         
         return cell
     }
@@ -109,7 +126,7 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
         })
         
         action.image = UIImage(systemName: "square.and.arrow.up")
-        action.backgroundColor = UIColor(named: "Gray")
+        action.backgroundColor = UIColor(named: "Seconday Button Color")
         
         return UISwipeActionsConfiguration(actions: [action])
     }
@@ -140,5 +157,14 @@ extension SavedNewsViewController {
     
     func showMessage(_ message: String, style: Loaf.State) {
         Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+    }
+}
+
+// MARK: Safari VC Delegate
+extension SavedNewsViewController: SFSafariViewControllerDelegate {
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        if let selectedCell = savedNewsTableView.indexPathForSelectedRow {
+            savedNewsTableView.deselectRow(at: selectedCell, animated: true)
+        }
     }
 }

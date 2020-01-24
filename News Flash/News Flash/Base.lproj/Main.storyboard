@@ -292,7 +292,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gZF-Yf-XeB"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Flash Cards" image="rectangle.stack" catalog="system" selectedImage="rectangle.stack.fill" id="cO3-GW-NTi"/>
+                    <tabBarItem key="tabBarItem" title="Flash Cards" image="rectangle.on.rectangle.angled" catalog="system" selectedImage="rectangle.fill.on.rectangle.angled.fill" id="cO3-GW-NTi"/>
                     <connections>
                         <outlet property="reloadKolodaStackView" destination="OHG-C9-ELB" id="0Rs-Iq-RKw"/>
                         <outlet property="topNewsKolodaView" destination="7kT-gU-tth" id="Txw-tp-zTp"/>
@@ -455,7 +455,7 @@
         <scene sceneID="gjI-Iv-czc">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7Uh-Rm-59i" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="For You" image="doc.append" catalog="system" id="lOf-zG-58s"/>
+                    <tabBarItem key="tabBarItem" title="For You" image="rectangle.grid.1x2" catalog="system" selectedImage="rectangle.grid.1x2.fill" id="lOf-zG-58s"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XT4-xb-yb5">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -619,7 +619,7 @@
         <scene sceneID="Rrm-zB-SgL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sdH-oe-U6j" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Explore" image="map" catalog="system" selectedImage="map.fill" id="DaW-ng-L41"/>
+                    <tabBarItem key="tabBarItem" title="Explore" image="magnifyingglass.circle" catalog="system" selectedImage="magnifyingglass.circle.fill" id="DaW-ng-L41"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="dZu-Bl-euE">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -941,15 +941,16 @@
         <image name="book" catalog="system" width="64" height="50"/>
         <image name="bookmark" catalog="system" width="56" height="64"/>
         <image name="bookmark.fill" catalog="system" width="56" height="64"/>
-        <image name="doc.append" catalog="system" width="56" height="64"/>
-        <image name="map" catalog="system" width="64" height="56"/>
-        <image name="map.fill" catalog="system" width="64" height="56"/>
+        <image name="magnifyingglass.circle" catalog="system" width="64" height="60"/>
+        <image name="magnifyingglass.circle.fill" catalog="system" width="64" height="60"/>
         <image name="person" catalog="system" width="64" height="58"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
-        <image name="rectangle.stack" catalog="system" width="64" height="60"/>
-        <image name="rectangle.stack.fill" catalog="system" width="64" height="60"/>
+        <image name="rectangle.fill.on.rectangle.angled.fill" catalog="system" width="64" height="50"/>
+        <image name="rectangle.grid.1x2" catalog="system" width="64" height="50"/>
+        <image name="rectangle.grid.1x2.fill" catalog="system" width="64" height="50"/>
+        <image name="rectangle.on.rectangle.angled" catalog="system" width="64" height="50"/>
         <namedColor name="Gray">
-            <color red="0.45899999141693115" green="0.45899999141693115" blue="0.45899999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="Primary Color">
             <color red="0.59600001573562622" green="0.83499997854232788" blue="0.14499999582767487" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

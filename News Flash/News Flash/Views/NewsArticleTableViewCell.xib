@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,17 +19,23 @@
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JFf-up-VvU">
                         <rect key="frame" x="20" y="10" width="374" height="110"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hhD-7T-Ahb">
-                                <rect key="frame" x="0.0" y="0.0" width="254" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="hhD-7T-Ahb">
+                                <rect key="frame" x="0.0" y="0.0" width="254" height="57"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AhK-vk-jua">
-                                        <rect key="frame" x="0.0" y="0.0" width="254" height="23"/>
-                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="254" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wu0-XH-tcr">
+                                        <rect key="frame" x="0.0" y="23.5" width="254" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                        <color key="textColor" name="Gray"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Article Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYZ-FE-OLL">
-                                        <rect key="frame" x="0.0" y="33" width="254" height="17"/>
+                                        <rect key="frame" x="0.0" y="40" width="254" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -56,11 +63,17 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="descLabel" destination="CYZ-FE-OLL" id="q5X-dV-BPV"/>
+                <outlet property="descriptionLabel" destination="CYZ-FE-OLL" id="q5X-dV-BPV"/>
                 <outlet property="newsImage" destination="GAS-mZ-VuE" id="Bed-Mf-uoj"/>
+                <outlet property="sourceLabel" destination="Wu0-XH-tcr" id="m6V-jr-gTW"/>
                 <outlet property="titleLabel" destination="AhK-vk-jua" id="e6j-UQ-prG"/>
             </connections>
-            <point key="canvasLocation" x="128" y="66"/>
+            <point key="canvasLocation" x="-233" y="124"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <namedColor name="Gray">
+            <color red="0.45882352941176469" green="0.45882352941176469" blue="0.45882352941176469" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

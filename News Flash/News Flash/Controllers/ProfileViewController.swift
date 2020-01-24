@@ -35,10 +35,12 @@ class ProfileViewController: UIViewController {
         signOutButton.startAnimation()
         
         let alertController = UIAlertController(title: nil, message: "Are you sure you want to sign out?", preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "Sign Out", style: .destructive, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Sign Out", style: .destructive) { (_) in
             self.signOut()
-        }))
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        })
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            self.signOutButton.stopAnimation()
+        })
         present(alertController, animated: true, completion: nil)
     }
 

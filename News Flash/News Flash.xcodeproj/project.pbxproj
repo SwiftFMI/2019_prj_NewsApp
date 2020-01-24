@@ -35,10 +35,8 @@
 		38EC3DA723D11CAF003A137F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3D9C23D11CAF003A137F /* LoginViewController.swift */; };
 		38EC3DB123D11CF9003A137F /* NewsArticleLoadingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EC3DAA23D11CF4003A137F /* NewsArticleLoadingTableViewCell.xib */; };
 		38EC3DB223D11CF9003A137F /* NewsArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3DAB23D11CF4003A137F /* NewsArticleTableViewCell.swift */; };
-		38EC3DB323D11CF9003A137F /* FlashCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3DAC23D11CF5003A137F /* FlashCardView.swift */; };
 		38EC3DB423D11CF9003A137F /* NewsArticleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EC3DAD23D11CF6003A137F /* NewsArticleTableViewCell.xib */; };
 		38EC3DB523D11CF9003A137F /* NewsArticleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3DAE23D11CF7003A137F /* NewsArticleCardView.swift */; };
-		38EC3DB623D11CF9003A137F /* FlashCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EC3DAF23D11CF8003A137F /* FlashCardView.xib */; };
 		38EC3DB723D11CF9003A137F /* NewsArticleLoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC3DB023D11CF9003A137F /* NewsArticleLoadingTableViewCell.swift */; };
 		5F730F7FCD050D64036A84C2 /* Pods_News_Flash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D241AAAD7F3D3C9684CBCF0B /* Pods_News_Flash.framework */; };
 /* End PBXBuildFile section */
@@ -74,10 +72,8 @@
 		38EC3D9C23D11CAF003A137F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		38EC3DAA23D11CF4003A137F /* NewsArticleLoadingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsArticleLoadingTableViewCell.xib; sourceTree = "<group>"; };
 		38EC3DAB23D11CF4003A137F /* NewsArticleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsArticleTableViewCell.swift; sourceTree = "<group>"; };
-		38EC3DAC23D11CF5003A137F /* FlashCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashCardView.swift; sourceTree = "<group>"; };
 		38EC3DAD23D11CF6003A137F /* NewsArticleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsArticleTableViewCell.xib; sourceTree = "<group>"; };
 		38EC3DAE23D11CF7003A137F /* NewsArticleCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsArticleCardView.swift; sourceTree = "<group>"; };
-		38EC3DAF23D11CF8003A137F /* FlashCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashCardView.xib; sourceTree = "<group>"; };
 		38EC3DB023D11CF9003A137F /* NewsArticleLoadingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsArticleLoadingTableViewCell.swift; sourceTree = "<group>"; };
 		4F817C7655BD132D3E3A2D73 /* Pods-News Flash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-News Flash.release.xcconfig"; path = "Target Support Files/Pods-News Flash/Pods-News Flash.release.xcconfig"; sourceTree = "<group>"; };
 		D241AAAD7F3D3C9684CBCF0B /* Pods_News_Flash.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_News_Flash.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,8 +180,6 @@
 		38EC3DB823D11D07003A137F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				38EC3DAC23D11CF5003A137F /* FlashCardView.swift */,
-				38EC3DAF23D11CF8003A137F /* FlashCardView.xib */,
 				38EC3DAE23D11CF7003A137F /* NewsArticleCardView.swift */,
 				38EC3DB023D11CF9003A137F /* NewsArticleLoadingTableViewCell.swift */,
 				38EC3DAA23D11CF4003A137F /* NewsArticleLoadingTableViewCell.xib */,
@@ -267,7 +261,6 @@
 				38EC3D7723D116A2003A137F /* LaunchScreen.storyboard in Resources */,
 				38EC3DB123D11CF9003A137F /* NewsArticleLoadingTableViewCell.xib in Resources */,
 				38EC3D7F23D1181D003A137F /* GoogleService-Info.plist in Resources */,
-				38EC3DB623D11CF9003A137F /* FlashCardView.xib in Resources */,
 				38EC3D7423D116A2003A137F /* Assets.xcassets in Resources */,
 				38EC3D7223D1169C003A137F /* Main.storyboard in Resources */,
 				38EC3DB423D11CF9003A137F /* NewsArticleTableViewCell.xib in Resources */,
@@ -331,7 +324,6 @@
 				38EC3DA123D11CAF003A137F /* ExploreViewController.swift in Sources */,
 				38EC3DA223D11CAF003A137F /* FlashCardsViewController.swift in Sources */,
 				38EC3DA023D11CAF003A137F /* EditUserInterestsViewController.swift in Sources */,
-				38EC3DB323D11CF9003A137F /* FlashCardView.swift in Sources */,
 				38EC3DA423D11CAF003A137F /* SignUpInterestsViewController.swift in Sources */,
 				38EC02C323DA3EAC00D91F1B /* CategoryViewController.swift in Sources */,
 				38EC3D8923D11C0E003A137F /* Protocols.swift in Sources */,

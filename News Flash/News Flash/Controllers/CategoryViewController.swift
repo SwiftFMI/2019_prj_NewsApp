@@ -77,15 +77,14 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return CGFloat(Constants.TableCell.newArticleHeight)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = articlesTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticle, for: indexPath) as! NewsArticleTableViewCell
         
-        cell.titleLabel.text = News.shared.categoryNews[indexPath.row].title
-        cell.descLabel.text = News.shared.categoryNews[indexPath.row].description
-        cell.saved = News.shared.savedUrls.contains(News.shared.categoryNews[indexPath.row].url ?? "")
+        cell.newsImage.image = UIImage(named: "Palceholder Image")
+        cell.newsImage.isHidden = false
         
         if let url = URL(string: News.shared.categoryNews[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
@@ -96,8 +95,13 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         } else {
-            cell.newsImage.image = UIImage(named: "Placeholder Image")
+            cell.newsImage.isHidden = true
         }
+        
+        cell.titleLabel.text = News.shared.categoryNews[indexPath.row].title
+        cell.descriptionLabel.text = News.shared.categoryNews[indexPath.row].description
+        cell.sourceLabel.text = News.shared.categoryNews[indexPath.row].source?.name
+        cell.saved = News.shared.savedUrls.contains(News.shared.categoryNews[indexPath.row].url ?? "")
         
         return cell
     }
@@ -120,6 +124,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         
         let label: String = cell.saved ? "Unsave" : "Save"
         let image: UIImage = cell.saved ? UIImage(systemName: "bookmark.fill")! : UIImage(systemName: "bookmark")!
+        let color: UIColor = cell.saved ? UIColor(named: "Gray")! : UIColor(named: "Secondary Button Color")!
         
         let action = UIContextualAction(style: .normal, title: label, handler: { (action, view, completionHandler) in
             let article = News.shared.categoryNews[indexPath.row]
@@ -149,7 +154,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         })
         
         action.image = image
-        action.backgroundColor = UIColor(named: "Gray")
+        action.backgroundColor = color
         
         return UISwipeActionsConfiguration(actions: [action])
     }
@@ -168,7 +173,7 @@ extension CategoryViewController: UITableViewDelegate, UITableViewDataSource {
         })
         
         action.image = UIImage(systemName: "square.and.arrow.up")
-        action.backgroundColor = UIColor(named: "Gray")
+        action.backgroundColor = UIColor(named: "Secondary Button Color")
         
         return UISwipeActionsConfiguration(actions: [action])
     }

@@ -24,6 +24,7 @@ struct Constants {
     struct TableCell {
         static let newsArticle = "NewsArticle"
         static let newsArticleLoading = "NewsArticleLoading"
+        static let newArticleHeight = 130
     }
     
     struct NewsCategories {

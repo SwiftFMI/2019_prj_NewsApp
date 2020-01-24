@@ -20,11 +20,11 @@ func stylePrimaryTextButton(_ button: UIButton) {
 }
 
 func styleSecondaryButton(_ button: UIButton) {
-    styleButton(button, textColor: UIColor.black, bgColor: UIColor(named: "Gray")!)
+    styleButton(button, textColor: UIColor.black, bgColor: UIColor(named: "Secondary Button Color")!)
 }
 
 func styleDangerButton(_ button: UIButton) {
-    styleButton(button, textColor: .white, bgColor: .red)
+    styleButton(button, textColor: .white, bgColor: UIColor(named: "Danger Color")!)
 }
 
 func styleButton(_ button: UIButton, textColor: UIColor, bgColor: UIColor) {
@@ -41,14 +41,14 @@ func stylePrimaryPill(_ button: UIButton) {
 }
 
 func styleSecondaryPill(_ button: UIButton) {
-    stylePill(button, textColor: UIColor.white, borderColor: UIColor(named: "Gray")!)
+    stylePill(button, textColor: UIColor.white, borderColor: UIColor(named: "Secondary Button Color")!)
     button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
 }
 
 func stylePill(_ button: UIButton, textColor: UIColor, borderColor: UIColor) {
     button.setTitleColor(textColor, for: .normal)
     
-    button.backgroundColor = UIColor(named: "Gray")
+    button.backgroundColor = UIColor(named: "Secondary Button Color")
     
     button.layer.borderColor = borderColor.cgColor
     button.layer.borderWidth = 3

@@ -11,7 +11,8 @@ import UIKit
 class NewsArticleTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var newsImage: UIImageView!
     
     var saved: Bool = false

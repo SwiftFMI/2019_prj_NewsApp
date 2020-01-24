@@ -85,7 +85,7 @@ final class Networking {
             }
         }
         
-        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=relevancy&q=\(query)&page=\(page)")!
+        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=publishedAt&qInTitle=\(query)&page=\(page)")!
         
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
@@ -134,7 +134,7 @@ final class Networking {
     
     static func saveArticle(_ article: Article, completion: @escaping BasicCompletion) {
         let data : [String: String] = [
-            "author": article.author ?? "",
+            "source": article.source?.name ?? "",
             "title": article.title ?? "",
             "description": article.description ?? "",
             "url": article.url ?? "",
@@ -193,7 +193,7 @@ final class Networking {
             
             for document in data.documents {
                 let article = Article.init(
-                    author: document["author"] as? String,
+                    source: Source(id: nil, name: document["source"] as? String) ,
                     title: document["title"] as? String,
                     description: document["description"] as? String,
                     url: document["url"] as? String,

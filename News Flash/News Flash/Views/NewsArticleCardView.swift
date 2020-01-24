@@ -17,11 +17,11 @@ class NewsArticleCardView: UIView {
     var delegate: NewsArticleCardDelegate?
     
 // MARK: Initializers
-    var publishedAtLabel: UILabel! = {
+    var sourceLabel: UILabel! = {
         var perm = UILabel()
         
         perm.textColor = UIColor(named: "Gray")
-        perm.font = UIFont(name: "Helvetica Neue", size: 14)
+        perm.font = UIFont(name: "Helvetica Neue", size: 16)
         
         // enable auto layout
         perm.translatesAutoresizingMaskIntoConstraints = false
@@ -29,31 +29,7 @@ class NewsArticleCardView: UIView {
         return perm
     }()
     
-    private var publishedAtImage: UIImageView! = {
-        var perm = UIImageView()
-        
-        perm.image = UIImage(systemName: "clock")
-        perm.tintColor = UIColor(named: "Gray")
-        
-        // enable auto layout
-        perm.translatesAutoresizingMaskIntoConstraints = false
-        
-        return perm
-    }()
-    
-    var authorLabel: UILabel! = {
-        var perm = UILabel()
-        
-        perm.textColor = UIColor(named: "Gray")
-        perm.font = UIFont(name: "Helvetica Neue", size: 14)
-        
-        // enable auto layout
-        perm.translatesAutoresizingMaskIntoConstraints = false
-        
-        return perm
-    }()
-    
-    private var authorImage: UIImageView! = {
+    private var sourceImage: UIImageView! = {
         var perm = UIImageView()
         
         perm.image = UIImage(systemName: "person.fill")
@@ -91,7 +67,7 @@ class NewsArticleCardView: UIView {
         return perm
     }()
     
-    var title: UILabel! = {
+    var titleLabel: UILabel! = {
         let perm = UILabel()
         perm.textColor = UIColor.white
         perm.numberOfLines = 0
@@ -104,7 +80,7 @@ class NewsArticleCardView: UIView {
         return perm
     }()
     
-    var desc: UILabel! = {
+    var descriptionLabel: UILabel! = {
         let perm = UILabel()
         perm.textColor = UIColor.black
         perm.numberOfLines = 0
@@ -115,7 +91,7 @@ class NewsArticleCardView: UIView {
         return perm
     }()
     
-    var image: UIImageView! = {
+    var cardImageView: UIImageView! = {
         let perm = UIImageView()
         
         perm.layer.cornerRadius = 20
@@ -164,7 +140,11 @@ class NewsArticleCardView: UIView {
         return perm
     }()
     
-    var saved: Bool = false
+    var saved: Bool = false {
+        didSet {
+            self.setSaveButtonImage()
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -190,19 +170,17 @@ class NewsArticleCardView: UIView {
         layer.shadowOffset = .zero
         layer.shadowRadius = 10
         
-        titleContainer.addSubview(title)
+        titleContainer.addSubview(titleLabel)
         footerContainer.addSubview(saveButton)
         footerContainer.addSubview(shareButton)
         footerContainer.addSubview(revertButton)
         
-        addSubview(image)
+        addSubview(cardImageView)
         addSubview(titleContainer)
         addSubview(footerContainer)
-        addSubview(publishedAtImage)
-        addSubview(publishedAtLabel)
-        addSubview(authorImage)
-        addSubview(authorLabel)
-        addSubview(desc)
+        addSubview(sourceImage)
+        addSubview(sourceLabel)
+        addSubview(descriptionLabel)
         
         configureHeader()
         configureFooter()
@@ -213,43 +191,34 @@ class NewsArticleCardView: UIView {
     private func configureHeader() {
         titleContainer.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         titleContainer.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        titleContainer.bottomAnchor.constraint(equalTo: image.bottomAnchor).isActive = true
-        titleContainer.heightAnchor.constraint(equalTo: title.heightAnchor, constant: 40).isActive = true
+        titleContainer.bottomAnchor.constraint(equalTo: cardImageView.bottomAnchor).isActive = true
+        titleContainer.heightAnchor.constraint(equalTo: titleLabel.heightAnchor, constant: 40).isActive = true
         
-        title.leadingAnchor.constraint(equalTo: title.superview!.leadingAnchor, constant: 20).isActive = true
-        title.trailingAnchor.constraint(equalTo: title.superview!.trailingAnchor, constant: -20).isActive = true
-        title.bottomAnchor.constraint(equalTo: title.superview!.bottomAnchor, constant: -20).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: titleLabel.superview!.leadingAnchor, constant: 20).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: titleLabel.superview!.trailingAnchor, constant: -20).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: titleLabel.superview!.bottomAnchor, constant: -20).isActive = true
         
-        image.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        image.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        image.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        image.heightAnchor.constraint(equalTo: image.widthAnchor, multiplier: 9/16).isActive = true
+        cardImageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        cardImageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        cardImageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        cardImageView.heightAnchor.constraint(equalTo: cardImageView.widthAnchor, multiplier: 9/16).isActive = true
     }
     
 // MARK: Configure Body
     private func configureBody() {
-        publishedAtImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        publishedAtImage.widthAnchor.constraint(equalToConstant: 15).isActive = true
-        publishedAtImage.heightAnchor.constraint(equalTo: publishedAtImage.widthAnchor).isActive = true
-        publishedAtImage.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 10).isActive = true
-        
-        publishedAtLabel.leadingAnchor.constraint(equalTo: publishedAtImage.trailingAnchor, constant: 5).isActive = true
-        publishedAtLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-        publishedAtLabel.centerYAnchor.constraint(equalTo: publishedAtImage.centerYAnchor).isActive = true
-        
-        authorImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        authorImage.widthAnchor.constraint(equalToConstant: 15).isActive = true
-        authorImage.heightAnchor.constraint(equalTo: authorImage.widthAnchor).isActive = true
-        authorImage.topAnchor.constraint(equalTo: publishedAtImage.bottomAnchor, constant: 5).isActive = true
+        sourceImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        sourceImage.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        sourceImage.heightAnchor.constraint(equalTo: sourceImage.widthAnchor).isActive = true
+        sourceImage.topAnchor.constraint(equalTo: cardImageView.bottomAnchor, constant: 5).isActive = true
 
-        authorLabel.leadingAnchor.constraint(equalTo: authorImage.trailingAnchor, constant: 5).isActive = true
-        authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-        authorLabel.centerYAnchor.constraint(equalTo: authorImage.centerYAnchor).isActive = true
+        sourceLabel.leadingAnchor.constraint(equalTo: sourceImage.trailingAnchor, constant: 5).isActive = true
+        sourceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        sourceLabel.centerYAnchor.constraint(equalTo: sourceImage.centerYAnchor).isActive = true
      
-        desc.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        desc.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
-        desc.topAnchor.constraint(equalTo: authorImage.bottomAnchor, constant: 10).isActive = true
-        desc.bottomAnchor.constraint(lessThanOrEqualTo: footerContainer.topAnchor).isActive = true
+        descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        descriptionLabel.topAnchor.constraint(equalTo: sourceImage.bottomAnchor, constant: 10).isActive = true
+        descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: footerContainer.topAnchor).isActive = true
     }
     
 // MARK: Configure Footer
@@ -304,15 +273,13 @@ extension NewsArticleCardView {
         if saved {
             delegate?.unsaveArticle() { (isUnsaved) in
                 if isUnsaved {
-                    self.saved = !self.saved
-                    self.setSaveButtonImage()
+                    self.saved.toggle()
                 }
             }
         } else {
             delegate?.saveArticle() { (isSaved) in
                 if isSaved {
-                    self.saved = !self.saved
-                    self.setSaveButtonImage()
+                    self.saved.toggle()
                 }
             }
         }

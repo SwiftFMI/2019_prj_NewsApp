@@ -100,27 +100,26 @@ extension FlashCardsViewController: KolodaViewDataSource {
         
         view.delegate = self
         
-        view.title.text = News.shared.topNews[index].title
-        view.authorLabel.text = News.shared.topNews[index].author
-        view.publishedAtLabel.text = formatDate(News.shared.topNews[index].publishedAt ?? "")
-        view.desc.text = News.shared.topNews[index].description
+        view.titleLabel.text = News.shared.topNews[index].title
+        view.sourceLabel.text = News.shared.topNews[index].source?.name
+        view.descriptionLabel.text = News.shared.topNews[index].description
         
-        if let url = News.shared.topNews[index].url{
+        if let url = News.shared.topNews[index].url {
             view.saved = News.shared.savedUrls.contains(url)
         }
         
-        view.setSaveButtonImage()
+//        view.setSaveButtonImage()
         
         if let url = URL(string: News.shared.topNews[index].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
-                view.image.image = cachedImage
+                view.cardImageView.image = cachedImage
             } else {
-                view.image.load(url: url) { (image) in
+                view.cardImageView.load(url: url) { (image) in
                     self.imageCache.setObject(image, forKey: NSString(string: url.absoluteString))
                 }
             }
         } else {
-            view.image.image = UIImage(named: "Placeholder Image")
+            view.cardImageView.image = UIImage(named: "Placeholder Image")
         }
         
         return view
