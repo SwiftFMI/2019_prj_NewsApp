@@ -133,23 +133,22 @@ final class Networking {
     }
     
     static func saveArticle(_ article: Article, completion: @escaping BasicCompletion) {
-        let data : [String: String] = [
+        let db = Firestore.firestore()
+        
+        let data : [String: Any] = [
             "source": article.source?.name ?? "",
             "title": article.title ?? "",
             "description": article.description ?? "",
             "url": article.url ?? "",
             "urlToImage": article.urlToImage ?? "",
-            "publishedAt": article.publishedAt ?? "",
-//            "content": article.content ?? ""
+            "savedAt": FieldValue.serverTimestamp()
         ]
-        
-        let db = Firestore.firestore()
         
         db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").addDocument(data: data) { (error) in
             if let _ = error {
                 completion(false)
             } else {
-                News.shared.savedNews.append(article)
+                News.shared.savedNews.insert(article, at: 0)
                 News.shared.savedUrls.append(article.url ?? "")
                 
                 completion(true)
@@ -181,7 +180,7 @@ final class Networking {
     static func getSavedNews(completion: @escaping SavedCompletion) {
         let db = Firestore.firestore()
         
-        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").getDocuments { (data, error) in
+        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").order(by: "savedAt", descending: true).getDocuments { (data, error) in
             guard let data = data, error == nil else {
                 completion(nil)
                 return
@@ -197,8 +196,7 @@ final class Networking {
                     title: document["title"] as? String,
                     description: document["description"] as? String,
                     url: document["url"] as? String,
-                    urlToImage: document["urlToImage"] as? String,
-                    publishedAt: document["publishedAt"] as? String
+                    urlToImage: document["urlToImage"] as? String
                 )
                 
                 News.shared.savedUrls.append(document["url"] as! String)

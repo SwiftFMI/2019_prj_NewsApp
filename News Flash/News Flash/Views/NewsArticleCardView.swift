@@ -269,7 +269,6 @@ extension NewsArticleCardView {
     }
     
     @objc func toggleSaved() {
-        print("Saved status: \(saved)")
         if saved {
             delegate?.unsaveArticle() { (isUnsaved) in
                 if isUnsaved {
