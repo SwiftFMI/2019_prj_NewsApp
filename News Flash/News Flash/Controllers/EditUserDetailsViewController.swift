@@ -71,7 +71,16 @@ class EditUserDetailsViewController: UIViewController {
     }
 }
 
-// MARK: UIPickerView
+// MARK: Text Field
+extension EditUserDetailsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+// MARK: Picker View
 extension EditUserDetailsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -91,8 +100,14 @@ extension EditUserDetailsViewController {
     func configureElements() {
         firstNameTextField.placeholder = "First Name"
         firstNameTextField.title = "First Name"
+        firstNameTextField.delegate = self
+        firstNameTextField.returnKeyType = .done
+        
         lastNameTextField.placeholder = "Last Name"
         lastNameTextField.title = "Last Name"
+        lastNameTextField.delegate = self
+        lastNameTextField.returnKeyType = .done
+        
         emailTextField.placeholder = "Email"
         emailTextField.title = "Email"
         

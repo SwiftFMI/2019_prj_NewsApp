@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var initialViewController: UIViewController
         let mainStoryboard = UIStoryboard(name: "Main" , bundle: nil)
         
-        if let _ = Auth.auth().currentUser, UserRepository.checkFor(key: .country) {
+        if let _ = Auth.auth().currentUser {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
             
             Authentication.updateUserData()

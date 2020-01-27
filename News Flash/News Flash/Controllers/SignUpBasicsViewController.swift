@@ -95,6 +95,15 @@ extension SignUpBasicsViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
 }
 
+// MARK: Text Field
+extension SignUpBasicsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 // MARK: Helper Functions
 extension SignUpBasicsViewController {
     func configureElements() {
@@ -102,12 +111,23 @@ extension SignUpBasicsViewController {
         
         firstNameTextField.placeholder = "First Name"
         firstNameTextField.title = "First Name"
+        firstNameTextField.delegate = self
+        firstNameTextField.returnKeyType = .done
+        
         lastNameTextField.placeholder = "Last Name"
         lastNameTextField.title = "Last Name"
+        lastNameTextField.delegate = self
+        lastNameTextField.returnKeyType = .done
+        
         emailTextField.placeholder = "Email"
         emailTextField.title = "Email"
+        emailTextField.delegate = self
+        emailTextField.returnKeyType = .done
+        
         passwordTextField.placeholder = "Password"
         passwordTextField.title = "Password"
+        passwordTextField.delegate = self
+        passwordTextField.returnKeyType = .done
         
         styleTextField(passwordTextField)
         styleTextField(emailTextField)

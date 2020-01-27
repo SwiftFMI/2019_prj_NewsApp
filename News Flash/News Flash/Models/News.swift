@@ -27,7 +27,7 @@ final class News {
     }
     
     func getAllNews(page: Int, completion: @escaping NewsCompletion) {
-        Networking.getLocalAllNews(page: page, completion: completion)
+        Networking.getAllNews(page: page, completion: completion)
     }
     
     func searchNews(page: Int, q: String, completion: @escaping NewsCompletion) {

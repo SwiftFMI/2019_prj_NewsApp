@@ -71,7 +71,7 @@ final class Networking {
         }.resume()
     }
     
-    static func getLocalAllNews(page: Int, completion: @escaping NewsCompletion) {
+    static func getAllNews(page: Int, completion: @escaping NewsCompletion) {
         let interests = UserRepository.fetch(key: .interests) as! [String]
         var query = ""
         
@@ -110,7 +110,7 @@ final class Networking {
     static func getSearchResults(page: Int, q: String, completion: @escaping NewsCompletion) {
         let urlQuery = q.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
         
-        let url = URL(string: "https://newsapi.org/v2/everything?page=\(page)&q=\(urlQuery)")!
+        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=publishedAt&page=\(page)&q=\(urlQuery)")!
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
         

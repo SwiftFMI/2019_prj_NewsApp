@@ -68,15 +68,29 @@ class LoginViewController: UIViewController {
     }
 }
 
+// MARK: Text Field
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 // MARK: Helper Functions
 extension LoginViewController {
     func configureElements() {
         loginButton.spinnerColor = .white
         
-        emailTextField.placeholder = "Email"
         emailTextField.title = "Email"
+        emailTextField.placeholder = "Email"
+        emailTextField.delegate = self
+        emailTextField.returnKeyType = .done
+        
         passwordTextField.placeholder = "Password"
         passwordTextField.title = "Password"
+        passwordTextField.delegate = self
+        passwordTextField.returnKeyType = .done
         
         stylePrimaryButton(loginButton)
         stylePrimaryTextButton(signUpButton)
@@ -89,10 +103,6 @@ extension LoginViewController {
         if  emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ||
             passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             return "All fields are required."
-        }
-        
-        if !isValidPassword(passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)) {
-            return "You should choose a better password."
         }
         
         if !isValidEmail(emailTextField.text!) {
