@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		38077CCC23DF34E300CE8834 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38077CCB23DF34E300CE8834 /* AppSettingsViewController.swift */; };
 		386C159F23D9E135003428D1 /* SavedNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C159E23D9E135003428D1 /* SavedNewsViewController.swift */; };
 		386C15A223D9F627003428D1 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386C15A123D9F627003428D1 /* Authentication.swift */; };
 		38EC02C323DA3EAC00D91F1B /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EC02C223DA3EAC00D91F1B /* CategoryViewController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		38077CCB23DF34E300CE8834 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		386C159E23D9E135003428D1 /* SavedNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedNewsViewController.swift; sourceTree = "<group>"; };
 		386C15A123D9F627003428D1 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		38EC02C223DA3EAC00D91F1B /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				38EC3D9923D11CAC003A137F /* SignUpInterestsViewController.swift */,
 				386C159E23D9E135003428D1 /* SavedNewsViewController.swift */,
 				38EC02C223DA3EAC00D91F1B /* CategoryViewController.swift */,
+				38077CCB23DF34E300CE8834 /* AppSettingsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				38EC3D6D23D1169C003A137F /* SceneDelegate.swift in Sources */,
 				38EC3D9E23D11CAF003A137F /* ForYouViewController.swift in Sources */,
 				38EC3D8623D11C0E003A137F /* Extensions.swift in Sources */,
+				38077CCC23DF34E300CE8834 /* AppSettingsViewController.swift in Sources */,
 				38EC3D9F23D11CAF003A137F /* ProfileViewController.swift in Sources */,
 				38EC3DA523D11CAF003A137F /* EditUserDetailsViewController.swift in Sources */,
 				38EC3D9023D11C65003A137F /* UserRepository.swift in Sources */,

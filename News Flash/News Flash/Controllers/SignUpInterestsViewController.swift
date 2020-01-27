@@ -29,7 +29,7 @@ class SignUpInterestsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        styleElements()
+        configureElements()
     }
 
     @IBAction func interestButtonPressed(_ sender: UIButton) {
@@ -62,7 +62,7 @@ class SignUpInterestsViewController: UIViewController {
 
 // MARK: Helper Functions
 extension SignUpInterestsViewController {
-    func styleElements() {
+    func configureElements() {
         let buttons = [businessButton, entertainmentButton, healthButton, scienceButton, sportsButton, technologyButton]
         
         for button in buttons {

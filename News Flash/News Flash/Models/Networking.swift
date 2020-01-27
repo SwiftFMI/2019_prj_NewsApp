@@ -9,9 +9,6 @@
 import Foundation
 import Firebase
 
-// TODO: Stop requesting data when before that it could not have been parsed
-// TODO: Implement a Result Status Enum for the response
-
 // API KEY: 2407b50324ed42dfadd1366a2f426651
 
 final class Networking {
@@ -85,7 +82,9 @@ final class Networking {
             }
         }
         
-        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=publishedAt&qInTitle=\(query)&page=\(page)")!
+        let preferredLanguage = UserRepository.fetch(key: .resultLanguage) as! String
+        
+        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=publishedAt&qInTitle=\(query)&language=\(preferredLanguage)&page=\(page)")!
         
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")

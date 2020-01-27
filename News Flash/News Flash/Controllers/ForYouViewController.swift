@@ -14,9 +14,11 @@ class ForYouViewController: UIViewController {
 
     @IBOutlet weak var newsTableView: UITableView!
     
-    let imageCache = NSCache<NSString, UIImage>()
+    private let imageCache = NSCache<NSString, UIImage>()
     
-    var currentPage: Int = 1
+    private var currentPage: Int = 1
+    
+    private var keepLoading = true
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -27,23 +29,32 @@ class ForYouViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("loaded")
+        
         configureTableView()
         
         loadNewsForPage()
         
         // Observe for changes in the interests of the user
-        UserDefaults.standard.addObserver(self, forKeyPath: "interests", options: .new, context: nil)
+        UserRepository.addObserver(self, for: .interests)
+        UserRepository.addObserver(self, for: .resultLanguage)
     }
     
     override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
         News.shared.allNews = []
         imageCache.removeAllObjects()
     }
     
     deinit {
         News.shared.allNews = []
-        UserDefaults.standard.removeObserver(self, forKeyPath: "interests")
         imageCache.removeAllObjects()
+        
+        if isViewLoaded {
+            UserRepository.removeObserver(self, for: .interests)
+            UserRepository.removeObserver(self, for: .resultLanguage)
+        }
     }
 }
 
@@ -54,11 +65,20 @@ extension ForYouViewController {
         currentPage = 1
         
         News.shared.getAllNews(page: currentPage) { [unowned self] (news) in
-            News.shared.allNews = news ?? []
-            
-            DispatchQueue.main.async {
-                self.newsTableView.reloadData()
-                self.refreshControl.endRefreshing()
+            if let news = news {
+                self.keepLoading = true
+                
+                News.shared.allNews = news
+                
+                DispatchQueue.main.async {
+                    self.newsTableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
+            } else {
+                self.keepLoading = false
+                DispatchQueue.main.async {
+                    self.showMessage("Could not load the articles", style: .warning)
+                }
             }
         }
     }
@@ -75,10 +95,19 @@ extension ForYouViewController {
     
     func loadNewsForPage() {
         News.shared.getAllNews(page: currentPage) { [unowned self] (news) in
-            News.shared.allNews += news ?? []
-            
-            DispatchQueue.main.async {
-                self.newsTableView.reloadData()
+            if let news = news {
+                self.keepLoading = true
+                
+                News.shared.allNews += news
+                
+                DispatchQueue.main.async {
+                    self.newsTableView.reloadData()
+                }
+            } else {
+                self.keepLoading = false
+                DispatchQueue.main.async {
+                    self.showMessage("Could not load the articles", style: .warning)
+                }
             }
         }
     }
@@ -111,7 +140,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == News.shared.allNews.count {
+        if indexPath.row == News.shared.allNews.count && self.keepLoading {
             let cell = newsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticleLoading, for: indexPath)
             
             currentPage += 1
@@ -216,10 +245,10 @@ extension ForYouViewController: SFSafariViewControllerDelegate {
     }
 }
 
-// MARK: User Defaults Observation Handler
+// MARK: User Defaults Observer Handler
 extension ForYouViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if UserRepository.checkFor(key: .interests) {
+        if UserRepository.checkFor(key: .interests), UserRepository.checkFor(key: .resultLanguage) {
             handleRefresh()
         }
     }

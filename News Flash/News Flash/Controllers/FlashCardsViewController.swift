@@ -15,10 +15,9 @@ import Loaf
 class FlashCardsViewController: UIViewController {
 
     @IBOutlet weak var topNewsKolodaView: KolodaView!
-    @IBOutlet weak var topTitlesLabel: UILabel!
     @IBOutlet weak var reloadKolodaStackView: UIStackView!
     
-    let imageCache = NSCache<NSString, UIImage>()
+    private let imageCache = NSCache<NSString, UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,22 +37,26 @@ class FlashCardsViewController: UIViewController {
             }
         }
         
-        let userCountry = (UserRepository.fetch(key: .country) as! [String: String])["full"]
-        topTitlesLabel.text = "Top Titles for " + (userCountry ?? "")
+        updateNavigationBarTitle()
         
         // Observe for changes in the country of the user
-        UserDefaults.standard.addObserver(self, forKeyPath: "country", options: .new, context: nil)
+        UserRepository.addObserver(self, for: .country)
     }
     
     override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
         News.shared.topNews = []
         imageCache.removeAllObjects()
     }
     
     deinit {
         News.shared.topNews = []
-        UserDefaults.standard.removeObserver(self, forKeyPath: "country")
         imageCache.removeAllObjects()
+        
+        if isViewLoaded {
+            UserRepository.removeObserver(self, for: .country)
+        }
     }
     
     @IBAction func reloadKolodaViewButtonPressed(_ sender: UIButton) {
@@ -152,6 +155,11 @@ extension FlashCardsViewController: SFSafariViewControllerDelegate {
 
 // MARK: Helper Functions
 extension FlashCardsViewController {
+    func updateNavigationBarTitle() {
+        let country = UserRepository.fetch(key: .country) as! [String: String]
+        self.navigationItem.title = "Top Titles for " + country["full"]!
+    }
+    
     func showMessage(_ message: String, style: Loaf.State) {
         Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
@@ -206,7 +214,7 @@ extension FlashCardsViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if UserRepository.checkFor(key: .country) {
-            topTitlesLabel.text = "Top Titles for " + ((UserRepository.fetch(key: .country) as! [String: String])["full"] ?? "")
+            updateNavigationBarTitle()
             
             News.shared.getTopNews { [unowned self] (news) in
                 News.shared.topNews = news ?? []

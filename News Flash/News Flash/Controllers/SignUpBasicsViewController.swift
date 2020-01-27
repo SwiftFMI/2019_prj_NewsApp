@@ -27,7 +27,7 @@ class SignUpBasicsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        styleElements()
+        configureElements()
         
         countryPickerView.delegate = self
         countryPickerView.dataSource = self
@@ -97,7 +97,7 @@ extension SignUpBasicsViewController: UIPickerViewDelegate, UIPickerViewDataSour
 
 // MARK: Helper Functions
 extension SignUpBasicsViewController {
-    func styleElements() {
+    func configureElements() {
         nextButton.spinnerColor = .white
         
         firstNameTextField.placeholder = "First Name"

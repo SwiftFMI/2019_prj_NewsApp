@@ -25,11 +25,14 @@ final class Authentication {
                 Firestore.firestore().collection("users").document(result!.user.uid).getDocument { (document, error) in
                     if let document = document, document.exists {
                         
-                        UserRepository.store(key: .firstname, value: document["firstname"] as! String)
+                        
                         UserRepository.store(key: .lastname, value: document["lastname"] as! String)
+                        UserRepository.store(key: .firstname, value: document["firstname"] as! String)
                         UserRepository.store(key: .country, value: (document["country"] as! [String: String]))
                         UserRepository.store(key: .interests, value: (document["interests"] as! [String]))
                         UserRepository.store(key: .email, value: email)
+                        UserRepository.store(key: .resultLanguage, value: "en")
+                        UserRepository.store(key: .isCountrySpecific, value: true)
                         
                         completion(nil)
                     } else {
@@ -43,6 +46,8 @@ final class Authentication {
     static func signOut(completion: @escaping BasicCompletion) {
         do {
             try Auth.auth().signOut()
+            
+            UserRepository.removeUserInfo()
             
             completion(true)
         } catch {
@@ -80,6 +85,8 @@ final class Authentication {
                         UserRepository.store(key: .lastname, value: lastName)
                         UserRepository.store(key: .country, value: country)
                         UserRepository.store(key: .email, value: email)
+                        UserRepository.store(key: .resultLanguage, value: "en")
+                        UserRepository.store(key: .isCountrySpecific, value: true)
                         
                         completion(nil)
                     }

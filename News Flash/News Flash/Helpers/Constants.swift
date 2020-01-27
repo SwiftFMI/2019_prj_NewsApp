@@ -46,6 +46,12 @@ struct Constants {
         UIColor(named: "Card Purple")
     ]
     
+    struct Languages {
+        static let full = ["Arabic", "Chinese", "Dutch", "English", "French", "German", "Hebrew", "Italian", "Norwegian", "Portuguese", "Russian", "Spanish"]
+        
+        static let short = ["ar", "zh", "nl", "en", "fr", "de", "he", "it", "no", "pt", "ru", "es"]
+    }
+    
     struct Countries {
         static let short = [
             "ae",

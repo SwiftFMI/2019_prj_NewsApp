@@ -13,6 +13,7 @@ import SafariServices
 class SavedNewsViewController: UIViewController {
 
     @IBOutlet weak var savedNewsTableView: UITableView!
+    @IBOutlet weak var nothingSavedView: UIView!
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -20,20 +21,30 @@ class SavedNewsViewController: UIViewController {
         return refreshControl
     }()
     
-    let imageCache = NSCache<NSString, UIImage>()
+    private let imageCache = NSCache<NSString, UIImage>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        nothingSavedView.isHidden = true
+        
         configureTableView()
 
         News.shared.getSavedNews { [unowned self] (data) in
             News.shared.savedNews = data ?? []
             self.savedNewsTableView.reloadData()
+            
+            if News.shared.savedNews.isEmpty {
+                self.nothingSavedView.isHidden = false
+            } else {
+                self.nothingSavedView.isHidden = true
+            }
         }
     }
     
     override func didReceiveMemoryWarning() {
+        super .didReceiveMemoryWarning()
+        
         News.shared.savedNews = []
         imageCache.removeAllObjects()
     }
@@ -105,6 +116,13 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
                 if isUnsaved {
                     self.savedNewsTableView.deleteRows(at: [indexPath], with: .fade)
                     self.showMessage("Article unsaved!", style: .success)
+                    
+                    if News.shared.savedNews.isEmpty {
+                        self.nothingSavedView.isHidden = false
+                    } else {
+                        self.nothingSavedView.isHidden = true
+                    }
+                    
                     completion(true)
                 } else {
                     self.showMessage("Could not unsave article!", style: .error)
@@ -157,6 +175,12 @@ extension SavedNewsViewController {
             DispatchQueue.main.async {
                 self.savedNewsTableView.reloadData()
                 self.refreshControl.endRefreshing()
+                
+                if News.shared.savedNews.isEmpty {
+                    self.nothingSavedView.isHidden = false
+                } else {
+                    self.nothingSavedView.isHidden = true
+                }
             }
         }
     }

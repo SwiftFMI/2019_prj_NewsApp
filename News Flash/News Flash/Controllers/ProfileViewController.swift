@@ -11,14 +11,13 @@ import Firebase
 import TransitionButton
 import Loaf
 
-// TODO: Add settings (e.g. include country getting news by category?)
-
 class ProfileViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var editDetailsButton: UIButton!
     @IBOutlet weak var editInterestsButton: UIButton!
     @IBOutlet weak var changePasswordButton: UIButton!
+    @IBOutlet weak var appSettingsButton: UIButton!
     @IBOutlet weak var signOutButton: TransitionButton!
     
     override func viewDidLoad() {
@@ -29,15 +28,13 @@ class ProfileViewController: UIViewController {
         configureElements()
         
         // Observe for changes in the first name of the user
-        UserDefaults.standard.addObserver(self, forKeyPath: "firstname", options: .new, context: nil)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        UserDefaults.standard.removeObserver(self, forKeyPath: "firstname")
+        UserRepository.addObserver(self, for: .firstname)
     }
     
     deinit {
-        UserDefaults.standard.removeObserver(self, forKeyPath: "firstname")
+        if isViewLoaded {
+            UserRepository.removeObserver(self, for: .firstname)
+        }
     }
     
     @IBAction func signOutButtonPressed(_ sender: UIButton) {
@@ -49,6 +46,8 @@ class ProfileViewController: UIViewController {
         })
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { (_) in
             self.signOutButton.stopAnimation()
+            self.signOutButton.layer.cornerRadius = self.signOutButton.frame.height * 0.5
+            self.signOutButton.clipsToBounds = true
         })
         present(alertController, animated: true, completion: nil)
     }
@@ -79,12 +78,17 @@ extension ProfileViewController {
     }
     
     func configureElements() {
-        titleLabel.text = "Hello " + (UserRepository.fetch(key: .firstname) as! String)
+        updateNavigationBarTitle()
         
         styleSecondaryButton(editDetailsButton)
         styleSecondaryButton(editInterestsButton)
         styleSecondaryButton(changePasswordButton)
+        styleSecondaryButton(appSettingsButton)
         styleDangerButton(signOutButton)
+    }
+    
+    func updateNavigationBarTitle() {
+        self.navigationItem.title = "Hello " + (UserRepository.fetch(key: .firstname) as! String)
     }
     
     func showMessage(_ message: String, style: Loaf.State) {
@@ -97,7 +101,7 @@ extension ProfileViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         if UserRepository.checkFor(key: .firstname) {
-            self.titleLabel.text = "Hello " + (UserRepository.fetch(key: .firstname) as! String)
+            self.updateNavigationBarTitle()
         }
     }
 }

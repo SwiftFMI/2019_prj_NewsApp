@@ -9,7 +9,7 @@
 import Foundation
 
 enum Key: String, CaseIterable {
-    case firstname, lastname, country, interests, email
+    case firstname, lastname, country, interests, email, isCountrySpecific, resultLanguage
     func make() -> String {
         return self.rawValue
     }
@@ -33,5 +33,13 @@ class UserRepository {
         Key.allCases.map { $0.make() }.forEach { key in
             UserDefaults.standard.removeObject(forKey: key)
         }
+    }
+    
+    static func addObserver(_ observer: NSObject, for key: Key) {
+        UserDefaults.standard.addObserver(observer, forKeyPath: key.make(), options: .new, context: nil)
+    }
+    
+    static func removeObserver(_ observer: NSObject, for key: Key) {
+        UserDefaults.standard.removeObserver(observer, forKeyPath: key.make())
     }
 }

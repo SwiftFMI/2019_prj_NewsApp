@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        styleElements()
+        configureElements()
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,7 +70,7 @@ class LoginViewController: UIViewController {
 
 // MARK: Helper Functions
 extension LoginViewController {
-    func styleElements() {
+    func configureElements() {
         loginButton.spinnerColor = .white
         
         emailTextField.placeholder = "Email"

@@ -14,14 +14,14 @@ class ExploreViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        setupTableView()
+        configureNavigationBar()
+        configureTableView()
     }
 }
 
 // MARK: Helper Functions
 extension ExploreViewController {
-    func setupNavigationBar() {
+    func configureNavigationBar() {
         // Set Up the Search Results VC
         let searchResultsVC = storyboard?.instantiateViewController(identifier: Constants.Storyboard.searchResultsVC) as! SearchResultsTableViewController
 
@@ -39,7 +39,7 @@ extension ExploreViewController {
         definesPresentationContext = true
     }
     
-    func setupTableView() {
+    func configureTableView() {
         categoriesTableView.delegate = self
         categoriesTableView.dataSource = self
     }

@@ -14,7 +14,7 @@ class CategoryViewController: UIViewController {
 
     @IBOutlet weak var articlesTableView: UITableView!
     
-    let imageCache = NSCache<NSString, UIImage>()
+    private let imageCache = NSCache<NSString, UIImage>()
     
     var category: String?
     
@@ -30,13 +30,10 @@ class CategoryViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureTableView()
     }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        // reset the news array
-        News.shared.categoryNews = []
-    }
     
     override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
         News.shared.categoryNews = []
         imageCache.removeAllObjects()
     }
@@ -60,7 +57,9 @@ extension CategoryViewController {
     }
     
     func loadNewsByCategory(_ category: String) {
-        News.shared.getByCategory(category, includeCountry: true) { [unowned self] (data) in
+        let includeCountry = UserRepository.fetch(key: .isCountrySpecific) as! Bool
+        
+        News.shared.getByCategory(category, includeCountry: includeCountry) { [unowned self] (data) in
             News.shared.categoryNews = data ?? []
             
             DispatchQueue.main.async {

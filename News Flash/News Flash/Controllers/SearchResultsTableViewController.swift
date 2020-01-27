@@ -14,10 +14,12 @@ class SearchResultsTableViewController: UITableViewController {
 
     @IBOutlet var resultsTableView: UITableView!
     
-    var currentPage: Int = 1
-    var currentQuery: String = ""
+    private var currentPage: Int = 1
+    private var currentQuery: String = ""
     
-    let imageCache = NSCache<NSString, UIImage>()
+    private let imageCache = NSCache<NSString, UIImage>()
+    
+    private var keepLoading = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,8 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
         imageCache.removeAllObjects()
         News.shared.searchResults = []
     }
@@ -46,7 +50,7 @@ class SearchResultsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return News.shared.searchResults.count
+        return News.shared.searchResults.count + 1
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -66,7 +70,7 @@ class SearchResultsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == News.shared.searchResults.count - 1 {
+        if indexPath.row == News.shared.searchResults.count && keepLoading {
             let cell = resultsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticleLoading, for: indexPath)
             
             currentPage += 1
@@ -200,10 +204,21 @@ extension SearchResultsTableViewController {
     
     func loadNewsForPage() {
         News.shared.searchNews(page: currentPage, q: currentQuery) { [unowned self] (news) in
-            News.shared.searchResults += news ?? []
             
-            DispatchQueue.main.async {
-                self.resultsTableView.reloadData()
+            if let news = news {
+                self.keepLoading = true
+                
+                News.shared.searchResults += news
+                
+                DispatchQueue.main.async {
+                    self.resultsTableView.reloadData()
+                }
+            } else {
+                self.keepLoading = false
+                
+                DispatchQueue.main.async {
+                    self.showMessage("Could not load the articles", style: .warning)
+                }
             }
         }
     }
