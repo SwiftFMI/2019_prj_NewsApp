@@ -10,10 +10,10 @@ import UIKit
 import Firebase
 import IQKeyboardManagerSwift
 
+// TODO: Ask for help with search bar customization
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -23,13 +23,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // IQ Keyboard
         IQKeyboardManager.shared.enable = true
         
-        // Update User Defaults
-        if let user = Auth.auth().currentUser {
-            Authentication.updateUserData()
-            
-            // get the saved urls
-            News.shared.updateSavedUrls()
-        }
+        // Custom Navigation Bar Style
+        UINavigationBar.appearance().barTintColor = UIColor(named: "Primary Color")
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().tintColor = .black
+        
+        // Search Bar Text and Placeholder
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes =  [NSAttributedString.Key.foregroundColor: UIColor.black]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 60/255, green: 85/255, blue: 13/255, alpha: 1)])
+        
+        // Custom Tab Bar Style
+        UITabBar.appearance().barTintColor = .black
+        UITabBar.appearance().isTranslucent = false
         
         return true
     }

@@ -26,16 +26,24 @@ class ForYouViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureTableView()
         
-        // make navigation bar title big
-        navigationController?.navigationBar.prefersLargeTitles = true
+        configureTableView()
         
         loadNewsForPage()
         
         // Observe for changes in the interests of the user
         UserDefaults.standard.addObserver(self, forKeyPath: "interests", options: .new, context: nil)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        News.shared.allNews = []
+        imageCache.removeAllObjects()
+    }
+    
+    deinit {
+        News.shared.allNews = []
+        UserDefaults.standard.removeObserver(self, forKeyPath: "interests")
+        imageCache.removeAllObjects()
     }
 }
 
@@ -45,7 +53,7 @@ extension ForYouViewController {
         // reset the page count
         currentPage = 1
         
-        News.shared.getAllNews(page: currentPage) { (news) in
+        News.shared.getAllNews(page: currentPage) { [unowned self] (news) in
             News.shared.allNews = news ?? []
             
             DispatchQueue.main.async {
@@ -66,7 +74,7 @@ extension ForYouViewController {
     }
     
     func loadNewsForPage() {
-        News.shared.getAllNews(page: currentPage) { (news) in
+        News.shared.getAllNews(page: currentPage) { [unowned self] (news) in
             News.shared.allNews += news ?? []
             
             DispatchQueue.main.async {
@@ -151,7 +159,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
             
             if cell.saved {
                 // unsave
-                News.shared.unsaveArticle(article.url ?? "") { (isUnsaved) in
+                News.shared.unsaveArticle(article.url ?? "") { [unowned self] (isUnsaved) in
                     if isUnsaved {
                         cell.saved = false
                         self.showMessage("Article unsaved!", style: .success)
@@ -161,7 +169,7 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             } else {
                 // save
-                News.shared.saveArticle(article) { (isSaved) in
+                News.shared.saveArticle(article) { [unowned self] (isSaved) in
                     if isSaved {
                         cell.saved = true
                         self.showMessage("Article saved!", style: .success)
@@ -211,7 +219,7 @@ extension ForYouViewController: SFSafariViewControllerDelegate {
 // MARK: User Defaults Observation Handler
 extension ForYouViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if UserRepository.shared.checkFor(key: .interests) {
+        if UserRepository.checkFor(key: .interests) {
             handleRefresh()
         }
     }

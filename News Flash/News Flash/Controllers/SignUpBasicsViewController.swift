@@ -38,7 +38,7 @@ class SignUpBasicsViewController: UIViewController {
         nextButton.startAnimation()
         
         if let errorMessage = validateFields() {
-            nextButton.stopAnimation(animationStyle: .shake) {
+            nextButton.stopAnimation(animationStyle: .shake) { [unowned self] in
                 self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5
             }
             showError(message: errorMessage)
@@ -53,7 +53,7 @@ class SignUpBasicsViewController: UIViewController {
                 "full": Constants.Countries.full[countryPickerView.selectedRow(inComponent: 0)]
             ]
             
-            Authentication.signUpBasics(firstName: firstName, lastName: lastName, email: email, password: password, country: country) { (message) in
+            Authentication.signUpBasics(firstName: firstName, lastName: lastName, email: email, password: password, country: country) { [unowned self] (message) in
                 if let message = message {
                     self.nextButton.stopAnimation(animationStyle: .shake) {
                         self.nextButton.cornerRadius = self.nextButton.frame.height * 0.5

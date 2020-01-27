@@ -23,7 +23,7 @@ final class Networking {
         var urlString = "https://newsapi.org/v2/top-headlines?category=\(category)"
         
         if includeCountry {
-            let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
+            let countryCode = (UserRepository.fetch(key: .country) as! [String: String])["short"] ?? ""
             urlString.append("&country=\(countryCode)")
         }
         
@@ -50,7 +50,7 @@ final class Networking {
     }
     
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
-        let countryCode = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
+        let countryCode = (UserRepository.fetch(key: .country) as! [String: String])["short"] ?? ""
         
         let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(countryCode)")!
         var request = URLRequest(url: url)
@@ -75,7 +75,7 @@ final class Networking {
     }
     
     static func getLocalAllNews(page: Int, completion: @escaping NewsCompletion) {
-        let interests = UserRepository().fetch(key: .interests) as! [String]
+        let interests = UserRepository.fetch(key: .interests) as! [String]
         var query = ""
         
         for index in 0..<interests.count {

@@ -24,6 +24,16 @@ class SearchResultsTableViewController: UITableViewController {
 
         configureTableView()
     }
+    
+    override func didReceiveMemoryWarning() {
+        imageCache.removeAllObjects()
+        News.shared.searchResults = []
+    }
+    
+    deinit {
+        imageCache.removeAllObjects()
+        News.shared.searchResults = []
+    }
 
     // MARK: - Table view data source
 
@@ -104,7 +114,7 @@ class SearchResultsTableViewController: UITableViewController {
             
             if cell.saved {
                 // unsave
-                News.shared.unsaveArticle(article.url ?? "") { (isUnsaved) in
+                News.shared.unsaveArticle(article.url ?? "") { [unowned self] (isUnsaved) in
                     if isUnsaved {
                         cell.saved = false
                         self.showMessage("Article unsaved!", style: .success)
@@ -114,7 +124,7 @@ class SearchResultsTableViewController: UITableViewController {
                 }
             } else {
                 // save
-                News.shared.saveArticle(article) { (isSaved) in
+                News.shared.saveArticle(article) { [unowned self] (isSaved) in
                     if isSaved {
                         cell.saved = true
                         self.showMessage("Article saved!", style: .success)
@@ -189,7 +199,7 @@ extension SearchResultsTableViewController {
     }
     
     func loadNewsForPage() {
-        News.shared.searchNews(page: currentPage, q: currentQuery) { (news) in
+        News.shared.searchNews(page: currentPage, q: currentQuery) { [unowned self] (news) in
             News.shared.searchResults += news ?? []
             
             DispatchQueue.main.async {

@@ -24,3 +24,11 @@ extension UIImageView {
         }
     }
 }
+
+// MARK: Navigation Bar
+extension UINavigationController {
+    // make the Nav Bars with dark status bars
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+}

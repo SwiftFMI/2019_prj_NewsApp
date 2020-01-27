@@ -11,6 +11,7 @@ import Firebase
 
 final class Authentication {
     typealias MessageCompletion = (String?) -> ()
+    typealias BasicCompletion = (Bool) -> ()
     
     static func login(email: String, password: String, completion: @escaping MessageCompletion) {
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
@@ -24,11 +25,11 @@ final class Authentication {
                 Firestore.firestore().collection("users").document(result!.user.uid).getDocument { (document, error) in
                     if let document = document, document.exists {
                         
-                        UserRepository.shared.store(key: .firstname, value: document["firstname"]!)
-                        UserRepository.shared.store(key: .lastname, value: document["lastname"]!)
-                        UserRepository.shared.store(key: .country, value: (document["country"] as! [String: String]))
-                        UserRepository.shared.store(key: .interests, value: (document["interests"] as! [String]))
-                        UserRepository.shared.store(key: .email, value: email)
+                        UserRepository.store(key: .firstname, value: document["firstname"] as! String)
+                        UserRepository.store(key: .lastname, value: document["lastname"] as! String)
+                        UserRepository.store(key: .country, value: (document["country"] as! [String: String]))
+                        UserRepository.store(key: .interests, value: (document["interests"] as! [String]))
+                        UserRepository.store(key: .email, value: email)
                         
                         completion(nil)
                     } else {
@@ -39,14 +40,24 @@ final class Authentication {
         }
     }
     
+    static func signOut(completion: @escaping BasicCompletion) {
+        do {
+            try Auth.auth().signOut()
+            
+            completion(true)
+        } catch {
+            completion(false)
+        }
+    }
+    
     static func updateUserData() {
         Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).getDocument { (data, _) in
             if let data = data, data.exists {
-                UserRepository.shared.store(key: .firstname, value: data["firstname"]!)
-                UserRepository.shared.store(key: .lastname, value: data["lastname"]!)
-                UserRepository.shared.store(key: .email, value: Auth.auth().currentUser!.email!)
-                UserRepository.shared.store(key: .country, value: data["country"] as! [String: String])
-                UserRepository.shared.store(key: .interests, value: data["interests"] as! [String])
+                UserRepository.store(key: .firstname, value: data["firstname"]!)
+                UserRepository.store(key: .lastname, value: data["lastname"]!)
+                UserRepository.store(key: .email, value: Auth.auth().currentUser!.email!)
+                UserRepository.store(key: .country, value: data["country"] as! [String: String])
+                UserRepository.store(key: .interests, value: data["interests"] as! [String])
             }
         }
     }
@@ -64,12 +75,11 @@ final class Authentication {
                         completion("User data could not be saved.")
                     } else {
                         // success -> move to the next step
-                        let userRepo = UserRepository()
                         
-                        userRepo.store(key: .firstname, value: firstName)
-                        userRepo.store(key: .lastname, value: lastName)
-                        userRepo.store(key: .country, value: country)
-                        userRepo.store(key: .email, value: email)
+                        UserRepository.store(key: .firstname, value: firstName)
+                        UserRepository.store(key: .lastname, value: lastName)
+                        UserRepository.store(key: .country, value: country)
+                        UserRepository.store(key: .email, value: email)
                         
                         completion(nil)
                     }

@@ -35,6 +35,16 @@ class CategoryViewController: UIViewController {
         // reset the news array
         News.shared.categoryNews = []
     }
+    
+    override func didReceiveMemoryWarning() {
+        News.shared.categoryNews = []
+        imageCache.removeAllObjects()
+    }
+    
+    deinit {
+        News.shared.categoryNews = []
+        imageCache.removeAllObjects()
+    }
 }
 
 // MARK: Helper Functions
@@ -50,7 +60,7 @@ extension CategoryViewController {
     }
     
     func loadNewsByCategory(_ category: String) {
-        News.shared.getByCategory(category, includeCountry: true) { (data) in
+        News.shared.getByCategory(category, includeCountry: true) { [unowned self] (data) in
             News.shared.categoryNews = data ?? []
             
             DispatchQueue.main.async {

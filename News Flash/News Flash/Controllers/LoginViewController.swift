@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         loginButton.startAnimation()
         
         if let errorMessage = validateFields() {
-            loginButton.stopAnimation(animationStyle: .shake) {
+            loginButton.stopAnimation(animationStyle: .shake) { [unowned self] in
                 self.loginButton.layer.cornerRadius = self.loginButton.frame.height * 0.5
             }
             showError(message: errorMessage)
@@ -48,15 +48,15 @@ class LoginViewController: UIViewController {
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            Authentication.login(email: email, password: password) { (message) in
+            Authentication.login(email: email, password: password) { [unowned self] (message) in
                 if let message = message {
-                    self.loginButton.stopAnimation(animationStyle: .normal) {
+                    self.loginButton.stopAnimation(animationStyle: .normal) { [unowned self] in
                         self.loginButton.layer.cornerRadius = self.loginButton.frame.height * 0.5
                     }
                     
                     self.showError(message: message)
                 } else {
-                    self.loginButton.stopAnimation(animationStyle: .expand) {
+                    self.loginButton.stopAnimation(animationStyle: .expand) { [unowned self] in
                         let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
 
                         self.view.window?.rootViewController = loggedVC
@@ -64,10 +64,8 @@ class LoginViewController: UIViewController {
                     }
                 }
             }
-            
         }
     }
-    
 }
 
 // MARK: Helper Functions

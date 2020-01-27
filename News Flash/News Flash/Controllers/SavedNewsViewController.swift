@@ -24,16 +24,23 @@ class SavedNewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // make navigation bar title big
-        navigationController?.navigationBar.prefersLargeTitles = true
 
         configureTableView()
 
-        News.shared.getSavedNews { (data) in
+        News.shared.getSavedNews { [unowned self] (data) in
             News.shared.savedNews = data ?? []
             self.savedNewsTableView.reloadData()
         }
+    }
+    
+    override func didReceiveMemoryWarning() {
+        News.shared.savedNews = []
+        imageCache.removeAllObjects()
+    }
+    
+    deinit {
+        News.shared.savedNews = []
+        imageCache.removeAllObjects()
     }
 }
 
@@ -94,7 +101,7 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
         let article = News.shared.savedNews[indexPath.row]
         
         let action = UIContextualAction(style: .destructive, title: "Unsave") { (action, view, completion) in
-            News.shared.unsaveArticle(article.url ?? "") { (isUnsaved) in
+            News.shared.unsaveArticle(article.url ?? "") { [unowned self] (isUnsaved) in
                 if isUnsaved {
                     self.savedNewsTableView.deleteRows(at: [indexPath], with: .fade)
                     self.showMessage("Article unsaved!", style: .success)
@@ -113,8 +120,7 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .normal, title: "Share",
-          handler: { (action, view, completionHandler) in
+        let action = UIContextualAction(style: .normal, title: "Share", handler: { (action, view, completionHandler) in
             guard let urlAddress = News.shared.savedNews[indexPath.row].url, let url = URL(string: urlAddress) else {
                 completionHandler(false)
                 return
@@ -145,7 +151,7 @@ extension SavedNewsViewController {
     }
     
     @objc func handleRefresh() -> Void {
-        News.shared.getSavedNews { (data) in
+        News.shared.getSavedNews { [unowned self] (data) in
             News.shared.savedNews = data ?? []
             
             DispatchQueue.main.async {

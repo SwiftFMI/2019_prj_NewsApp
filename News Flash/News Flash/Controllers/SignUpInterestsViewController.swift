@@ -39,17 +39,16 @@ class SignUpInterestsViewController: UIViewController {
     @IBAction func nextButtonPressed(_ sender: UIButton) {
         nextButton.startAnimation()
         
-        Authentication.signUpInterests(interests: selectedInterests) { (message) in
+        Authentication.signUpInterests(interests: selectedInterests) { [unowned self] (message) in
             if let message = message {
-                self.nextButton.stopAnimation(animationStyle: .shake) {
+                self.nextButton.stopAnimation(animationStyle: .shake) { [unowned self] in
                     self.nextButton.layer.cornerRadius = self.nextButton.frame.height * 0.5
                 }
                 // user data could not be saved
                 self.showError(message: message)
             } else {
-                self.nextButton.stopAnimation(animationStyle: .expand) {
-                    let userRepo = UserRepository()
-                    userRepo.store(key: .interests, value: self.selectedInterests)
+                self.nextButton.stopAnimation(animationStyle: .expand) { [unowned self] in
+                    UserRepository.store(key: .interests, value: self.selectedInterests)
                     
                     let loggedVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
 

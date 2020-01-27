@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import TransitionButton
+import Loaf
 
 // TODO: Add settings (e.g. include country getting news by category?)
 
@@ -31,6 +32,14 @@ class ProfileViewController: UIViewController {
         UserDefaults.standard.addObserver(self, forKeyPath: "firstname", options: .new, context: nil)
     }
     
+    override func didReceiveMemoryWarning() {
+        UserDefaults.standard.removeObserver(self, forKeyPath: "firstname")
+    }
+    
+    deinit {
+        UserDefaults.standard.removeObserver(self, forKeyPath: "firstname")
+    }
+    
     @IBAction func signOutButtonPressed(_ sender: UIButton) {
         signOutButton.startAnimation()
         
@@ -49,29 +58,37 @@ class ProfileViewController: UIViewController {
 // MARK: Helper Functions
 extension ProfileViewController {
     func signOut() -> Void {
-        do {
-            try Auth.auth().signOut()
-            
-            signOutButton.stopAnimation(animationStyle: .expand) {
-                // navigating to Auth views
-                let authVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController
-                authVC.isNavigationBarHidden = true
-                
-                self.view.window?.rootViewController = authVC
-                self.view.window?.makeKeyAndVisible()
+        Authentication.signOut { [unowned self] (isSingedOut) in
+            if isSingedOut {
+                self.signOutButton.stopAnimation(animationStyle: .expand) { [unowned self] in
+                    // navigating to Auth views
+                    
+                    UserRepository.removeUserInfo()
+                    
+                    let authVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController
+                    authVC.isNavigationBarHidden = true
+                    
+                    self.view.window?.rootViewController = authVC
+                    self.view.window?.makeKeyAndVisible()
+                }
+            } else {
+                self.signOutButton.stopAnimation()
+                self.showMessage("Could not sign out!", style: .error)
             }
-        } catch let error {
-            print("Failed to sign out with error", error)
         }
     }
     
     func configureElements() {
-        titleLabel.text = "Hello " + (UserRepository().fetch(key: .firstname) as! String)
+        titleLabel.text = "Hello " + (UserRepository.fetch(key: .firstname) as! String)
         
         styleSecondaryButton(editDetailsButton)
         styleSecondaryButton(editInterestsButton)
         styleSecondaryButton(changePasswordButton)
         styleDangerButton(signOutButton)
+    }
+    
+    func showMessage(_ message: String, style: Loaf.State) {
+        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }
 
@@ -79,8 +96,8 @@ extension ProfileViewController {
 extension ProfileViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        if UserRepository.shared.checkFor(key: .firstname) {
-            self.titleLabel.text = "Hello " + (UserRepository.shared.fetch(key: .firstname) as! String)
+        if UserRepository.checkFor(key: .firstname) {
+            self.titleLabel.text = "Hello " + (UserRepository.fetch(key: .firstname) as! String)
         }
     }
 }

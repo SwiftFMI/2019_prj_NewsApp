@@ -37,16 +37,16 @@ class EditUserDetailsViewController: UIViewController {
         
         var updateFields: [String: Any] = [:]
         
-        if firstName != "" {
+        if let firstName = firstName, firstName != "" {
             // save the new name
-            UserRepository.shared.store(key: .firstname, value: firstName)
+            UserRepository.store(key: .firstname, value: firstName)
             
             updateFields["firstname"] = firstName
         }
         
-        if lastName != "" {
+        if let lastName = lastName, lastName != "" {
             // save the new name
-            UserRepository.shared.store(key: .lastname, value: lastName)
+            UserRepository.store(key: .lastname, value: lastName)
             
             updateFields["lastname"] = lastName
         }
@@ -56,7 +56,7 @@ class EditUserDetailsViewController: UIViewController {
             "full": Constants.Countries.full[countryPickerView.selectedRow(inComponent: 0)]
         ]
         
-        UserRepository.shared.store(key: .country, value: country)
+        UserRepository.store(key: .country, value: country)
         
         updateFields["country"] = country
         
@@ -96,12 +96,12 @@ extension EditUserDetailsViewController {
         emailTextField.placeholder = "Email"
         emailTextField.title = "Email"
         
-        firstNameTextField.text = UserRepository().fetch(key: .firstname) as? String
-        lastNameTextField.text = UserRepository().fetch(key: .lastname) as? String
-        emailTextField.text = UserRepository().fetch(key: .email) as? String
+        firstNameTextField.text = UserRepository.fetch(key: .firstname) as? String
+        lastNameTextField.text = UserRepository.fetch(key: .lastname) as? String
+        emailTextField.text = UserRepository.fetch(key: .email) as? String
         emailTextField.isUserInteractionEnabled = false
         
-        let countryName = (UserRepository.shared.fetch(key: .country) as! [String: String])["short"] ?? ""
+        let countryName = (UserRepository.fetch(key: .country) as! [String: String])["short"] ?? ""
         let countryId = Constants.Countries.short.firstIndex(of: countryName) ?? 0
         
         countryPickerView.selectRow(countryId, inComponent: 0, animated: false)

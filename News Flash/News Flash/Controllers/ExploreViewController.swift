@@ -14,10 +14,6 @@ class ExploreViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
         setupNavigationBar()
         setupTableView()
     }
@@ -26,9 +22,6 @@ class ExploreViewController: UIViewController {
 // MARK: Helper Functions
 extension ExploreViewController {
     func setupNavigationBar() {
-        // Make title large
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
         // Set Up the Search Results VC
         let searchResultsVC = storyboard?.instantiateViewController(identifier: Constants.Storyboard.searchResultsVC) as! SearchResultsTableViewController
 
@@ -36,12 +29,13 @@ extension ExploreViewController {
         let searchController = UISearchController(searchResultsController: searchResultsVC)
         searchController.searchBar.delegate = searchResultsVC
         searchController.searchResultsUpdater = searchResultsVC
-        searchController.searchBar.tintColor = UIColor(named: "Primary Color")
-        searchController.searchBar.placeholder = "Search..."
+        
+        searchController.searchBar.searchTextField.backgroundColor = UIColor(red: 137/255, green: 195/255, blue: 30/255, alpha: 1)
+        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass"), for: UISearchBar.Icon.search, state: .normal)
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        
+
         definesPresentationContext = true
     }
     

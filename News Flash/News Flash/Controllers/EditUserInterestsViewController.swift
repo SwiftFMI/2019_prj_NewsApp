@@ -21,12 +21,10 @@ class EditUserInterestsViewController: UIViewController {
     
     @IBOutlet weak var doneButton: UIButton!
     
-    var interests = UserRepository.shared.fetch(key: .interests) as! [String]
+    var interests = UserRepository.fetch(key: .interests) as! [String]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         configureElements()
     }
@@ -35,7 +33,7 @@ class EditUserInterestsViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         // Update User Defaults
-        UserRepository.shared.store(key: .interests, value: interests)
+        UserRepository.store(key: .interests, value: interests)
         
        // Update Database
         Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).updateData(["interests": interests])

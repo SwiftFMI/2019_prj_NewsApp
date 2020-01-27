@@ -30,7 +30,7 @@ class FlashCardsViewController: UIViewController {
         // Hide Koloda Reload View
         reloadKolodaStackView.isHidden = true
         
-        News.shared.getTopNews { (news) in
+        News.shared.getTopNews { [unowned self] (news) in
             News.shared.topNews = news ?? []
             
             DispatchQueue.main.async {
@@ -38,15 +38,26 @@ class FlashCardsViewController: UIViewController {
             }
         }
         
-        let userCountry = (UserRepository.shared.fetch(key: .country) as! [String: String])["full"]
+        let userCountry = (UserRepository.fetch(key: .country) as! [String: String])["full"]
         topTitlesLabel.text = "Top Titles for " + (userCountry ?? "")
         
         // Observe for changes in the country of the user
         UserDefaults.standard.addObserver(self, forKeyPath: "country", options: .new, context: nil)
     }
     
+    override func didReceiveMemoryWarning() {
+        News.shared.topNews = []
+        imageCache.removeAllObjects()
+    }
+    
+    deinit {
+        News.shared.topNews = []
+        UserDefaults.standard.removeObserver(self, forKeyPath: "country")
+        imageCache.removeAllObjects()
+    }
+    
     @IBAction func reloadKolodaViewButtonPressed(_ sender: UIButton) {
-        News.shared.getTopNews { (news) in
+        News.shared.getTopNews { [unowned self] (news) in
             News.shared.topNews = news ?? []
 
             DispatchQueue.main.async {
@@ -108,8 +119,6 @@ extension FlashCardsViewController: KolodaViewDataSource {
             view.saved = News.shared.savedUrls.contains(url)
         }
         
-//        view.setSaveButtonImage()
-        
         if let url = URL(string: News.shared.topNews[index].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
                 view.cardImageView.image = cachedImage
@@ -165,7 +174,7 @@ extension FlashCardsViewController: NewsArticleCardDelegate {
         let articleId = topNewsKolodaView.currentCardIndex
         let article = News.shared.topNews[articleId]
         
-        News.shared.saveArticle(article) { (isSaved) in
+        News.shared.saveArticle(article) { [unowned self] (isSaved) in
             if isSaved {
                 self.showMessage("Article saved!", style: .success)
                 completion(true)
@@ -180,7 +189,7 @@ extension FlashCardsViewController: NewsArticleCardDelegate {
         let articleId = topNewsKolodaView.currentCardIndex
         let articleUrl = News.shared.topNews[articleId].url ?? ""
         
-        News.shared.unsaveArticle(articleUrl) { (isUnsaved) in
+        News.shared.unsaveArticle(articleUrl) { [unowned self] (isUnsaved) in
             if isUnsaved {
                 self.showMessage("Article unsaved!", style: .success)
                 completion(true)
@@ -196,10 +205,10 @@ extension FlashCardsViewController: NewsArticleCardDelegate {
 extension FlashCardsViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
-        if UserRepository.shared.checkFor(key: .country) {
-            topTitlesLabel.text = "Top Titles for " + ((UserRepository.shared.fetch(key: .country) as! [String: String])["full"] ?? "")
+        if UserRepository.checkFor(key: .country) {
+            topTitlesLabel.text = "Top Titles for " + ((UserRepository.fetch(key: .country) as! [String: String])["full"] ?? "")
             
-            News.shared.getTopNews { (news) in
+            News.shared.getTopNews { [unowned self] (news) in
                 News.shared.topNews = news ?? []
                 
                 DispatchQueue.main.async {

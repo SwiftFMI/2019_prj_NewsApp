@@ -24,8 +24,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         var initialViewController: UIViewController
         let mainStoryboard = UIStoryboard(name: "Main" , bundle: nil)
         
-        if let _ = Auth.auth().currentUser, UserRepository.shared.checkFor(key: .firstname) {
+        if let _ = Auth.auth().currentUser, UserRepository.checkFor(key: .country) {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.loggedVC) as! UITabBarController
+            
+            Authentication.updateUserData()
+            
+            News.shared.updateSavedUrls()
         } else {
             initialViewController = mainStoryboard.instantiateViewController(withIdentifier: Constants.Storyboard.authVC) as! UINavigationController
         }
