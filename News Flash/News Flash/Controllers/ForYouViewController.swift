@@ -128,6 +128,11 @@ extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == News.shared.searchResults.count {
+            newsTableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
         let urlAddress = News.shared.allNews[indexPath.row].url ?? ""
         
         guard let url = URL(string: urlAddress) else { return }

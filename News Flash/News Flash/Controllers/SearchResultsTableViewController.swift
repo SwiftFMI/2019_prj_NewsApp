@@ -58,6 +58,11 @@ class SearchResultsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == News.shared.searchResults.count {
+            resultsTableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
+        
         let urlAddress = News.shared.searchResults[indexPath.row].url ?? ""
         
         guard let url = URL(string: urlAddress) else { return }
@@ -73,9 +78,10 @@ class SearchResultsTableViewController: UITableViewController {
         if indexPath.row == News.shared.searchResults.count && keepLoading {
             let cell = resultsTableView.dequeueReusableCell(withIdentifier: Constants.TableCell.newsArticleLoading, for: indexPath)
             
-            currentPage += 1
-            
-            loadNewsForPage()
+            if currentQuery != "" {
+                currentPage += 1
+                loadNewsForPage()
+            }
             
             return cell
         }
@@ -169,17 +175,19 @@ class SearchResultsTableViewController: UITableViewController {
 // MARK: Search Delegate
 extension SearchResultsTableViewController: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        
+        resultsTableView.isHidden = true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         currentQuery = searchBar.text ?? ""
+        resultsTableView.isHidden = false
         News.shared.searchResults = []
         loadNewsForPage()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         News.shared.searchResults = []
+        resultsTableView.reloadData()
     }
 }
 
