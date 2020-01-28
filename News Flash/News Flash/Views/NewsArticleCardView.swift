@@ -19,7 +19,7 @@ class NewsArticleCardView: UIView {
     var sourceLabel: UILabel! = {
         var perm = UILabel()
         
-        perm.textColor = UIColor(named: "Gray")
+        perm.textColor = UIColor(named: "Card Source Color")
         perm.font = UIFont(name: "Helvetica Neue", size: 16)
         
         // enable auto layout
@@ -32,7 +32,7 @@ class NewsArticleCardView: UIView {
         var perm = UIImageView()
         
         perm.image = UIImage(systemName: "person.fill")
-        perm.tintColor = UIColor(named: "Gray")
+        perm.tintColor = UIColor(named: "Card Source Color")
         
         // enable auto layout
         perm.translatesAutoresizingMaskIntoConstraints = false

@@ -7,7 +7,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon ionic-ios-flash-1.png",
+      "filename" : "Logo.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -18,7 +18,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon ionic-ios-flash-2.png",
+      "filename" : "Logo Light.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -34,7 +34,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon ionic-ios-flash@2x-1.png",
+      "filename" : "Logo@2x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -45,7 +45,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon ionic-ios-flash@2x-2.png",
+      "filename" : "Logo Light@2x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -61,7 +61,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon ionic-ios-flash@3x-1.png",
+      "filename" : "Logo@3x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
@@ -72,7 +72,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "Icon ionic-ios-flash@3x-2.png",
+      "filename" : "Logo Light@3x.png",
       "appearances" : [
         {
           "appearance" : "luminosity",

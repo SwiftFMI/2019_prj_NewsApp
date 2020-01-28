@@ -39,11 +39,10 @@ struct Constants {
     }
     
     static let cardColors = [
-        UIColor(named: "Card Green"),
-        UIColor(named: "Card Yellow"),
-        UIColor(named: "Card Blue"),
-        UIColor(named: "Card Brown"),
-        UIColor(named: "Card Purple")
+        UIColor(named: "Card Purple"),
+        UIColor(named: "Card Orange"),
+        UIColor(named: "Card Pink"),
+        UIColor(named: "Card Yellow")
     ]
     
     struct Languages {

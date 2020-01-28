@@ -110,7 +110,7 @@ extension FlashCardsViewController: KolodaViewDelegate {
 
 extension FlashCardsViewController: KolodaViewDataSource {
     func koloda(_ koloda: KolodaView, viewForCardAt index: Int) -> UIView {
-        let view = NewsArticleCardView(cardColorIndex: index % 5)
+        let view = NewsArticleCardView(cardColorIndex: index % 4)
         
         view.delegate = self
         
