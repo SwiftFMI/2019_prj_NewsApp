@@ -20,7 +20,7 @@ func stylePrimaryTextButton(_ button: UIButton) {
 }
 
 func styleSecondaryButton(_ button: UIButton) {
-    styleButton(button, textColor: UIColor.label, bgColor: UIColor(named: "Secondary Button Color")!)
+    styleButton(button, textColor: .black, bgColor: UIColor(named: "Secondary Button Color")!)
 }
 
 func styleDangerButton(_ button: UIButton) {
@@ -36,12 +36,12 @@ func styleButton(_ button: UIButton, textColor: UIColor, bgColor: UIColor) {
 
 // MARK: Pills
 func stylePrimaryPill(_ button: UIButton) {
-    stylePill(button, textColor: .label, borderColor: UIColor(named: "Primary Color")!)
+    stylePill(button, textColor: .black, borderColor: UIColor(named: "Primary Color")!)
     button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
 }
 
 func styleSecondaryPill(_ button: UIButton) {
-    stylePill(button, textColor: .label, borderColor: UIColor(named: "Secondary Button Color")!)
+    stylePill(button, textColor: .black, borderColor: UIColor(named: "Secondary Button Color")!)
     button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
 }
 
@@ -62,7 +62,7 @@ func styleTextField(_ field: SkyFloatingLabelTextField) {
     field.selectedLineColor = UIColor(named: "Primary Color")!
     field.selectedLineHeight = 2
     field.lineHeight = 1
-    field.textColor = .label
+    field.textColor = .black
     field.disabledColor = .gray
     
     field.selectedTitleColor = UIColor(named: "Primary Color")!

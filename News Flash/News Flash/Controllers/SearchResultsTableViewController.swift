@@ -116,7 +116,7 @@ class SearchResultsTableViewController: UITableViewController {
         let cell = resultsTableView.cellForRow(at: indexPath) as! NewsArticleTableViewCell
         
         let label: String = cell.saved ? "Unsave" : "Save"
-        let image: UIImage = cell.saved ? UIImage(systemName: "bookmark.fill")! : UIImage(systemName: "bookmark")!
+        let image: UIImage = cell.saved ? UIImage(contentsOfFile: "bookmark.fill")! : UIImage(contentsOfFile: "bookmark")!
         let color: UIColor = cell.saved ? UIColor(named: "Gray")! : UIColor(named: "Secondary Button Color")!
         
         let action = UIContextualAction(style: .normal, title: label, handler: { (action, view, completionHandler) in
@@ -165,7 +165,7 @@ class SearchResultsTableViewController: UITableViewController {
             completionHandler(true)
         })
         
-        action.image = UIImage(systemName: "square.and.arrow.up")
+        action.image = UIImage(contentsOfFile: "square.and.arrow.up")
         action.backgroundColor = UIColor(named: "Secondary Button Color")
         
         return UISwipeActionsConfiguration(actions: [action])
