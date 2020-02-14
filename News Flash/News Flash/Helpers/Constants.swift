@@ -29,8 +29,8 @@ struct Constants {
     
     struct NewsCategories {
         static let titles = ["business", "entertainment", "health", "science", "sports", "technology"]
-        @available(iOS 13.0, *)
-        static let images = [UIImage(contentsOfFile: "briefcase.fill"), UIImage(contentsOfFile: "gamecontroller.fill"), UIImage(contentsOfFile: "bandage.fill"), UIImage(systemName: "wrench.fill"), UIImage(systemName: "sportscourt.fill"), UIImage(systemName: "desktopcomputer")]
+                static let images = [UIImage(systemName: "briefcase.fill"), UIImage(systemName: "gamecontroller.fill"), UIImage(systemName: "bandage.fill"), UIImage(systemName: "wrench.fill"), UIImage(systemName: "sportscourt.fill"), UIImage(systemName: "desktopcomputer")]
+
     }
     
     struct Xib {

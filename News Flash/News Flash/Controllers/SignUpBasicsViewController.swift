@@ -62,7 +62,7 @@ class SignUpBasicsViewController: UIViewController {
                     self.showError(message: message)
                 } else {
                     self.nextButton.stopAnimation(animationStyle: .normal) {
-                        let signUpInterestsVC = self.storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
+                        let signUpInterestsVC = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
                         
                         self.navigationController?.pushViewController(signUpInterestsVC, animated: true)
                     }

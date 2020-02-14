@@ -131,7 +131,7 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        action.image = UIImage(contentsOfFile: "bookmark.fill")
+        action.image = UIImage(systemName: "bookmark.fill")
         action.backgroundColor = UIColor(named: "Gray")
         
         return UISwipeActionsConfiguration(actions: [action])
@@ -149,7 +149,7 @@ extension SavedNewsViewController: UITableViewDelegate, UITableViewDataSource {
             completionHandler(true)
         })
         
-        action.image = UIImage(contentsOfFile: "square.and.arrow.up")
+        action.image = UIImage(systemName: "square.and.arrow.up")
         action.backgroundColor = UIColor(named: "Seconday Button Color")
         
         return UISwipeActionsConfiguration(actions: [action])

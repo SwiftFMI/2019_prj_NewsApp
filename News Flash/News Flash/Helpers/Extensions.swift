@@ -29,6 +29,6 @@ extension UIImageView {
 extension UINavigationController {
     // make the Nav Bars with dark status bars
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        return .darkContent
     }
 }

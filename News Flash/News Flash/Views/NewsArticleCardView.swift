@@ -31,7 +31,7 @@ class NewsArticleCardView: UIView {
     private var sourceImage: UIImageView! = {
         var perm = UIImageView()
         
-        perm.image = UIImage(contentsOfFile: "person.fill")
+        perm.image = UIImage(systemName: "person.fill")
         perm.tintColor = UIColor(named: "Card Source Color")
         
         // enable auto layout
@@ -106,7 +106,7 @@ class NewsArticleCardView: UIView {
     private var saveButton: UIButton! = {
         var perm = UIButton()
         
-        perm.setBackgroundImage(UIImage(contentsOfFile: "bookmark"), for: .normal)
+        perm.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
         perm.tintColor = UIColor(named: "Gray")
         
         // enable auto layout
@@ -118,7 +118,7 @@ class NewsArticleCardView: UIView {
     private var shareButton: UIButton! = {
         var perm = UIButton()
         
-        perm.setBackgroundImage(UIImage(contentsOfFile: "square.and.arrow.up"), for: .normal)
+        perm.setBackgroundImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         perm.tintColor = UIColor(named: "Gray")
         
         // enable auto layout
@@ -130,7 +130,7 @@ class NewsArticleCardView: UIView {
     private var revertButton: UIButton! = {
         var perm = UIButton()
         
-        perm.setBackgroundImage(UIImage(contentsOfFile: "backward"), for: .normal)
+        perm.setBackgroundImage(UIImage(systemName: "backward"), for: .normal)
         perm.tintColor = UIColor(named: "Gray")
         
         // enable auto layout
@@ -253,10 +253,10 @@ class NewsArticleCardView: UIView {
     func setSaveButtonImage() {
         if saved {
             saveButton.tintColor = UIColor(named: "Saved Color")
-            saveButton.setBackgroundImage(UIImage(contentsOfFile: "bookmark.fill"), for: .normal)
+            saveButton.setBackgroundImage(UIImage(systemName: "bookmark.fill"), for: .normal)
         } else {
             saveButton.tintColor = UIColor(named: "Gray")
-            saveButton.setBackgroundImage(UIImage(contentsOfFile: "bookmark"), for: .normal)
+            saveButton.setBackgroundImage(UIImage(systemName: "bookmark"), for: .normal)
         }
     }
 }

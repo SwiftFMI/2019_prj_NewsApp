@@ -23,7 +23,7 @@ class ExploreViewController: UIViewController {
 extension ExploreViewController {
     func configureNavigationBar() {
         // Set Up the Search Results VC
-        let searchResultsVC = storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.searchResultsVC) as! SearchResultsTableViewController
+        let searchResultsVC = storyboard?.instantiateViewController(identifier: Constants.Storyboard.searchResultsVC) as! SearchResultsTableViewController
 
         // Set Up the Search Bar
         let searchController = UISearchController(searchResultsController: searchResultsVC)
@@ -31,7 +31,7 @@ extension ExploreViewController {
         searchController.searchResultsUpdater = searchResultsVC
         
         searchController.searchBar.searchTextField.backgroundColor = UIColor(red: 137/255, green: 195/255, blue: 30/255, alpha: 1)
-        searchController.searchBar.setImage(UIImage(contentsOfFile: "magnifyingglass"), for: UISearchBar.Icon.search, state: .normal)
+        searchController.searchBar.setImage(UIImage(systemName: "magnifyingglass"), for: UISearchBar.Icon.search, state: .normal)
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -56,7 +56,7 @@ extension ExploreViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextVC = storyboard?.instantiateViewController(withIdentifier: Constants.Storyboard.categoryVC) as! CategoryViewController
+        let nextVC = storyboard?.instantiateViewController(identifier: Constants.Storyboard.categoryVC) as! CategoryViewController
         
         nextVC.navigationItem.title = Constants.NewsCategories.titles[indexPath.row].capitalized
         nextVC.navigationItem.leftBarButtonItem?.tintColor = UIColor(named: "Primary Color")
