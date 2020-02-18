@@ -9,10 +9,9 @@
 import UIKit
 import Firebase
 import FirebaseAuth
-import Loaf
 import TransitionButton
 
-class SignUpInterestsViewController: UIViewController {
+class SignUpInterestsViewController: BaseViewController {
     
     @IBOutlet weak var businessButton: UIButton!
     @IBOutlet weak var entertainmentButton: UIButton!
@@ -88,7 +87,4 @@ extension SignUpInterestsViewController {
         }
     }
     
-    func showError(message: String) {
-        Loaf(message, state: .error, sender: self).show()
-    }
 }

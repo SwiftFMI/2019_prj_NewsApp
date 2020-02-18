@@ -298,6 +298,7 @@ PODS:
   - pop (1.0.12)
   - PromisesObjC (1.2.8)
   - Protobuf (3.11.3)
+  - ReachabilitySwift (5.0.0)
   - SkyFloatingLabelTextField (3.8.0)
   - TransitionButton (0.5.2)
 
@@ -310,6 +311,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - Koloda
   - Loaf
+  - ReachabilitySwift
   - SkyFloatingLabelTextField (~> 3.0)
   - TransitionButton
 
@@ -344,6 +346,7 @@ SPEC REPOS:
     - pop
     - PromisesObjC
     - Protobuf
+    - ReachabilitySwift
     - SkyFloatingLabelTextField
     - TransitionButton
 
@@ -377,9 +380,10 @@ SPEC CHECKSUMS:
   pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   Protobuf: 0e94afe3b47cb11876eb6aee296638711a24bf75
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
   TransitionButton: fb271583d9c9e4bb116b97103047e5157653f233
 
-PODFILE CHECKSUM: ad537b571b30f19705ae7011309e782c9fb78d3c
+PODFILE CHECKSUM: 69fe26afe913e598b15d7d0b4b1f5d05d8d4fa3e
 
 COCOAPODS: 1.8.4

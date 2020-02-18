@@ -11,14 +11,15 @@ import Firebase
 import Koloda
 import SafariServices
 import Loaf
+import Reachability
 
-class FlashCardsViewController: UIViewController {
+class FlashCardsViewController: BaseViewController {
 
     @IBOutlet weak var topNewsKolodaView: KolodaView!
     @IBOutlet weak var reloadKolodaStackView: UIStackView!
     
     private let imageCache = NSCache<NSString, UIImage>()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +42,7 @@ class FlashCardsViewController: UIViewController {
         
         // Observe for changes in the country of the user
         UserRepository.addObserver(self, for: .country)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -115,7 +117,10 @@ extension FlashCardsViewController: KolodaViewDataSource {
         view.delegate = self
         
         view.titleLabel.text = News.shared.topNews[index].title
+        view.titleLabel.font = UIFont.init(name: "TrebuchetMS-Bold", size: 18)
+        view.titleLabel.textAlignment = .center
         view.sourceLabel.text = News.shared.topNews[index].source?.name
+        view.descriptionLabel.font = UIFont.init(name: "TrebuchetMS", size: 15)
         view.descriptionLabel.text = News.shared.topNews[index].description
         
         if let url = News.shared.topNews[index].url {
@@ -160,9 +165,6 @@ extension FlashCardsViewController {
         self.navigationItem.title = "Top Titles for " + country["full"]!
     }
     
-    func showMessage(_ message: String, style: Loaf.State) {
-        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
-    }
 }
 
 // MARK: News Article Card Delegate

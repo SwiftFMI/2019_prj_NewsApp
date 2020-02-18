@@ -13,7 +13,7 @@ import Loaf
 import SkyFloatingLabelTextField
 import TransitionButton
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
 
     @IBOutlet weak var emailTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var loginButton: TransitionButton!
@@ -123,10 +123,7 @@ extension LoginViewController {
         let passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: str)
     }
-    
-    func showError(message: String) -> Void {
-        Loaf(message, state: .error, sender: self).show()
-    }
+
 }
 
 // MARK: Touch Events

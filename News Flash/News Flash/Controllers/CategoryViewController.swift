@@ -8,9 +8,8 @@
 
 import UIKit
 import SafariServices
-import Loaf
 
-class CategoryViewController: UIViewController {
+class CategoryViewController: BaseViewController {
 
     @IBOutlet weak var articlesTableView: UITableView!
     
@@ -66,10 +65,6 @@ extension CategoryViewController {
                 self.articlesTableView.reloadData()
             }
         }
-    }
-    
-    func showMessage(_ message: String, style: Loaf.State) {
-        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
     @objc func handleRefresh() {

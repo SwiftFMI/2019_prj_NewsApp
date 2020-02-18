@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExploreViewController: UIViewController {
+class ExploreViewController: BaseViewController {
 
     @IBOutlet weak var categoriesTableView: UITableView!
     

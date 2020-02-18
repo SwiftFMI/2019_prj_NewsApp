@@ -234,4 +234,5 @@ extension SearchResultsTableViewController {
     func showMessage(_ message: String, style: Loaf.State) {
         Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
+    
 }

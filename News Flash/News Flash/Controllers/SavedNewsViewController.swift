@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import Loaf
 import SafariServices
 
-class SavedNewsViewController: UIViewController {
+class SavedNewsViewController: BaseViewController {
 
     @IBOutlet weak var savedNewsTableView: UITableView!
     @IBOutlet weak var nothingSavedView: UIView!
@@ -184,10 +183,7 @@ extension SavedNewsViewController {
             }
         }
     }
-    
-    func showMessage(_ message: String, style: Loaf.State) {
-        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
-    }
+
 }
 
 // MARK: Safari VC Delegate

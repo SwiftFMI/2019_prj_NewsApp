@@ -9,9 +9,8 @@
 import UIKit
 import Firebase
 import TransitionButton
-import Loaf
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: BaseViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var editDetailsButton: UIButton!
@@ -90,10 +89,7 @@ extension ProfileViewController {
     func updateNavigationBarTitle() {
         self.navigationItem.title = "Hello " + (UserRepository.fetch(key: .firstname) as! String)
     }
-    
-    func showMessage(_ message: String, style: Loaf.State) {
-        Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
-    }
+
 }
 
 // MARK: User Defaults Observer Handler

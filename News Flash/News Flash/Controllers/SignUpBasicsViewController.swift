@@ -9,11 +9,10 @@
 import UIKit
 import Firebase
 import FirebaseAuth
-import Loaf
 import TransitionButton
 import SkyFloatingLabelTextField
 
-class SignUpBasicsViewController: UIViewController {
+class SignUpBasicsViewController: BaseViewController {
 
     @IBOutlet weak var nextButton: TransitionButton!
     @IBOutlet weak var passwordTextField: SkyFloatingLabelTextField!
@@ -168,10 +167,7 @@ extension SignUpBasicsViewController {
         let passwordRegex = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: str)
     }
-    
-    func showError(message: String) -> Void {
-        Loaf(message, state: .error, sender: self).show()
-    }
+
 }
 
 // MARK: Touch Events
