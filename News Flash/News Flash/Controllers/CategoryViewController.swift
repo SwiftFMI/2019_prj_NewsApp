@@ -30,6 +30,11 @@ class CategoryViewController: BaseViewController {
         configureTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNoFlashTopNavigationBar(isHigher: false)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         

@@ -17,6 +17,11 @@ class ExploreViewController: BaseViewController {
         configureNavigationBar()
         configureTableView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureNoFlashTopNavigationBar(isHigher: true)
+    }
 }
 
 // MARK: Helper Functions
@@ -79,4 +84,5 @@ extension ExploreViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
 }
