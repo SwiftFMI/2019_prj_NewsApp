@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iOZ-Uv-7FK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iOZ-Uv-7FK">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -712,7 +712,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bb7-EQ-Odz">
-                                <rect key="frame" x="20" y="108" width="335" height="298"/>
+                                <rect key="frame" x="20" y="108" width="335" height="238"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="si4-N7-PK7">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="24"/>
@@ -740,21 +740,14 @@
                                             <segue destination="elg-9Z-g0H" kind="presentation" id="Xra-yL-WZl"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkp-DR-oi4">
-                                        <rect key="frame" x="0.0" y="154" width="335" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="YVf-IE-b7E"/>
-                                        </constraints>
-                                        <state key="normal" title="Change Your Password"/>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p8Y-gC-u4Y">
-                                        <rect key="frame" x="0.0" y="214" width="335" height="24"/>
+                                        <rect key="frame" x="0.0" y="154" width="335" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RrE-LP-fGQ">
-                                        <rect key="frame" x="0.0" y="248" width="335" height="50"/>
+                                        <rect key="frame" x="0.0" y="188" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ZGV-VL-wkE"/>
                                         </constraints>
@@ -790,7 +783,6 @@
                     <navigationItem key="navigationItem" title="Hello" largeTitleDisplayMode="always" id="XUO-dA-Gwm"/>
                     <connections>
                         <outlet property="appSettingsButton" destination="RrE-LP-fGQ" id="sVQ-XP-1O9"/>
-                        <outlet property="changePasswordButton" destination="tkp-DR-oi4" id="vB7-rm-8L7"/>
                         <outlet property="editDetailsButton" destination="osn-DQ-2l3" id="ug8-m3-ua9"/>
                         <outlet property="editInterestsButton" destination="h0k-E4-MQz" id="SnJ-Oz-fP1"/>
                         <outlet property="signOutButton" destination="I8u-ht-AjO" id="4up-p7-kZo"/>

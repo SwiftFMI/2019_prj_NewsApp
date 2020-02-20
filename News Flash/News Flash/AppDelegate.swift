@@ -45,7 +45,6 @@ class AppDelegate: FIRMessagingExtensionHelper, UIApplicationDelegate {
         // Custom Navigation Bar Style
         UINavigationBar.appearance().barTintColor = UIColor(named: "Primary Color")
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().tintColor = .black
         
         // Search Bar Text and Placeholder

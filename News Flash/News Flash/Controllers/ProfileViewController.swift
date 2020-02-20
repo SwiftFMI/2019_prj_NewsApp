@@ -15,7 +15,6 @@ class ProfileViewController: BaseViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var editDetailsButton: UIButton!
     @IBOutlet weak var editInterestsButton: UIButton!
-    @IBOutlet weak var changePasswordButton: UIButton!
     @IBOutlet weak var appSettingsButton: UIButton!
     @IBOutlet weak var signOutButton: TransitionButton!
     
@@ -81,7 +80,6 @@ extension ProfileViewController {
         
         styleSecondaryButton(editDetailsButton)
         styleSecondaryButton(editInterestsButton)
-        styleSecondaryButton(changePasswordButton)
         styleSecondaryButton(appSettingsButton)
         styleDangerButton(signOutButton)
     }
