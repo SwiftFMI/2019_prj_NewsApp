@@ -161,8 +161,8 @@ extension FlashCardsViewController: SFSafariViewControllerDelegate {
 // MARK: Helper Functions
 extension FlashCardsViewController {
     func updateNavigationBarTitle() {
-        let country = UserRepository.fetch(key: .country) as! [String: String]
-        self.navigationItem.title = "Top Titles for " + country["full"]!
+        let country = UserRepository.fetch(key: .country) as? [String: String]
+        self.navigationItem.title = "Top Titles for " + (country?["full"] ?? "")
     }
     
 }

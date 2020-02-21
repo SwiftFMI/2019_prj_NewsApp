@@ -60,7 +60,7 @@ extension CategoryViewController {
     }
     
     func loadNewsByCategory(_ category: String) {
-        let includeCountry = UserRepository.fetch(key: .isCountrySpecific) as! Bool
+        let includeCountry = UserRepository.fetch(key: .isCountrySpecific) as? Bool ?? false
         
         News.shared.getByCategory(category, includeCountry: includeCountry) { [unowned self] (data) in
             News.shared.categoryNews = data ?? []

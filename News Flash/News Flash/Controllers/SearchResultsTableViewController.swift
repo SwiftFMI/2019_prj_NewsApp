@@ -91,7 +91,8 @@ class SearchResultsTableViewController: UITableViewController {
         cell.newsImage.image = UIImage(named: "Palceholder Image")
         cell.newsImage.isHidden = false
         
-        if let url = URL(string: News.shared.searchResults[indexPath.row].urlToImage ?? "") {
+        if News.shared.searchResults.count > indexPath.row,
+            let url = URL(string: News.shared.searchResults[indexPath.row].urlToImage ?? "") {
             if let cachedImage = imageCache.object(forKey: NSString(string: url.absoluteString)) {
                 cell.newsImage.image = cachedImage
             } else {

@@ -14,8 +14,8 @@ class AppSettingsViewController: UIViewController {
     @IBOutlet weak var countryPickerView: UIPickerView!
     @IBOutlet weak var doneButton: UIButton!
     
-    var isCountrySpecific = UserRepository.fetch(key: .isCountrySpecific) as! Bool
-    var languageIndex = Constants.Languages.short.firstIndex(of: UserRepository.fetch(key: .resultLanguage) as! String) ?? 0
+    var isCountrySpecific = UserRepository.fetch(key: .isCountrySpecific) as? Bool ?? false
+    var languageIndex = Constants.Languages.short.firstIndex(of: UserRepository.fetch(key: .resultLanguage) as? String ?? "") ?? 0
     
     override func viewDidLoad() {
         super.viewDidLoad()

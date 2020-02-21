@@ -47,7 +47,9 @@ final class Networking {
     }
     
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
-        let countryCode = (UserRepository.fetch(key: .country) as! [String: String])["short"] ?? ""
+        guard let countryDictionary = (UserRepository.fetch(key: .country) as? [String: String]) else { return }
+        
+        let countryCode = countryDictionary["short"] ?? ""
         
         let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(countryCode)")!
         var request = URLRequest(url: url)
@@ -82,9 +84,9 @@ final class Networking {
             }
         }
         
-        let preferredLanguage = UserRepository.fetch(key: .resultLanguage) as! String
+        let preferredLanguage = UserRepository.fetch(key: .resultLanguage) as? String
         
-        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=publishedAt&q=\(query)&language=\(preferredLanguage)&page=\(page)")!
+        let url = URL(string: "https://newsapi.org/v2/everything?sortBy=publishedAt&q=\(query)&language=\(preferredLanguage ?? "")&page=\(page)")!
         
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
@@ -109,9 +111,9 @@ final class Networking {
     
     static func getSearchResults(page: Int, q: String, completion: @escaping NewsCompletion) {
         let urlQuery = q.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
-        let language = UserRepository.fetch(key: .resultLanguage) as! String
+        let language = UserRepository.fetch(key: .resultLanguage) as? String
         
-        let url = URL(string: "https://newsapi.org/v2/everything?language=\(language)&sortBy=publishedAt&page=\(page)&qInTitle=\(urlQuery)")!
+        let url = URL(string: "https://newsapi.org/v2/everything?language=\(language ?? "")&sortBy=publishedAt&page=\(page)&qInTitle=\(urlQuery)")!
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
         
