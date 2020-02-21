@@ -17,10 +17,6 @@ class ExploreViewController: BaseViewController {
         configureNavigationBar()
         configureTableView()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        configureNoFlashTopNavigationBar()
-    }
 }
 
 // MARK: Helper Functions

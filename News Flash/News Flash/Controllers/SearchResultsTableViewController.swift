@@ -25,6 +25,8 @@ class SearchResultsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         configureTableView()
+        
+//        configureNoFlashTopNavigationBar()
     }
     
     override func didReceiveMemoryWarning() {
@@ -212,6 +214,7 @@ extension SearchResultsTableViewController {
     }
     
     func loadNewsForPage() {
+        
         News.shared.searchNews(page: currentPage, q: currentQuery) { [unowned self] (news) in
             
             if let news = news {
@@ -236,4 +239,25 @@ extension SearchResultsTableViewController {
         Loaf(message, state: style, location: .bottom, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
+//    func configureNoFlashTopNavigationBar() {
+//
+//        let barImage = UIImage(named: "No Flash Bar")
+//        let barImageView = UIImageView(image: barImage)
+//        barImageView.frame = CGRect(x: 0, y: -75, width: 414, height: getHeaderImageHeightForCurrentDevice() + 20)
+//
+//        view.addSubview(barImageView)
+//
+//    }
+//
+//    func getHeaderImageHeightForCurrentDevice() -> CGFloat {
+//
+//        if UIScreen.main.nativeBounds.height >= 2436 { // iPhone X and up
+//            return BaseViewController.HEADER_VIEW_X_HEIGHT
+//        } else {
+//            return BaseViewController.HEADER_VIEW_HEIGHT
+//        }
+//
+//    }
+    
 }
+
