@@ -66,6 +66,14 @@ struct Article: Decodable {
     let description: String?
     let url: String?
     let urlToImage: String?
+    
+    private enum CodingKeys: String, CodingKey {
+        case source = "source"
+        case title = "title"
+        case description = "description"
+        case url = "url"
+        case urlToImage = "urlToImage"
+    }
 }
 
 struct ArticleResults: Decodable {
