@@ -19,8 +19,7 @@ class ExploreViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureNoFlashTopNavigationBar(isHigher: true)
+        configureNoFlashTopNavigationBar()
     }
 }
 

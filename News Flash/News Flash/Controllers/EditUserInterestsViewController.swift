@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class EditUserInterestsViewController: BaseViewController {
+class EditUserInterestsViewController: UIViewController {
 
     @IBOutlet weak var businessButton: UIButton!
     @IBOutlet weak var entertainmentButton: UIButton!

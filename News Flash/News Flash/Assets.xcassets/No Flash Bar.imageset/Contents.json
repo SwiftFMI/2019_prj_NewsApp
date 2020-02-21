@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "noFlashNavBarImg.png",
+      "filename" : "navBar.png",
       "scale" : "1x"
     },
     {

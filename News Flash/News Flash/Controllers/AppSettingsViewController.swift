@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppSettingsViewController: BaseViewController {
+class AppSettingsViewController: UIViewController {
 
     @IBOutlet weak var countrySpecificSwitch: UISwitch!
     @IBOutlet weak var countryPickerView: UIPickerView!

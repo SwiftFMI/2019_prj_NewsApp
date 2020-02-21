@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SkyFloatingLabelTextField
 
-class EditUserDetailsViewController: BaseViewController {
+class EditUserDetailsViewController: UIViewController {
 
     @IBOutlet weak var firstNameTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var lastNameTextField: SkyFloatingLabelTextField!
