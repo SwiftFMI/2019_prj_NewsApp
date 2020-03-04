@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -91,6 +92,14 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TrK-Qp-wQo">
+                                <rect key="frame" x="168" y="37" width="39" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <state key="normal" backgroundImage="DownButton">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -115,18 +124,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="126.5625"/>
+            <point key="canvasLocation" x="1047.2" y="126.35467980295567"/>
         </scene>
         <!--Sign Up Basics View Controller-->
         <scene sceneID="a8J-Oe-5y0">
             <objects>
                 <viewController storyboardIdentifier="SignUpBasicsVC" id="LXU-Jq-HwU" customClass="SignUpBasicsViewController" customModule="News_Flash" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xIG-oG-3Mr">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="758"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cVX-d4-cmd">
-                                <rect key="frame" x="20" y="144" width="335" height="489"/>
+                                <rect key="frame" x="20" y="100" width="335" height="489"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let us get to know you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2k-q7-06m">
                                         <rect key="frame" x="0.0" y="0.0" width="335" height="33.666666666666664"/>
@@ -178,7 +187,7 @@
                                                 </constraints>
                                             </pickerView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will help us give you specific news for the country you have selected. You can see them in the For You and Explore tabs." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cnI-eb-fHN">
-                                                <rect key="frame" x="0.0" y="154.99999999999994" width="335" height="50.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="155" width="335" height="50.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -198,7 +207,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VRx-fZ-zzX">
-                                <rect key="frame" x="57" y="728" width="261" height="30"/>
+                                <rect key="frame" x="57" y="674" width="261" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You already have a profile?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vtw-5m-dOq">
                                         <rect key="frame" x="0.0" y="0.0" width="204" height="30"/>
@@ -307,6 +316,7 @@
         <scene sceneID="Fe3-TH-3vB">
             <objects>
                 <tabBarController storyboardIdentifier="LoggedVC" id="xZA-wj-49c" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="pZ0-ng-qLq"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hmg-ze-Ekc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -464,12 +474,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="oEc-0u-8hO"/>
+                        <segue destination="xZA-wj-49c" kind="relationship" relationship="rootViewController" id="n5i-kp-RCV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcx-3c-9hd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="126.5625"/>
+            <point key="canvasLocation" x="-327" y="443"/>
         </scene>
         <!--For You-->
         <scene sceneID="gjI-Iv-czc">
@@ -711,6 +721,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsVerticalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="n4Q-Y5-EWk">
+                                <rect key="frame" x="0.0" y="88" width="375" height="571"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yui-dj-cLU">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="zVX-SM-mCw">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="et6-fu-3xd">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bb7-EQ-Odz">
                                 <rect key="frame" x="20" y="108" width="335" height="238"/>
                                 <subviews>
@@ -768,14 +798,33 @@
                                     <action selector="signOutButtonPressed:" destination="pGH-b5-CzN" eventType="touchUpInside" id="cg0-WB-Tu9"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="paV-f2-buf" customClass="TransitionButton" customModule="TransitionButton">
+                                <rect key="frame" x="20" y="659" width="335" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="g5D-zw-uFc"/>
+                                </constraints>
+                                <state key="normal" title="Sign In"/>
+                                <connections>
+                                    <action selector="signInButtonPressed:" destination="pGH-b5-CzN" eventType="touchUpInside" id="vIM-dK-GRk"/>
+                                    <action selector="signOutButtonPressed:" destination="pGH-b5-CzN" eventType="touchUpInside" id="Fcz-73-maR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="n4Q-Y5-EWk" firstAttribute="top" secondItem="Qch-Wa-xKw" secondAttribute="top" id="4Gv-zl-82D"/>
+                            <constraint firstAttribute="trailing" secondItem="n4Q-Y5-EWk" secondAttribute="trailing" id="4ta-cz-X4n"/>
                             <constraint firstItem="Qch-Wa-xKw" firstAttribute="bottom" secondItem="I8u-ht-AjO" secondAttribute="bottom" constant="20" id="CUs-yQ-asx"/>
                             <constraint firstItem="Qch-Wa-xKw" firstAttribute="trailing" secondItem="I8u-ht-AjO" secondAttribute="trailing" constant="20" id="HIO-te-gOA"/>
+                            <constraint firstItem="paV-f2-buf" firstAttribute="centerX" secondItem="I8u-ht-AjO" secondAttribute="centerX" id="LFW-KN-MHB"/>
+                            <constraint firstItem="paV-f2-buf" firstAttribute="centerY" secondItem="I8u-ht-AjO" secondAttribute="centerY" id="VNF-BS-g7W"/>
                             <constraint firstItem="I8u-ht-AjO" firstAttribute="leading" secondItem="Qch-Wa-xKw" secondAttribute="leading" constant="20" id="Xjj-C8-fHV"/>
                             <constraint firstItem="bb7-EQ-Odz" firstAttribute="leading" secondItem="Qch-Wa-xKw" secondAttribute="leading" constant="20" id="atZ-9S-uNB"/>
+                            <constraint firstItem="n4Q-Y5-EWk" firstAttribute="leading" secondItem="Qch-Wa-xKw" secondAttribute="leading" id="egC-Pe-Qa2"/>
+                            <constraint firstItem="paV-f2-buf" firstAttribute="width" secondItem="I8u-ht-AjO" secondAttribute="width" id="feh-m0-CsZ"/>
                             <constraint firstItem="bb7-EQ-Odz" firstAttribute="top" secondItem="Qch-Wa-xKw" secondAttribute="top" constant="20" id="grN-7M-eIk"/>
+                            <constraint firstItem="paV-f2-buf" firstAttribute="height" secondItem="I8u-ht-AjO" secondAttribute="height" id="hgL-oo-f9g"/>
+                            <constraint firstItem="n4Q-Y5-EWk" firstAttribute="bottom" secondItem="paV-f2-buf" secondAttribute="top" id="ioa-fZ-mtB"/>
                             <constraint firstItem="Qch-Wa-xKw" firstAttribute="trailing" secondItem="bb7-EQ-Odz" secondAttribute="trailing" constant="20" id="smg-Zv-Miu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Qch-Wa-xKw"/>
@@ -783,15 +832,18 @@
                     <navigationItem key="navigationItem" title="Hello" largeTitleDisplayMode="always" id="XUO-dA-Gwm"/>
                     <connections>
                         <outlet property="appSettingsButton" destination="RrE-LP-fGQ" id="sVQ-XP-1O9"/>
+                        <outlet property="collectionView" destination="n4Q-Y5-EWk" id="7B2-gz-oH2"/>
                         <outlet property="editDetailsButton" destination="osn-DQ-2l3" id="ug8-m3-ua9"/>
                         <outlet property="editInterestsButton" destination="h0k-E4-MQz" id="SnJ-Oz-fP1"/>
+                        <outlet property="signInButton" destination="paV-f2-buf" id="BSe-fe-l2v"/>
                         <outlet property="signOutButton" destination="I8u-ht-AjO" id="4up-p7-kZo"/>
+                        <outlet property="stackView" destination="bb7-EQ-Odz" id="qRW-Cd-Ni6"/>
                         <outlet property="titleLabel" destination="si4-N7-PK7" id="pPj-4e-rv1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eZy-hd-yJ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3055" y="2437"/>
+            <point key="canvasLocation" x="3053.5999999999999" y="2436.9458128078818"/>
         </scene>
         <!--Edit User Interests View Controller-->
         <scene sceneID="tNT-UZ-86m">
@@ -1154,6 +1206,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="DownButton" width="600" height="512"/>
         <image name="Flash Image" width="73.333335876464844" height="128"/>
         <image name="book" catalog="system" width="64" height="50"/>
         <image name="bookmark" catalog="system" width="56" height="64"/>

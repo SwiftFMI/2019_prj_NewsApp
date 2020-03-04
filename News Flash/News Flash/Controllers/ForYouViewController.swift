@@ -20,6 +20,8 @@ class ForYouViewController: BaseViewController {
     
     private var keepLoading = true
     
+    private var noLoggedUserLabel = UILabel()
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
@@ -38,6 +40,19 @@ class ForYouViewController: BaseViewController {
         // Observe for changes in the interests of the user
         UserRepository.addObserver(self, for: .interests)
         UserRepository.addObserver(self, for: .resultLanguage)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if UserRepository.fetch(key: .firstname) == nil {
+            noLoggedUserLabel.isHidden = false
+            self.configureNoLoggedUserLabel()
+        } else {
+            noLoggedUserLabel.isHidden = true
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,6 +70,17 @@ class ForYouViewController: BaseViewController {
             UserRepository.removeObserver(self, for: .interests)
             UserRepository.removeObserver(self, for: .resultLanguage)
         }
+    }
+    
+    private func configureNoLoggedUserLabel() {
+        
+        noLoggedUserLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 21))
+        noLoggedUserLabel.center = CGPoint(x: newsTableView.frame.width / 2, y: newsTableView.frame.height / 2)
+        noLoggedUserLabel.textAlignment = NSTextAlignment.center
+        noLoggedUserLabel.text = "Sign up to see your personised news."
+        noLoggedUserLabel.adjustsFontSizeToFitWidth = true
+        self.view.addSubview(noLoggedUserLabel)
+        
     }
 }
 
@@ -74,11 +100,15 @@ extension ForYouViewController {
                     self.newsTableView.reloadData()
                     self.refreshControl.endRefreshing()
                 }
+                
             } else {
+                
+                self.noLoggedUserLabel.removeFromSuperview()
                 self.keepLoading = false
                 DispatchQueue.main.async {
                     self.showMessage("Could not load the articles", style: .warning)
                 }
+                
             }
         }
     }
@@ -103,7 +133,9 @@ extension ForYouViewController {
                 DispatchQueue.main.async {
                     self.newsTableView.reloadData()
                 }
+                
             } else {
+                
                 self.keepLoading = false
                 DispatchQueue.main.async {
                     self.showMessage("Could not load the articles", style: .warning)
@@ -117,7 +149,7 @@ extension ForYouViewController {
 // MARK: Table View
 extension ForYouViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return News.shared.allNews.count + 1
+        return News.shared.allNews.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -19,12 +19,13 @@ final class Networking {
     static func getNewsByCategory(category: String, includeCountry: Bool, completion: @escaping NewsCompletion) {
         var urlString = "https://newsapi.org/v2/top-headlines?category=\(category)"
         
-        if includeCountry {
-            let countryCode = (UserRepository.fetch(key: .country) as! [String: String])["short"] ?? ""
+        guard let url = URL(string: urlString) else { return }
+        
+        if includeCountry,
+            let country = UserRepository.fetch(key: .country) as? [String: String] {
+            let countryCode = country["short"] ?? ""
             urlString.append("&country=\(countryCode)")
         }
-        
-        let url = URL(string: urlString)!
         
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
@@ -47,11 +48,12 @@ final class Networking {
     }
     
     static func getLocalTopNews(completion: @escaping NewsCompletion) {
-        guard let countryDictionary = (UserRepository.fetch(key: .country) as? [String: String]) else { return }
+
+        let countryDictionary = (UserRepository.fetch(key: .country) as? [String: String])
         
-        let countryCode = countryDictionary["short"] ?? ""
+        let countryCode = countryDictionary?["short"]
         
-        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(countryCode)")!
+        let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(countryCode ?? "bg")")!
         var request = URLRequest(url: url)
         request.addValue("2407b50324ed42dfadd1366a2f426651", forHTTPHeaderField: "X-Api-Key")
 
@@ -71,10 +73,12 @@ final class Networking {
             }
             
         }.resume()
+        
     }
     
     static func getAllNews(page: Int, completion: @escaping NewsCompletion) {
-        let interests = UserRepository.fetch(key: .interests) as! [String]
+        
+        guard let interests = UserRepository.fetch(key: .interests) as? [String] else { return }
         var query = ""
         
         for index in 0..<interests.count {
@@ -107,6 +111,7 @@ final class Networking {
             }
             
         }.resume()
+        
     }
     
     static func getSearchResults(page: Int, q: String, completion: @escaping NewsCompletion) {
@@ -180,9 +185,11 @@ final class Networking {
     }
     
     static func getSavedNews(completion: @escaping SavedCompletion) {
+        
+        guard let currentUser = Auth.auth().currentUser else { return }
         let db = Firestore.firestore()
         
-        db.collection("users").document(Auth.auth().currentUser!.uid).collection("saved").order(by: "savedAt", descending: true).getDocuments { (data, error) in
+        db.collection("users").document(currentUser.uid).collection("saved").order(by: "savedAt", descending: true).getDocuments { (data, error) in
             guard let data = data, error == nil else {
                 completion(nil)
                 return
