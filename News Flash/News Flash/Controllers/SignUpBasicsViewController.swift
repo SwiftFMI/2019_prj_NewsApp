@@ -62,8 +62,7 @@ class SignUpBasicsViewController: BaseViewController {
                 } else {
                     self.nextButton.stopAnimation(animationStyle: .normal) {
                         let signUpInterestsVC = self.storyboard?.instantiateViewController(identifier: Constants.Storyboard.signUpInterestsVC) as! SignUpInterestsViewController
-                        
-                        self.navigationController?.pushViewController(signUpInterestsVC, animated: true)
+                        self.present(signUpInterestsVC, animated: true, completion: nil)
                     }
                 }
             }

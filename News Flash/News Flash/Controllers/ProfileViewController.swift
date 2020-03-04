@@ -52,9 +52,9 @@ class ProfileViewController: BaseViewController {
         images.append("WalkingManCarousel")
         images.append("BrainCarousel")
         images.append("NewsCarousel")
-        messages.append("Register to see blabla")
-        messages.append("Newest news on news")
-        messages.append("Top 10 gossips")
+        messages.append("Be Connected, Be Informed")
+        messages.append("Dig in the topics you love")
+        messages.append("Choose your interests and what news to see")
         
         
     }

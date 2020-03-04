@@ -62,8 +62,13 @@ final class Authentication {
                 UserRepository.store(key: .lastname, value: data["lastname"]!)
                 UserRepository.store(key: .email, value: Auth.auth().currentUser!.email!)
                 UserRepository.store(key: .country, value: data["country"] as! [String: String])
-                UserRepository.store(key: .interests, value: data["interests"] as! [String])
+                
+                if let interests = data["interests"] as? [String] {
+                    UserRepository.store(key: .interests, value: interests)
+                }
+                
             }
+            
         }
     }
     
