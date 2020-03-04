@@ -32,6 +32,8 @@ class EditUserDetailsViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+        guard let currentUser = Auth.auth().currentUser else { return }
+        
         let firstName = firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let lastName = lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -60,10 +62,10 @@ class EditUserDetailsViewController: UIViewController {
         
         updateFields["country"] = country
         
-        
         // Update the database
         let db = Firestore.firestore()
-        db.collection("users").document(Auth.auth().currentUser!.uid).updateData(updateFields)
+        db.collection("users").document(currentUser.uid).updateData(updateFields)
+        
     }
     
     @IBAction func doneButtonPressed(_ sender: UIButton) {
@@ -116,10 +118,13 @@ extension EditUserDetailsViewController {
         emailTextField.text = UserRepository.fetch(key: .email) as? String
         emailTextField.isUserInteractionEnabled = false
         
-        let countryName = (UserRepository.fetch(key: .country) as! [String: String])["short"] ?? ""
-        let countryId = Constants.Countries.short.firstIndex(of: countryName) ?? 0
-        
-        countryPickerView.selectRow(countryId, inComponent: 0, animated: false)
+        if let countryName = UserRepository.fetch(key: .country) as? [String: String] {
+            
+            let countryCode = countryName["short"] ?? ""
+            let countryId = Constants.Countries.short.firstIndex(of: countryCode) ?? 0
+            countryPickerView.selectRow(countryId, inComponent: 0, animated: false)
+            
+        }
         
         stylePrimaryButton(doneButton)
         styleTextField(firstNameTextField)

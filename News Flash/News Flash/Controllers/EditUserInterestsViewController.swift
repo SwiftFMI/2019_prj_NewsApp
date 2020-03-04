@@ -21,7 +21,7 @@ class EditUserInterestsViewController: UIViewController {
     
     @IBOutlet weak var doneButton: UIButton!
     
-    var interests = UserRepository.fetch(key: .interests) as! [String]
+    var interests = UserRepository.fetch(key: .interests) as? [String]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,20 +33,24 @@ class EditUserInterestsViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         // Update User Defaults
-        UserRepository.store(key: .interests, value: interests)
-        
-       // Update Database
-        Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).updateData(["interests": interests])
+        if let interests = interests {
+            
+            UserRepository.store(key: .interests, value: interests)
+            
+            // Update Database
+            Firestore.firestore().collection("users").document(Auth.auth().currentUser!.uid).updateData(["interests": interests])
+            
+        }
     }
     
     @IBAction func toggleInterest(_ sender: UIButton) {
         let interest = sender.titleLabel?.text?.lowercased() ?? ""
         
-        if interests.contains(interest) {
-            interests = interests.filter { $0 != interest }
+        if interests?.contains(interest) ?? false {
+            interests = interests?.filter { $0 != interest }
             styleSecondaryPill(sender)
         } else {
-            interests.append(interest)
+            interests?.append(interest)
             stylePrimaryPill(sender)
         }
     }
@@ -59,37 +63,37 @@ class EditUserInterestsViewController: UIViewController {
 // MARK: Helper Functions
 extension EditUserInterestsViewController {
     func configureElements() {
-        if interests.contains("business") {
+        if interests?.contains("business") ?? false {
             stylePrimaryPill(businessButton)
         } else {
             styleSecondaryPill(businessButton)
         }
         
-        if interests.contains("entertainment") {
+        if interests?.contains("entertainment") ?? false {
             stylePrimaryPill(entertainmentButton)
         } else {
             styleSecondaryPill(entertainmentButton)
         }
         
-        if interests.contains("health") {
+        if interests?.contains("health") ?? false {
             stylePrimaryPill(healthButton)
         } else {
             styleSecondaryPill(healthButton)
         }
         
-        if interests.contains("science") {
+        if interests?.contains("science") ?? false {
             stylePrimaryPill(scienceButton)
         } else {
             styleSecondaryPill(scienceButton)
         }
         
-        if interests.contains("sports") {
+        if interests?.contains("sports") ?? false {
             stylePrimaryPill(sportsButton)
         } else {
             styleSecondaryPill(sportsButton)
         }
         
-        if interests.contains("technology") {
+        if interests?.contains("technology") ?? false {
             stylePrimaryPill(technologyButton)
         } else {
             styleSecondaryPill(technologyButton)
